@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-# TutorPatient.destroy
+TutorPatient.destroy_all
 User.destroy_all
 
 puts 'creating users'
@@ -18,4 +18,4 @@ user2= User.create!(role: "patient", first_name: "test_patient", email: "patient
 puts 'User created'
 
 puts 'Creating table patient tutor'
-user_tutor_1 = TutorPatient.create!(tutor_id: user1, patient_id: "user2")
+TutorPatient.create!(tutor_id: user1.id, patient_id: user2.id)
