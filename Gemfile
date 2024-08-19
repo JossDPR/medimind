@@ -77,3 +77,5 @@ group :test do
 end
 
 gem "pundit", "~> 2.3"
+gem "dotenv-rails"
+
