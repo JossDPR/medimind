@@ -7,3 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# TutorPatient.destroy
+User.destroy_all
+
+puts 'creating users'
+user1 = User.create!(role: "tutor", first_name:"test_tutor", email: "tutor@test.com", password: "password")
+user2= User.create!(role: "patient", first_name: "test_patient", email: "patient@test.com", password: "password")
+
+puts 'User created'
+
+puts 'Creating table patient tutor'
+user_tutor_1 = TutorPatient.create!(tutor_id: user1, patient_id: "user2")
