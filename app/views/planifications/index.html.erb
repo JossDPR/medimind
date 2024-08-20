@@ -1,4 +1,14 @@
 <h1>Planifications#index</h1>
-<p>Find me in app/views/planifications/index.html.erb</p>
 
-<%= @planifications %>
+<% if current_user.tutor? %>
+  <h1><%= "#{@patient.first_name} #{@patient.last_name}" %></h1>
+<% end %>
+
+<% @planifications.each do |planification|  %>
+<%=  cl_image_tag(planification.photo.key)%><br>
+<%= planification.patient.first_name %><br>
+<%= '*' * 60 %> <br><br>
+<% end %>
+<% if current_user.tutor? %>
+  <%= link_to 'Ajouter', new_patient_planification_path(@patient) %>
+<% end %>
