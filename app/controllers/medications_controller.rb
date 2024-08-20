@@ -17,7 +17,6 @@ class MedicationsController < ApplicationController
 
   def create
     @medication = Medication.new(params_medication)
-    @medication.user_id = current_user.id
     if @medication.save
       redirect_to @medication, notice: "Medication was successfully created."
     else
