@@ -7,14 +7,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def default_tutor
-    @role ||= "tutor"
+    self.role ||= "tutor"
   end
 
   def tutor?
-    @role == "tutor"
+    self.role == "tutor"
   end
 
   def patient?
-    @role == "patient"
+    self.role == "patient"
   end
 end

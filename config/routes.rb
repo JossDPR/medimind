@@ -10,8 +10,15 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  get '/', to: 'tutor#home', constraints: RoleRouteConstraint.new { |user| user.tutor? }
-  get '/', to: 'patient#home', constraints: RoleRouteConstraint.new { |user| user.patient? }
+  authenticated :user, ->(u) { u.tutor?} do
+    root to: "users#home", as: :tutor_root
+  end
+
+  authenticated :user, ->(u) { u.patient?} do
+    root to: "patients#home", as: :patient_root
+  end
+
+  root to: "pages#home"
 
   resources :patients, only: [:index, :new, :create, :edit, :update, :destroy]
 end

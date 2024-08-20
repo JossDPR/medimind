@@ -1,0 +1,40 @@
+<%= simple_form_for(@patient) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :first_name, label: 'Prénom',
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "Votre prénom" }%>
+
+    <%= f.input :last_name, label: 'Nom',
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "Votre nom" }%>
+
+    <%= f.input :phone_number, label: 'Téléphone',
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "Votre numéro de téléphone" }%>
+
+    <%= f.input :email, label: 'E-mail',
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "email" }%>
+
+    <%= f.input :password, label: 'Mot de passe',
+                required: true,
+                hint: ("#{@minimum_password_length} caractères minimums" if @minimum_password_length),
+                input_html: { autocomplete: "Votre mot de passe" } %>
+
+    <%= f.input :password_confirmation, label: 'Confirmation mot de passe',
+                required: true,
+                input_html: { autocomplete: "Votre mot de passe" } %>
+  </div>
+
+  <div class="form-actions btn-primary">
+    <%= f.button :submit, "S'enregistrer" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
