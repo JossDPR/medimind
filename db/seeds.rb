@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+
 # require 'cloudinary'
 # require 'open-uri'
 
@@ -84,3 +85,4 @@ Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T07:00:00" )
 Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T13:00:00" )
 Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T19:00:00" )
 puts 'End - Create Alarms'
+
