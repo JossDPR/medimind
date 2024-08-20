@@ -59,8 +59,8 @@ medic3 = Medication.create!(name: "Doliprane", description: "")
 puts 'End - Create Medications'
 
 puts 'Start - Create Users'
-tutor = User.create!(email: "admin@test.com", password: "password", role: "Admin", first_name: "Admin", last_name: "Tuteur", phone_number: "05 61 00 00 00")
-patient = User.create!(email: "user@test.com", password: "password", role: "User", first_name: "User", last_name: "Patient", phone_number: "05 61 99 99 99")
+tutor = User.create!(email: "tutor@test.com", password: "password", role: "tutor", first_name: "tutor", last_name: "Tuteur", phone_number: "05 61 00 00 00")
+patient = User.create!(email: "patient@test.com", password: "password", role: "patient", first_name: "patient", last_name: "Patient", phone_number: "05 61 99 99 99")
 puts 'End - Create Users'
 
 puts 'Start - Create TutorPatients'
@@ -72,9 +72,9 @@ semaineunefois = Frequency.create!(amount: 1, periodicity_id: period_semaine.id 
 jourtroisfois = Frequency.create!(amount: 3, periodicity_id: period_jour.id )
 
 puts 'Start - Create Planifications'
-planif1 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic1.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourdeuxfois.id, photo_key: "" )
-planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_id: semaineunefois.id, photo_key: "" )
-planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourtroisfois.id, photo_key: "" )
+planif1 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic1.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourdeuxfois.id, photo_key: "", description: "holala il faut encore prendre son médicament" )
+planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_id: semaineunefois.id, photo_key: "", description: "heyheyhey il faut encore prendre son médicament"  )
+planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourtroisfois.id, photo_key: "", description: "hohoho il faut encore prendre son médicament"  )
 puts 'End - Create Planifications'
 
 puts 'Start - Create Alarms'
@@ -85,4 +85,3 @@ Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T07:00:00" )
 Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T13:00:00" )
 Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T19:00:00" )
 puts 'End - Create Alarms'
-
