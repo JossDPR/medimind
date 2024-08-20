@@ -7,12 +7,28 @@ class PatientPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     # NOTE: Be explicit about which records you allow access to!
-    # def resolve
-    #   scope.all
-    # end
+    def resolve
+      scope.where(user: user)
+    end
+  end
+
+  def index?
+    @user.role  == "tutor"
+  end
+
+  def show?
+    true
   end
 
   def create?
+    @user.role  == "tutor"
+  end
+
+  def update?
+    @user.role  == "tutor"
+  end
+
+  def destroy
     @user.role  == "tutor"
   end
 
