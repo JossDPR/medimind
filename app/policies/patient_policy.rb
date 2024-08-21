@@ -20,6 +20,10 @@ class PatientPolicy < ApplicationPolicy
     true
   end
 
+  def new?
+    create?
+  end
+
   def create?
     @user.role  == "tutor"
   end

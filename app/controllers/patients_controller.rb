@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_patient, only: [:show, :update, :destroy]
+  before_action :set_user, only: [:show, :update, :destroy, :new]
 
   def home
   end
@@ -13,6 +13,7 @@ class PatientsController < ApplicationController
   end
 
   def new
+    @patient= User.new
   end
 
   def create
@@ -37,8 +38,8 @@ class PatientsController < ApplicationController
 
   private
 
-  def set_patient
-    @patient = current_user
+  def set_user
+    @user = current_user
   end
 
   def patient_params
