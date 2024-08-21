@@ -25,6 +25,10 @@ class PlanificationsController < ApplicationController
 
   private
   def set_patient
-    @patient = User.find(params[:patient_id])
+    if params[:patient_id]
+      @patient = User.find(params[:patient_id])
+    else
+      @patient = current_user
+    end
   end
 end

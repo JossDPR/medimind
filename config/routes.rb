@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   authenticated :user, ->(u) { u.patient?} do
-    root to: "patients#home", as: :patient_root
+    root to: "planifications#index", as: :patient_root
   end
 
   root to: "pages#home"
