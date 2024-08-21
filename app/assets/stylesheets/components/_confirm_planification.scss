@@ -1,0 +1,60 @@
+.confirm {
+  height: auto;
+  animation: fade 1s ease 1 forwards;
+  display: block;
+  overflow: auto;
+  width: -webkit-fill-available;
+  border-radius: $border-radius-xl;
+  border: 2px solid $secondary;
+  background-color: $white;
+  box-shadow: 2px 12px 10px 1px rgba(0, 0, 255, .1);
+  margin: 16px;
+  text-align: center;
+}
+.confirm h1 {
+  margin: 0 2rem 2rem;
+}
+.confirm p {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 25% auto;
+}
+.confirm button {
+  background: transparent;
+  border: none;
+  color: $primary;
+  height: 3rem;
+  font-size: 1rem;
+  width: 50%;
+  bottom: 0;
+  cursor: pointer;
+}
+.confirm button:nth-of-type(1) {
+  border-top: 1px solid #B4B4B4;
+  border-right: 1px solid #B4B4B4;
+  // border-radius: 0 0 0 10px;
+}
+.confirm button:nth-of-type(2) {
+  border-top: 1px solid #B4B4B4;
+  // border-radius: 0 0 10px 0;
+}
+.confirm button:focus,
+.confirm button:hover {
+  font-weight: bold;
+  background: $secondary;
+  color: $white;
+}
+.confirm button:active {
+  background: $primary;
+  color: $white;
+}
+.buttons_double {
+  display: flex;
+}
+
+.fa-calendar-check {
+  font-size: 32px;
+  color: $success;
+  margin: 16px;
+}
