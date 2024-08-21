@@ -20,7 +20,7 @@ class PatientsController < ApplicationController
   def create
     # authorize @patient
     @patient = User.new(patient_params)
-    @patient.tutors.push(@user)
+    @user.patients.push(@patient)
     if @patient.save
       redirect_to patient_planifications_path(@patient)
     else
