@@ -1,0 +1,19 @@
+.default_card {
+  display: block;
+  overflow: auto;
+  width: -webkit-fill-available;
+  border-radius: $border-radius-xl;
+  border: 2px solid $secondary;
+  background-color: $white;
+  box-shadow: 2px 12px 10px 1px rgba(0, 0, 255, .1);
+  margin: 16px;
+  padding: 16px;
+  text-align: center;
+}
+
+hr {
+  margin: 1rem auto;
+  border: 0;
+  border-top: 2px solid $tertiary;
+  width: 50%;
+}
