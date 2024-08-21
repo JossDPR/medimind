@@ -21,7 +21,9 @@
       <li class="nav-link" data-burger-target="navLink"><%= link_to "Log out", destroy_user_session_path, class: "dropdown-item", data: {turbo_method: :delete} %></li>
     </ul>
     <% else %>
-      <li class="nav-link" data-burger-target="navLink"><%= link_to "Sign-In", new_user_session_path, class: "nav-link" %></li>
+      <ul class="nav-links">
+        <li class="nav-link" data-burger-target="navLink"><%= link_to "Sign-In", new_user_session_path, class: "nav-link" %></li>
+      </ul>
     <% end %>
   </nav>
 </div>
