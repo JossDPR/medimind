@@ -2,4 +2,11 @@
 <p>Find me in app/views/users/home.html.erb</p>
 
 
+<h3>Liste des patients</h1>
+
+<% @patients.each do |patient| %>
+  <%= patient.first_name %>
+  <%= patient.last_name %><br>
+<% end %>
+
 <%= link_to "Ajouter un patient", new_patient_path %>
