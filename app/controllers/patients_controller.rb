@@ -1,6 +1,11 @@
 class PatientsController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :create, :new]
 
+  def cam
+    # authorize @patient
+    @patient = User.find(params[:id])
+  end
+
   def new
     @patient= User.new
   end

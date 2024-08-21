@@ -2,3 +2,7 @@
 <p>Find me in app/views/planifications/new.html.erb</p>
 
 <%# form planification %>
+<%# Display photo planification, then selection of the drug, then form planification,
+use js to display one at a time? %>
+
+<%= render "form_planification", partial: [@patient, @planification]  %>
