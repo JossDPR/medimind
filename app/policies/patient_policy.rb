@@ -20,6 +20,10 @@ class PatientPolicy < ApplicationPolicy
     true
   end
 
+  def cam
+    @user.role  == "tutor"
+  end
+
   def new?
     create?
   end

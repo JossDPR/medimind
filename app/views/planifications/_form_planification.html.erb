@@ -1,0 +1,7 @@
+<%= simple_form_for [@patient, @planification] do |f| %>
+  <%= f.input :username, label: 'Your username please', error: 'Username is mandatory, please specify one' %>
+  <%= f.input :password, hint: 'No special characters.' %>
+  <%= f.input :email, placeholder: 'user@domain.com' %>
+  <%= f.input :remember_me, inline_label: 'Yes, remember me' %>
+  <%= f.button :submit %>
+<% end %>
