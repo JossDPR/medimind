@@ -1,12 +1,8 @@
 class PatientsController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy, :create, :new]
+  before_action :set_user, only: [:home, :show, :update, :destroy, :create, :new]
 
   def home
-  end
-
-  def index
     # authorize @patient
-    @patients = @current_user.patients.all
   end
 
   def show
@@ -25,7 +21,7 @@ class PatientsController < ApplicationController
   def create
     # authorize @patient
     @patient = User.new(patient_params)
-    @patient.tutors.push(@user)
+    @user.patients.push(@patient)
     if @patient.save
       redirect_to patient_planifications_path(@patient)
     else

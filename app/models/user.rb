@@ -23,6 +23,5 @@ class User < ApplicationRecord
 
   def patient?
     self.role == "patient"
-
   end
 end

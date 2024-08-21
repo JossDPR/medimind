@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:home]
   def home
+    @patients = @user.patients
   end
 
   private

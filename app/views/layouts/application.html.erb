@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Medimind</title>
+    <%= favicon_link_tag 'logo_favicon.png' %>
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,7 +13,8 @@
   </head>
 
   <body>
-<%= render "shared/flashes" %>
+    <%= render "components/navbar" %>
+    <%= render "shared/flashes" %>
 
     <%= yield %>
   </body>
