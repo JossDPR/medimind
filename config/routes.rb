@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   end
 
   root to: "pages#home"
+  get "about", to: "pages#about"
+  get "contact", to: "pages#contact"
 
   resources :patients, only: [:new, :create, :edit, :update, :destroy] do
     resources :planifications, only: %i[index new create edit update destroy]
