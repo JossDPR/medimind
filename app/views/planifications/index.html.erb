@@ -10,5 +10,5 @@
 <%= '*' * 60 %> <br><br>
 <% end %>
 <% if current_user.tutor? %>
-  <%= link_to 'Ajouter',  cam_patient_path(@patient) %>
+  <%= link_to 'Ajouter',  cam_patient_path(@patient.id) %>
 <% end %>

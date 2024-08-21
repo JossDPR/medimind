@@ -13,6 +13,11 @@ class PatientsController < ApplicationController
     # authorize @patient
   end
 
+  def cam
+    # authorize @patient
+    @patient = User.find(params[:id])
+  end
+
   def new
     @patient= User.new
   end
