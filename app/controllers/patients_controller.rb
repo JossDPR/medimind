@@ -1,16 +1,16 @@
 class PatientsController < ApplicationController
-  before_action :set_user, only: [:show, :update, :destroy, :new]
+  before_action :set_user, only: [:show, :update, :destroy, :create, :new]
 
   def home
   end
 
   def index
-    authorize @patient
+    # authorize @patient
     @patients = @current_user.patients.all
   end
 
   def show
-    authorize @patient
+    # authorize @patient
   end
 
   def new
@@ -18,9 +18,9 @@ class PatientsController < ApplicationController
   end
 
   def create
-    authorize @patient
-    @patient = User.new(patient_params, role: "patient")
-    @patient.tutors = current_user
+    # authorize @patient
+    @patient = User.new(patient_params)
+    @patient.tutors.push(@user)
     if @patient.save
       redirect_to patient_planifications_path(@patient)
     else
@@ -29,13 +29,13 @@ class PatientsController < ApplicationController
   end
 
   def update
-    authorize @patient
+    # authorize @patient
     @patient.update(patient_params)
     redirect_to patient_path(@patient)
   end
 
   def destroy
-    authorize @patient
+    # authorize @patient
   end
 
   private
@@ -45,7 +45,10 @@ class PatientsController < ApplicationController
   end
 
   def patient_params
-    params.require(:user).permit(:first_name, :last_name, :phone_number)
+    params
+      .require(:user)
+      .permit(:first_name, :last_name, :phone_number, :email, :password, :password_confirmation)
+      .with_defaults(role: "patient")
   end
 
 end
