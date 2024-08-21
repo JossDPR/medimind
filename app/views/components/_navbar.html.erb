@@ -12,10 +12,16 @@
   </div>
 
   <nav class="navbar" data-burger-target="navbar">
+     <% if user_signed_in? %>
     <ul class="nav-links">
       <li class="nav-link" data-burger-target="navLink"><a href="#">Home</a></li>
       <li class="nav-link" data-burger-target="navLink"><a href="#">About</a></li>
       <li class="nav-link" data-burger-target="navLink"><a href="#">Contact</a></li>
+
+      <li class="nav-link" data-burger-target="navLink"><%= link_to "Log out", destroy_user_session_path, class: "dropdown-item", data: {turbo_method: :delete} %></li>
     </ul>
+    <% else %>
+      <li class="nav-link" data-burger-target="navLink"><%= link_to "Sign-In", new_user_session_path, class: "nav-link" %></li>
+    <% end %>
   </nav>
 </div>
