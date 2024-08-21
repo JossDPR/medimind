@@ -1,5 +1,6 @@
 class PatientsController < ApplicationController
   before_action :set_user, only: [:home, :show, :update, :destroy, :create, :new]
+  before_action :set_patient, only: %i[cam]
 
   def home
     # authorize @patient
@@ -11,7 +12,7 @@ class PatientsController < ApplicationController
 
   def cam
     # authorize @patient
-    @patient = User.find(params[:id])
+    @planification = Planification.new
   end
 
   def new
@@ -43,6 +44,10 @@ class PatientsController < ApplicationController
 
   def set_user
     @user = current_user
+  end
+
+  def set_patient
+    @patient = User.find(params[:id])
   end
 
   def patient_params
