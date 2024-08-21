@@ -9,17 +9,23 @@
 #   end
 
 
-# require 'cloudinary'
-# require 'open-uri'
+require 'cloudinary'
+require 'open-uri'
 
 puts 'Start - Destroy tables'
+planifs = Planification.all
+planifs.each do |planif|
+  if planif.photo.attached?
+    planif.photo.purge
+  end
+end
+Planification.destroy_all
 Dosage.destroy_all
+Frequency.destroy_all
 Periodicity.destroy_all
 Medication.destroy_all
 TutorPatient.destroy_all
 User.destroy_all
-Frequency.destroy_all
-Planification.destroy_all
 Alarm.destroy_all
 puts 'End - Destroy tables'
 
@@ -60,7 +66,7 @@ puts 'End - Create Medications'
 
 puts 'Start - Create Users'
 tutor = User.create!(email: "tutor@test.com", password: "password", role: "tutor", first_name: "tutor", last_name: "Tuteur", phone_number: "05 61 00 00 00")
-patient = User.create!(email: "patient@test.com", password: "password", role: "patient", first_name: "patient", last_name: "Patient", phone_number: "05 61 99 99 99")
+patient = User.create!(email: "patient@test.com", password: "password", role: "patient", first_name: "patient1", last_name: "Patient1", phone_number: "05 61 99 99 99")
 puts 'End - Create Users'
 
 puts 'Start - Create TutorPatients'
@@ -72,9 +78,13 @@ semaineunefois = Frequency.create!(amount: 1, periodicity_id: period_semaine.id 
 jourtroisfois = Frequency.create!(amount: 3, periodicity_id: period_jour.id )
 
 puts 'Start - Create Planifications'
-planif1 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic1.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourdeuxfois.id, photo_key: "", description: "holala il faut encore prendre son médicament" )
-planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_id: semaineunefois.id, photo_key: "", description: "heyheyhey il faut encore prendre son médicament"  )
-planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourtroisfois.id, photo_key: "", description: "hohoho il faut encore prendre son médicament"  )
+planif1 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic1.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourdeuxfois.id, description: "holala il faut encore prendre son médicament")
+planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_id: semaineunefois.id, description: "heyheyhey il faut encore prendre son médicament")
+planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourtroisfois.id, description: "hohoho il faut encore prendre son médicament")
+planif1.photo.attach(io: URI.open('https://asset.cloudinary.com/dw9vzaips/91882ab24984f1b7bd1ed0a2b8f350ed'), filename: "medoc", content_type: "image/jpg")
+planif2.photo.attach(io: URI.open('https://asset.cloudinary.com/dw9vzaips/91882ab24984f1b7bd1ed0a2b8f350ed'), filename: "medoc", content_type: "image/jpg")
+planif3.photo.attach(io: URI.open('https://asset.cloudinary.com/dw9vzaips/91882ab24984f1b7bd1ed0a2b8f350ed'), filename: "medoc", content_type: "image/jpg")
+
 puts 'End - Create Planifications'
 
 puts 'Start - Create Alarms'

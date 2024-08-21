@@ -10,4 +10,8 @@ class User < ApplicationRecord
 
   has_many :patients, through: :tutors_relation
   has_many :tutors, through: :patients_relation
+
+  def tutor?
+    self.role == 'tutor'
+  end
 end
