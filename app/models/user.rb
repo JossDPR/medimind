@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  before_create :default_tutor
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -11,7 +13,16 @@ class User < ApplicationRecord
   has_many :patients, through: :tutors_relation
   has_many :tutors, through: :patients_relation
 
+  def default_tutor
+    self.role ||= "tutor"
+  end
+
   def tutor?
-    self.role == 'tutor'
+    self.role == "tutor"
+  end
+
+  def patient?
+    self.role == "patient"
+
   end
 end

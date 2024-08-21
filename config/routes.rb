@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "pages#home"
+
   get "ui", to: "pages#ui"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -13,5 +14,17 @@ Rails.application.routes.draw do
   resources :patients, only: [:index, :new, :create, :edit, :update, :destroy] do
     resources :planifications, only: %i[index new create edit update destroy]
   end
+
+  authenticated :user, ->(u) { u.tutor?} do
+    root to: "users#home", as: :tutor_root
+  end
+
+  authenticated :user, ->(u) { u.patient?} do
+    root to: "patients#home", as: :patient_root
+  end
+
+  root to: "pages#home"
+
+  resources :patients, only: [:index, :new, :create, :edit, :update, :destroy, :show]
 
 end
