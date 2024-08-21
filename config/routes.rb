@@ -20,5 +20,5 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
 
-  resources :patients, only: [:index, :new, :create, :edit, :update, :destroy]
+  resources :patients, only: [:index, :new, :create, :edit, :update, :destroy, :show]
 end

@@ -3,6 +3,7 @@ class PatientsController < ApplicationController
 
   def home
   end
+
   def index
     authorize @patient
     @patients = @current_user.patients.all
@@ -30,6 +31,7 @@ class PatientsController < ApplicationController
   def update
     authorize @patient
     @patient.update(patient_params)
+    redirect_to patient_path(@patient)
   end
 
   def destroy

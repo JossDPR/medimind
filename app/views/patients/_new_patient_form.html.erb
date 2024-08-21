@@ -1,4 +1,4 @@
-<%= simple_form_for @patient do |f| %>
+<%= simple_form_for @patient, url: patients_path do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -36,5 +36,3 @@
     <%= f.button :submit, "S'enregistrer" %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
