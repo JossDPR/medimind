@@ -1,7 +1,11 @@
-<%= simple_form_for [@patient, @planification] do |f| %>
-  <%= f.input :username, label: 'Your username please', error: 'Username is mandatory, please specify one' %>
-  <%= f.input :password, hint: 'No special characters.' %>
-  <%= f.input :email, placeholder: 'user@domain.com' %>
-  <%= f.input :remember_me, inline_label: 'Yes, remember me' %>
+<%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
+  <%# <p>medication name</p> %>
+  <%= f.input :medication, label: 'Your username please', error: 'Username is mandatory, please specify one' %>
+  <%= f.input :quantity, hint: 'No special characters.' %>
+  <%= f.input :start_date, hint: 'No special characters.' %>
+  <%= f.input :end_date, hint: 'No special characters.' %>
+  <%= f.input :dosage, hint: 'No special characters.' %>
+  <%= f.input :frequency, hint: 'No special characters.' %>
+  <%= f.input :description, hint: 'No special characters.' %>
   <%= f.button :submit %>
 <% end %>
