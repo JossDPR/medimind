@@ -1,0 +1,21 @@
+
+<div class="logo" data-burger-target="logo">
+  <img src="https://github.com/JossDPR/medimind/blob/master/public/Logo_small.png?raw=true" alt="Logo" />
+</div>
+<div class="header-text" data-burger-target="headerText">
+  MediMind
+</div>
+<div data-controller="burger">
+  <div class="burger" data-action="click->burger#toggle" data-burger-target="burger">
+    <i class="fas fa-bars fa-2x"></i>
+    <i class="fas fa-times fa-2x"></i>
+  </div>
+
+  <nav class="navbar" data-burger-target="navbar">
+    <ul class="nav-links">
+      <li class="nav-link" data-burger-target="navLink"><a href="#">Home</a></li>
+      <li class="nav-link" data-burger-target="navLink"><a href="#">About</a></li>
+      <li class="nav-link" data-burger-target="navLink"><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div>
