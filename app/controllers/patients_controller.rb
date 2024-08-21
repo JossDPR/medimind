@@ -1,13 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_user, only: [:home, :show, :update, :destroy, :create, :new]
-
-  def home
-    # authorize @patient
-  end
-
-  def show
-    # authorize @patient
-  end
+  before_action :set_user, only: [:update, :destroy, :create, :new]
 
   def new
     @patient= User.new
