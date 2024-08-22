@@ -3,7 +3,7 @@
 	--color-two: #364b44;
 	--text-color: $gray;
 	--mem-width: min(38em, calc(100vw - 4em));
-	--mem-height: min(36em, calc(100vw - 6em));
+	// --mem-height: min(36em, calc(100vw - 6em));
 	--slide-duration: 0.9s;
 	--text-duration: 0.9s;
 	--text-l-height: 1.5em;
@@ -144,12 +144,74 @@ label > .slider {
 	grid-area: img;
 }
 
+.acord-head {
+  display: flex;
+  width: 100%;
+}
+
+.acord-vign {
+  width: 30%;
+}
+
+.acord-info {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.acord-medic {
+  height: 50%;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: bolder;
+}
+
+.acord-qte {
+  height: 50%;
+  font-size: large;
+  font-style: italic;
+  color: $dark-gray;
+}
+
 .slider {
 	margin-top: 1em;
 	overflow: hidden;
 	transition: all var(--slide-duration);
 	height: 0;
+  text-align: center;
 }
+
+.acord-det {
+  width: 100%;
+  padding: 10px;
+}
+
+.acord-det .grid-medic{
+  text-transform: uppercase;
+  font-size: x-large;
+  font-weight: bolder;
+  box-sizing: border-box;
+}
+
+.acord-det .grid-qte{
+  font-size: large;
+  font-style: italic;
+  box-sizing: border-box;
+}
+
+.acord-det .grid-comment{
+  font-size: large;
+  font-style: italic;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: $dark-gray;
+  box-sizing: border-box;
+}
+
+.acord-det .grid-val{
+  box-sizing: border-box;
+}
+
 
 input:checked + label > .slider {
 	/*  animation: details-show var(--slide-duration) ease-in-out; */
