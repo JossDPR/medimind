@@ -30,7 +30,7 @@ TakingPeriod.destroy_all
 puts 'End - Destroy tables'
 
 puts 'Start - Create Dosages'
-dose_ampoule = Dosage.create!(label: "amploule(s)")
+dose_ampoule = Dosage.create!(label: "ampoule(s)")
 dose_application = Dosage.create!(label: "application(s)")
 dose_capsule = Dosage.create!(label: "capsule(s)")
 dose_comprime = Dosage.create!(label: "comprimé(s)")
