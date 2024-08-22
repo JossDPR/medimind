@@ -19,6 +19,5 @@
 <%= render "components/accordion_card", elements: @planifications %>
 
 <% if current_user.tutor? %>
-  <%= link_to 'Ajouter',  cam_patient_path(@patient.id) %>
-  <%= render "components/button_confirm", content: "Ajouter" %>
+  <a href="<%= cam_patient_path(@patient.id) %>" %><%= render "components/button_confirm", content: "Ajouter" %></a>
 <% end %>
