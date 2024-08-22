@@ -1,8 +1,15 @@
-<h1>Planifications#index</h1>
-
-<% if current_user.tutor? %>
-  <h1><%= "#{@patient.first_name} #{@patient.last_name}" %></h1>
+<br><% if current_user.tutor? %>
+  <div class="default_card">
+    <h2 class="patient-first-name"><%= "#{@patient.first_name}" %></h2>
+    <h3 class="patient-last-name"><%= "#{@patient.last_name}" %></h3>
+    <hr>
+    <%= link_to edit_patient_path(@patient.id) do %>
+      <%= render "components/button_edit", content: "Editer patient" %>
+    <% end %>
+  </div><br>
 <% end %>
+
+<h2 class="text-center">Médicaments du jour</h2><hr><br>
 
 <% @planifications.each do |planification|  %>
 <%=  cl_image_tag(planification.photo.key)%><br>
@@ -10,5 +17,7 @@
 <%= '*' * 60 %> <br><br>
 <% end %>
 <% if current_user.tutor? %>
-  <%= link_to 'Ajouter',  cam_patient_path(@patient.id) %>
+  <%= link_to cam_patient_path(@patient.id) do%>
+    <%= render "components/button_edit", content: "Nouvelle planification" %>
+  <% end %>
 <% end %>
