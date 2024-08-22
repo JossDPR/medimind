@@ -11,18 +11,22 @@ class PlanificationsController < ApplicationController
   end
 
   def create
-    @planification = Planification.new(planification_params)
-    @planification.patient_id = @patient.id
-    if @planification.photo.attached? #=> true/false
-      @planification.photo.purge
+    respond_to do |format|
+      # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
+      format.json { render json: { message: "Planification created successfully.", planification: @planification }, status: :created }
     end
-    # @planification.photo = ???
-    # attache new photo to planification
-    if @planification.save!
-      redirect_to patient_planifications_path(@patient)
-    else
-      render 
-    end
+    # @planification = Planification.new(planification_params)
+    # @planification.patient_id = @patient.id
+    # if @planification.photo.attached? #=> true/false
+    #   @planification.photo.purge
+    # end
+    # # @planification.photo = ???
+    # # attache new photo to planification
+    # if @planification.save!
+    #   redirect_to patient_planifications_path(@patient)
+    # else
+    #   render
+    # end
   end
 
   def edit
