@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[cam]
+  before_action :set_patient, only: %i[cam edit update]
   before_action :set_user, only: [:update, :destroy, :create, :new]
 
   def cam
@@ -18,14 +18,18 @@ class PatientsController < ApplicationController
     if @patient.save
       redirect_to patient_planifications_path(@patient)
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
   end
 
   def update
     # authorize @patient
     @patient.update(patient_params)
-    redirect_to patient_path(@patient)
+    @patient.save!
+    redirect_to patient_planifications_path(@patient)
   end
 
   def destroy
