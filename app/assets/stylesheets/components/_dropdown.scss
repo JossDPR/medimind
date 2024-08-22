@@ -20,13 +20,13 @@ option {
   width: 100%;
 }
 
-.form-control {
-  background-color: $secondary;
-  border-radius: 10px;
-  &:focus {
-    background-color: $white;
-  }
-}
+// .form-control {
+//   background-color: $secondary;
+//   border-radius: 10px;
+//   &:focus {
+//     background-color: $white;
+//   }
+// }
 
 .dropdown_double {
   display: grid;
