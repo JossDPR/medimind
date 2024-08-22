@@ -32,5 +32,9 @@
                 input_html: { autocomplete: "Votre mot de passe" } %>
   </div>
 
-  <%= f.button :submit, "Enregistrer", class: "boton-elegante" %>
+  <div class="text-center">
+    <%= button_tag(type: 'submit', class: "boton-elegante") do %>
+      <i class="fa-solid fa-check"></i> Enregistrer
+    <% end %>
+  </div>
 <% end %>
