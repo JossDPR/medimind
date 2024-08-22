@@ -78,21 +78,21 @@ file1 = URI.open("https://cdn.pim.mesoigner.fr/mesoigner/6e704e85abf8557ac1a0df9
 p uploaded_file1 = Cloudinary::Uploader.upload(file1.path, transformation: [{fetch_format: "webp"}])
 p planif1.photo.attach(io: URI.open(uploaded_file1['url']), filename: medic1.name, content_type: "image/webp")
 planif1.save!
-planTaking11 = PlanTaking.create!(planifications_id: planif1.id, taking_periods_id: period_matin.id)
-planTaking12 = PlanTaking.create!(planifications_id: planif1.id, taking_periods_id: period_midi.id)
-planTaking13 = PlanTaking.create!(planifications_id: planif1.id, taking_periods_id: period_soir.id)
+planTaking11 = PlanTaking.create!(planification_id: planif1.id, taking_period_id: period_matin.id)
+planTaking12 = PlanTaking.create!(planification_id: planif1.id, taking_period_id: period_midi.id)
+planTaking13 = PlanTaking.create!(planification_id: planif1.id, taking_period_id: period_soir.id)
 
 planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_days: 1, description: "Prise de cachet journalière seulement le matin")
 file2 = URI.open("https://www.novomedlink.com/content/dam/novonordisk/novomedlink/new/diabetes/products/treatments/ozempic/now-available/Ozempic_EHR_blue.png/jcr:content/renditions/original")
 p uploaded_file2 = Cloudinary::Uploader.upload(file2.path, transformation: [{fetch_format: "webp"}])
 p planif2.photo.attach(io: URI.open(uploaded_file2['url']), filename: medic2.name, content_type: "image/webp")
 planif2.save!
-planTaking21 = PlanTaking.create!(planifications_id: planif2.id, taking_periods_id: period_matin.id)
+planTaking21 = PlanTaking.create!(planification_id: planif2.id, taking_period_id: period_matin.id)
 
 planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_days: 7, description: "Prise de cachet une fois par semaine le midi")
 file3 = URI.open("https://www.pharma-medicaments.com/wp-content/uploads/2022/01/3595583-768x509.jpg")
 p uploaded_file3 = Cloudinary::Uploader.upload(file3.path, transformation: [{fetch_format: "webp"}])
 p planif3.photo.attach(io: URI.open(uploaded_file3['url']), filename: medic3.name, content_type: "image/webp")
 planif3.save!
-planTaking31 = PlanTaking.create!(planifications_id: planif3.id, taking_periods_id: period_midi.id)
+planTaking31 = PlanTaking.create!(planification_id: planif3.id, taking_period_id: period_midi.id)
 puts 'End - Create Planifications'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_22_100305) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_22_151515) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,12 +56,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_100305) do
   end
 
   create_table "plan_takings", force: :cascade do |t|
-    t.bigint "planifications_id", null: false
-    t.bigint "taking_periods_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["planifications_id"], name: "index_plan_takings_on_planifications_id"
-    t.index ["taking_periods_id"], name: "index_plan_takings_on_taking_periods_id"
+    t.bigint "planification_id"
+    t.bigint "taking_period_id"
+    t.index ["planification_id"], name: "index_plan_takings_on_planification_id"
+    t.index ["taking_period_id"], name: "index_plan_takings_on_taking_period_id"
   end
 
   create_table "planifications", force: :cascade do |t|
@@ -122,8 +122,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_100305) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "plan_takings", "planifications", column: "planifications_id"
-  add_foreign_key "plan_takings", "taking_periods", column: "taking_periods_id"
   add_foreign_key "planifications", "dosages"
   add_foreign_key "planifications", "medications"
   add_foreign_key "planifications", "users", column: "patient_id"
