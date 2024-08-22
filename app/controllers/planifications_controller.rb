@@ -34,7 +34,13 @@ class PlanificationsController < ApplicationController
   def destroy
   end
 
+  def confirm
+    @planification = Planification.new
+    @planification.patient_id = @patient.id
+  end
+
   private
+
   def set_patient
     if params[:patient_id]
       @patient = User.find(params[:patient_id])
