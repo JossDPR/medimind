@@ -19,14 +19,14 @@ planifs.each do |planif|
     planif.photo.purge
   end
 end
+PlanTaking.destroy_all
 Planification.destroy_all
 Dosage.destroy_all
-Frequency.destroy_all
-Periodicity.destroy_all
 Medication.destroy_all
 TutorPatient.destroy_all
 User.destroy_all
-Alarm.destroy_all
+Take.destroy_all
+TakingPeriod.destroy_all
 puts 'End - Destroy tables'
 
 puts 'Start - Create Dosages'
@@ -51,12 +51,11 @@ dose_suppositoire = Dosage.create!(label: "suppositoire(s)")
 dose_unite = Dosage.create!(label: "unité(s)")
 puts 'End - Create Dosages'
 
-puts 'Start - Create Periodicities'
-period_besoin = Periodicity.create!(label: "Au besoin")
-period_jour = Periodicity.create!(label: "Jour")
-period_semaine = Periodicity.create!(label: "Semaine")
-period_mois = Periodicity.create!(label: "Mois")
-puts 'End - Create Periodicities'
+puts 'Start - Create Taking Periods'
+period_matin = TakingPeriod.create!(label: "Matin")
+period_midi = TakingPeriod.create!(label: "Midi")
+period_soir = TakingPeriod.create!(label: "Soir")
+puts 'End - Create Taking Periods'
 
 puts 'Start - Create Medications'
 medic1 = Medication.create!(name: "Metformine", description: "")
@@ -73,25 +72,18 @@ puts 'Start - Create TutorPatients'
 TutorPatient.create!(tutor_id: tutor.id, patient_id: patient.id)
 puts 'End - Create TutorPatients'
 
-jourdeuxfois = Frequency.create!(amount: 2, periodicity_id: period_jour.id )
-semaineunefois = Frequency.create!(amount: 1, periodicity_id: period_semaine.id )
-jourtroisfois = Frequency.create!(amount: 3, periodicity_id: period_jour.id )
-
 puts 'Start - Create Planifications'
-planif1 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic1.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourdeuxfois.id, description: "holala il faut encore prendre son médicament")
-planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_id: semaineunefois.id, description: "heyheyhey il faut encore prendre son médicament")
-planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_id: jourtroisfois.id, description: "hohoho il faut encore prendre son médicament")
+planif1 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic1.id, quantity: 1, dosage_id: dose_comprime.id, frequency_days: 1, description: "Prise de cachet journalière (Matin/Midi/Soir)")
 planif1.photo.attach(io: URI.open('https://asset.cloudinary.com/dw9vzaips/91882ab24984f1b7bd1ed0a2b8f350ed'), filename: "medoc", content_type: "image/jpg")
+planTaking11 = PlanTaking.create!(planifications_id: planif1.id, taking_periods_id: period_matin.id)
+planTaking12 = PlanTaking.create!(planifications_id: planif1.id, taking_periods_id: period_midi.id)
+planTaking13 = PlanTaking.create!(planifications_id: planif1.id, taking_periods_id: period_soir.id)
+
+planif2 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "", medication_id: medic2.id, quantity: 1, dosage_id: dose_injection.id, frequency_days: 1, description: "Prise de cachet journalière seulement le matin")
 planif2.photo.attach(io: URI.open('https://asset.cloudinary.com/dw9vzaips/91882ab24984f1b7bd1ed0a2b8f350ed'), filename: "medoc", content_type: "image/jpg")
+planTaking21 = PlanTaking.create!(planifications_id: planif2.id, taking_periods_id: period_matin.id)
+
+planif3 = Planification.create!(patient_id: patient.id, start_date: "19/08/2024", end_date: "24/08/2024", medication_id: medic3.id, quantity: 1, dosage_id: dose_comprime.id, frequency_days: 7, description: "Prise de cachet une fois par semaine le midi")
 planif3.photo.attach(io: URI.open('https://asset.cloudinary.com/dw9vzaips/91882ab24984f1b7bd1ed0a2b8f350ed'), filename: "medoc", content_type: "image/jpg")
-
+planTaking31 = PlanTaking.create!(planifications_id: planif3.id, taking_periods_id: period_midi.id)
 puts 'End - Create Planifications'
-
-puts 'Start - Create Alarms'
-Alarm.create!(planification_id: planif1.id, datetime: "19/08/2024T07:00:00" )
-Alarm.create!(planification_id: planif1.id, datetime: "19/08/2024T19:00:00" )
-Alarm.create!(planification_id: planif2.id, datetime: "23/08/2024T19:00:00" )
-Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T07:00:00" )
-Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T13:00:00" )
-Alarm.create!(planification_id: planif3.id, datetime: "19/08/2024T19:00:00" )
-puts 'End - Create Alarms'
