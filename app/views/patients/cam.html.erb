@@ -1,17 +1,31 @@
 <h1>Congrats ! You managed to come to this view </h1>
 
 <h1>Take a photo of the medication</h1>
+<div data-controller="camera" data-camera-url-value=<%="#{patient_planifications_path(@patient)}"%>>
+  <div class="selfie-container" >
 
-  <div class="selfie-container" data-controller="camera">
 
-      <video class="selfie-video" data-camera-target="cameraScreen">
+    <video class="selfie-video" data-camera-target="cameraScreen">
 
-      </video>
-      <p class="selfie-startbutton" data-camera-target="cameraButton" data-action="click->camera#photo">📸</p>
+    </video>
+    <p class="selfie-startbutton" data-camera-target="cameraButton" data-action="click->camera#photo">📸</p>
+
+    <%= button_to "validate photo", new_patient_planification_path(@patient), data:{action:"click->camera#validatePhoto"} %>
+
+    <div data-camera-target="form" class='d-none'>
+      <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
+      <%# <p>medication name</p> %>
+      <%= f.input :medication%>
+      <%= f.input :quantity %>
+      <%= f.input :start_date %>
+      <%= f.input :end_date%>
+      <%= f.input :dosage %>
+      <%= f.input :frequency %>
+      <%= f.input :description %>
+      <%= f.button :submit, data:{action:"click->camera#submitForm"} %>
+      <% end %>
+    </div>
+  </div>
+
+    <%= link_to 'Retour',  patient_planifications_path(@patient), data:{action:"click->camera#stopPhoto"} %>
 </div>
-
-
-      <%= button_to "validate photo", false, class: "mx-auto" %>
-
-    <%= render "planifications/form_planification", partial: [@patient, @planification] %>
-  <%= link_to 'Retour',  patient_planifications_path(@patient) %>
