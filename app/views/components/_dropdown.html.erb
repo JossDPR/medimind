@@ -1,7 +1,7 @@
 <div class="default_card">
   <select class="form-control">
-      <option>Option</option>
-      <option>Option #2</option>
-      <option>Option #3</option>
+      <% elements.each do |element| %>
+        <option><%= element %></option>
+      <% end %>
   </select>
 </div>
