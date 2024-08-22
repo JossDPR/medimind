@@ -4,8 +4,6 @@
 
 <h3>Liste des patients</h1>
 
-<% @patients.each do |patient| %>
-  <%= link_to "#{patient.first_name} #{patient.last_name}", patient_planifications_path(patient) %><br>
-<% end %>
+<%= render "components/patient_card" %>
 
 <%= link_to "Ajouter un patient", new_patient_path %>

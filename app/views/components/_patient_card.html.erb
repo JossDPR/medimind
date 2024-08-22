@@ -1,0 +1,10 @@
+<% @patients.each do |patient| %>
+  <%= link_to patient_planifications_path(patient) do %>
+    <div class="default_card">
+      <h2 class="patient-first-name"><%= "#{patient.first_name}" %></h2>
+      <h3 class="patient-last-name"><%= "#{patient.last_name}" %></h3>
+      <hr>
+      <i class="fa-solid fa-circle-right"></i>
+    </div>
+  <% end %>
+<% end %>
