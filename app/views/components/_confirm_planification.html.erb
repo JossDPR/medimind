@@ -3,12 +3,18 @@
   <div>
     <h1>Médicament ajouté</h1>
     <p><strong><%= @planification.medication.name %></strong> a été ajouté à la liste de vos prises</p>
-    
+    <%= if @planification.end_date.present? %>
+      <p>Votre traitement durera du <%= @planification.start_date %> au <%= @planification.end_date %></p>
+      <% else %>
+      <p>Votre traitement démarre le <%= @planification.start_date %> </p>
+    <% end %>
+    <p>Votre traitement durera du <%= @planification.start_date %> <%= if @planification.end_date.present? ? "" %></p>
+    <p>Vous devez prendre <%= @planification.quantity %><%= @planification.dosage.label %> tous les <%= @planification.taking_periods %></p>
     <p>Voulez-vous <strong>confirmer</strong> votre action ?</p>
   </div>
   <div class="buttons_double">
     <%= link_to  %>
-    <button>Annuler</button>
-    <button>Confirmer</button>
+    <div>Annuler</div>
+    <div>Confirmer</div>
   </div>
 </div>
