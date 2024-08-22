@@ -47,6 +47,12 @@ export default class extends Controller {
     });
   };
 
+  noMoreButtonIfForm () {
+    if (!this.formTarget.classList.contains("d-none")) {
+      this.buttonValidateTarget.classList.add("d-none");
+    };
+  }
+
   validateButton(file) {
     if (file === undefined) {
       this.buttonValidateTarget.classList.add("d-none")
@@ -69,8 +75,6 @@ export default class extends Controller {
     this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
     this.cameraButtonTarget.classList.add("d-none");
     this.stopPhoto()
-    console.log(this.file)
-    console.log(this.buttonValidateTarget)
     this.validateButton(this.file);
   };
 
@@ -78,10 +82,12 @@ export default class extends Controller {
     e.preventDefault();
     console.log("Yeah you're in validate photo function");
     console.log(this.file)
-    //creating the FormData object to be sent in an HTTP request
+    this.formTarget.classList.remove("d-none");
+    this.noMoreButtonIfForm();
+    // creating the FormData object to be sent in an HTTP request
     let formData = new FormData();   //appending the file key with the uploaded file in the FormData object
     formData.append("file", this.file);   // POST request for uploaded files
-    this.formTarget.classList.remove("d-none");
+
     console.log(this.formTarget)
     fetch(this.urlValue, {
         method: "POST",
