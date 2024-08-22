@@ -14,6 +14,6 @@ class PagesController < ApplicationController
       medication.name
     end
     @planifications = Planification.all
-
+    @planification = Planification.first
   end
 end
