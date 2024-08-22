@@ -15,6 +15,7 @@
   <%= link_to cam_patient_path(@patient.id) do%>
     <%= render "components/button_edit", content: "Nouvelle planification" %>
   <% end %>
+<% end %>
 <%= render "components/accordion_card", elements: @planifications %>
 
 <% if current_user.tutor? %>
