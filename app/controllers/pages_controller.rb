@@ -13,5 +13,7 @@ class PagesController < ApplicationController
     @medications_name = medications.map do |medication|
       medication.name
     end
+    @planifications = Planification.all
+
   end
 end

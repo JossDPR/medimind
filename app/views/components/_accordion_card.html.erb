@@ -1,6 +1,7 @@
 	<main>
 		<ul class="item-list">
-        <%= render "components/accordion_card_detail", ident: "test1" %>
-        <%= render "components/accordion_card_detail", ident: "test2" %>
+         <% elements.each do |element| %>
+           <%= render "components/accordion_card_detail", element: element %>
+         <% end %>
 		</ul>
 	</main>
