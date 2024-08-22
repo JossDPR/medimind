@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PeriodicityTest < ActiveSupport::TestCase
+class PlanTakingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

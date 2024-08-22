@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_20_140155) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_22_100305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,26 +42,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_140155) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "alarms", force: :cascade do |t|
-    t.datetime "datetime"
-    t.bigint "planification_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["planification_id"], name: "index_alarms_on_planification_id"
-  end
-
   create_table "dosages", force: :cascade do |t|
     t.string "label"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "frequencies", force: :cascade do |t|
-    t.integer "amount"
-    t.bigint "periodicity_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["periodicity_id"], name: "index_frequencies_on_periodicity_id"
   end
 
   create_table "medications", force: :cascade do |t|
@@ -71,10 +55,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_140155) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "periodicities", force: :cascade do |t|
-    t.string "label"
+  create_table "plan_takings", force: :cascade do |t|
+    t.bigint "planifications_id", null: false
+    t.bigint "taking_periods_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["planifications_id"], name: "index_plan_takings_on_planifications_id"
+    t.index ["taking_periods_id"], name: "index_plan_takings_on_taking_periods_id"
   end
 
   create_table "planifications", force: :cascade do |t|
@@ -84,14 +71,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_140155) do
     t.bigint "medication_id", null: false
     t.bigint "patient_id", null: false
     t.bigint "dosage_id", null: false
-    t.bigint "frequency_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
+    t.integer "frequency_days"
     t.index ["dosage_id"], name: "index_planifications_on_dosage_id"
-    t.index ["frequency_id"], name: "index_planifications_on_frequency_id"
     t.index ["medication_id"], name: "index_planifications_on_medication_id"
     t.index ["patient_id"], name: "index_planifications_on_patient_id"
+  end
+
+  create_table "takes", force: :cascade do |t|
+    t.date "datetime"
+    t.bigint "planifications_id", null: false
+    t.date "taken_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["planifications_id"], name: "index_takes_on_planifications_id"
+  end
+
+  create_table "taking_periods", force: :cascade do |t|
+    t.string "label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tutor_patients", force: :cascade do |t|
@@ -121,12 +122,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_140155) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "alarms", "planifications"
-  add_foreign_key "frequencies", "periodicities"
+  add_foreign_key "plan_takings", "planifications", column: "planifications_id"
+  add_foreign_key "plan_takings", "taking_periods", column: "taking_periods_id"
   add_foreign_key "planifications", "dosages"
-  add_foreign_key "planifications", "frequencies"
   add_foreign_key "planifications", "medications"
   add_foreign_key "planifications", "users", column: "patient_id"
+  add_foreign_key "takes", "planifications", column: "planifications_id"
   add_foreign_key "tutor_patients", "users", column: "patient_id"
   add_foreign_key "tutor_patients", "users", column: "tutor_id"
 end

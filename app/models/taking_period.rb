@@ -1,0 +1,2 @@
+class TakingPeriod < ApplicationRecord
+end
