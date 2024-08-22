@@ -10,7 +10,10 @@
     </video>
     <p class="selfie-startbutton" data-camera-target="cameraButton" data-action="click->camera#photo">📸</p>
 
-    <%= button_to "validate photo", new_patient_planification_path(@patient), data:{action:"click->camera#validatePhoto"} %>
+    <div data-camera-target="buttonValidate" class= "d-none" >
+      <%= button_to "validate photo", new_patient_planification_path(@patient), data:{action:"click->camera#validatePhoto"}%>
+      <%= button_to "retake photo", new_patient_planification_path(@patient), data:{action:"click->camera#retakePhoto"}%>
+    </div>
 
     <div data-camera-target="form" class='d-none'>
       <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
@@ -21,6 +24,7 @@
       <%= f.input :end_date%>
       <%= f.input :dosage %>
       <%= f.input :frequency_days %>
+      <%= f.input :plan_takings %>
       <%= f.input :description %>
       <%= f.button :submit, data:{action:"click->camera#submitForm"} %>
       <% end %>
