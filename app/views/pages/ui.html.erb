@@ -1,13 +1,16 @@
 <%= render "components/accordion_card" %>
-<%# <%= render "components/button" %>
-<%# <%= render "components/expand_card" %>
+<%# render "components/expand_card" %>
 <%# render "components/test" %>
 <%# render "components/medic_card" %>
 <%# <%= render "components/default_card" %>
 <%# <%= render "components/dropdown" %>
 <%# <%= render "components/dropdown_double" %>
 <%# <%= render "components/medic_card" %>
-<%= render "components/default_card" %>
+<%= render "components/default_card", content: "First_name", content2: "Last_name" %>
 <%= render "components/dropdown", elements: @dosage_labels  %>
 <%# <%= render "components/dropdown_double" %>
 <%= render "components/confirm_planification"%>
+<%= render "components/button", content: "Explore" %>
+<%= render "components/button_secondary", content: "View more" %>
+<%= render "components/button_confirm", content: "Confirm" %>
+<%= render "components/button_edit", content: "Edit" %>
