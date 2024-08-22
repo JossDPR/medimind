@@ -1,14 +1,15 @@
-			<li class="item1">
-        <input type="radio" name="point" id="<%= ident %>">
-				<label for="<%= ident %>" class="label">
-          <h4><img class="vignette" src="https://github.com/JossDPR/medimind/blob/5ce22c05dc1a27b8036eccd50ce7157b513a2f17/doliprane-1000mg-effervescent-1372663055.png?raw=true" alt="slay Cthulhu with code" />
-					Doliprane 1000mg</h4>
+			<li class="item">
+        <input type="radio" name="point" id="<%= element.id %>">
+				<label for="<%= element.id %>" class="label">
+          <h4>
+            <%= cl_image_tag element.photo.key, class: "vignette" %>
+					<%= element.medication.name %></h4>
           <span class="control"></span>
 					<div class="slider ">
-						<img sizes="(max-width: 589px) 100vw" src="https://github.com/JossDPR/medimind/blob/5ce22c05dc1a27b8036eccd50ce7157b513a2f17/doliprane-1000mg-effervescent-1372663055.png?raw=true" alt="slay Cthulhu with code" />
+						<%= cl_image_tag element.photo.key, sizes: "(max-width: 589px) 100vw" %>
             <span>
-              <h4>Doliprane 1000mg</h4><br>
-						  <h6>A prendre lors du repas, si douleurs.<h6>
+              <h4><%= element.medication.name %></h4><br>
+						  <h6><%= element.medication.description %><h6>
             <span>
 					</div>
 				</label>
