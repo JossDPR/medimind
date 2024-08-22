@@ -47,11 +47,12 @@ export default class extends Controller {
     });
   };
 
+
   noMoreButtonIfForm () {
     if (!this.formTarget.classList.contains("d-none")) {
       this.buttonValidateTarget.classList.add("d-none");
     };
-  }
+  };
 
   validateButton(file) {
     if (file === undefined) {
@@ -78,22 +79,43 @@ export default class extends Controller {
     this.validateButton(this.file);
   };
 
-  validatePhoto(e) {
-    e.preventDefault();
-    console.log("Yeah you're in validate photo function");
-    console.log(this.file)
+  validatePhoto(event) {
+    event.preventDefault();
+    // console.log("Yeah you're in validate photo function");
+    // console.log(this.file)
     this.formTarget.classList.remove("d-none");
     this.noMoreButtonIfForm();
-    // creating the FormData object to be sent in an HTTP request
-    let formData = new FormData();   //appending the file key with the uploaded file in the FormData object
-    formData.append("file", this.file);   // POST request for uploaded files
+  };
 
-    console.log(this.formTarget)
+  retakePhoto () {
+    this.photoAgain()
+    this.photo()
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+    // creating the FormData object to be sent in an HTTP request
+    let formData = new FormData(this.formTarget);
+    // formData.append(this.formTarget);  //appending the file key with the uploaded file in the FormData object
+    formData.append("file", this.file);   // POST request for uploaded files
+    console.log(formData)
+    // console.log(this.formTarget)
+    console.log(document.getElementsByName('csrf-token'))
+    const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
         method: "POST",
-        body: formData
+        // definir un header dans lequel mettre le  csrf token pour rails:
+        headers: {
+          // 'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          // 'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Token': token
+        },
+        body: formData,
+        // credentials: 'same-origin'
     })
     .then(resp => resp.json())
+    // .then(resp => console.log(resp))
     .then(data => {
       if (data.errors) {
         alert(data.errors)
@@ -102,16 +124,7 @@ export default class extends Controller {
         console.log(data)
       }
     })
-    console.log(data)
-  };
-
-  retakePhoto () {
-    this.photoAgain()
-    this.photo()
+    // window.location.href = this.urlValue;
   }
-
-  // submitForm () {
-  //   window.location.href = this.urlValue;
-  // }
 
 };
