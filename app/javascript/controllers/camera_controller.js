@@ -3,6 +3,9 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="camera"
 export default class extends Controller {
   static targets= ["cameraScreen", "cameraButton"]
+  static values = {
+    url: String
+  }
 
   connect() {
     console.log("Camera controller is in tha place!");
@@ -27,7 +30,14 @@ export default class extends Controller {
     this.cameraScreenTarget.setAttribute("height",400);
     this.cameraScreenTarget.setAttribute("width",400);
 
-    };
+  };
+
+
+  stopPhoto () {
+    this.stream.getTracks().forEach(track => {
+      track.stop();
+    });
+  };
 
   photo = async () => {
     const canvas = document.createElement('canvas');
@@ -43,15 +53,42 @@ export default class extends Controller {
     let data = await new Promise((resolve) => {
       canvas.toBlob(resolve, 'image/png');
     });
+    // console.log(data);
+    this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
+    // console.log(file);
+    // this.validatePhoto(file)
 
     this.cameraButtonTarget.classList.add("d-none");
-    // video.pause();
-    // video.currentTime = 0;
-    // this.cameraScreenTarget.pause();
-    // this.cameraScreenTarget.currentTime=0;
-    this.stream.getTracks().forEach(track => {
-      track.stop();
-    });
 
+    this.stopPhoto()
   };
-}
+
+  validatePhoto(e) {
+    e.preventDefault();
+    console.log("Yeah you're in validate photo function");
+    // this.photo()
+    // console.log(photo);
+    // console.log(this.urlValue);
+    console.log(this.file)
+
+
+    //creating the FormData object to be sent in an HTTP request
+    let formData = new FormData();   //appending the file key with the uploaded file in the FormData
+    //object
+    formData.append("file", this.file);   // POST request for uploaded files
+    fetch(this.urlValue, {
+        method: "POST",
+        body: formData
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      if (data.errors) {
+        alert(data.errors)
+      }
+      else {
+        console.log(data)
+      }
+    })
+   }
+
+};

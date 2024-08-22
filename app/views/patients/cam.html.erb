@@ -2,16 +2,15 @@
 
 <h1>Take a photo of the medication</h1>
 
-  <div class="selfie-container" data-controller="camera">
+  <div class="selfie-container" data-controller="camera" data-camera-url-value=<%="#{new_patient_planification_path(@patient)}"%>>
 
       <video class="selfie-video" data-camera-target="cameraScreen">
 
       </video>
       <p class="selfie-startbutton" data-camera-target="cameraButton" data-action="click->camera#photo">📸</p>
+
+      <%= button_to "validate photo", new_patient_planification_path(@patient), data:{action:"click->camera#validatePhoto"} %>
 </div>
 
-
-      <%= button_to "validate photo", false, class: "mx-auto" %>
-
-    <%= render "planifications/form_planification", partial: [@patient, @planification] %>
+    <%# <%= render "planifications/form_planification", partial: [@patient, @planification] %>
   <%= link_to 'Retour',  patient_planifications_path(@patient) %>

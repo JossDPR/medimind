@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :planifications, only: %i[index new create edit update destroy]
     member do
       get 'cam'
+      post 'cam'
     end
   end
 end
