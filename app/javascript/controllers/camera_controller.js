@@ -22,6 +22,9 @@ export default class extends Controller {
     });
     this.cameraScreenTarget.setAttribute("height",400);
     this.cameraScreenTarget.setAttribute("width",400);
+    onpopstate = (event) => {
+      this.stopPhoto()
+    }
   };
 
   photoAgain () {
@@ -39,6 +42,10 @@ export default class extends Controller {
     });
     this.cameraScreenTarget.setAttribute("height",400);
     this.cameraScreenTarget.setAttribute("width",400);
+
+    onpopstate = (event) => {
+      this.stopPhoto()
+    }
   };
 
   stopPhoto () {
@@ -77,6 +84,7 @@ export default class extends Controller {
     this.cameraButtonTarget.classList.add("d-none");
     this.stopPhoto()
     this.validateButton(this.file);
+
   };
 
   validatePhoto(event) {
@@ -106,16 +114,12 @@ export default class extends Controller {
         method: "POST",
         // definir un header dans lequel mettre le  csrf token pour rails:
         headers: {
-          // 'Content-Type': 'application/json',
           'Accept': 'application/json',
-          // 'X-Requested-With': 'XMLHttpRequest',
           'X-CSRF-Token': token
         },
         body: formData,
-        // credentials: 'same-origin'
     })
     .then(resp => resp.json())
-    // .then(resp => console.log(resp))
     .then(data => {
       if (data.errors) {
         alert(data.errors)
