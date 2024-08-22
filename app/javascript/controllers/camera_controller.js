@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera"
 export default class extends Controller {
-  static targets= ["cameraScreen", "cameraButton"]
+  static targets= ["cameraScreen", "cameraButton", "form"]
   static values = {
     url: String
   }
@@ -73,9 +73,10 @@ export default class extends Controller {
 
 
     //creating the FormData object to be sent in an HTTP request
-    let formData = new FormData();   //appending the file key with the uploaded file in the FormData
-    //object
+    let formData = new FormData();   //appending the file key with the uploaded file in the FormData object
     formData.append("file", this.file);   // POST request for uploaded files
+    this.formTarget.classList.remove("d-none");
+    console.log(this.formTarget)
     fetch(this.urlValue, {
         method: "POST",
         body: formData
@@ -89,6 +90,12 @@ export default class extends Controller {
         console.log(data)
       }
     })
-   }
+    // window.location.href = this.urlValue;
+    console.log(data)
+  };
+
+  submitForm () {
+    window.location.href = this.urlValue;
+  }
 
 };
