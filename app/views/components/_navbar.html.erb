@@ -1,6 +1,8 @@
 
 <div class="logo" data-burger-target="logo">
-  <img src="https://github.com/JossDPR/medimind/blob/master/public/Logo_small.png?raw=true" alt="Logo" />
+  <%= link_to root_path, class: "navbar-brand" do %>
+    <%= image_tag "https://github.com/JossDPR/medimind/blob/master/public/Logo_small.png?raw=true" %>
+  <% end %>
 </div>
 <div class="header-text" data-burger-target="headerText">
   MediMind
