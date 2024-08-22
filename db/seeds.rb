@@ -59,7 +59,7 @@ puts 'End - Create Taking Periods'
 
 puts 'Start - Create Medications'
 medic1 = Medication.create!(name: "Metformine", description: "Gros cachet...")
-medic2 = Medication.create!(name: "Ozempic", description: "Stylo piquere")
+medic2 = Medication.create!(name: "Ozempic", description: "Stylo piqure, petite aiguille mais ça pique quand même")
 medic3 = Medication.create!(name: "Doliprane", description: "A prendre en cas de douleurs")
 puts 'End - Create Medications'
 

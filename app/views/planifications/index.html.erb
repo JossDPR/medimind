@@ -11,13 +11,13 @@
 
 <h2 class="text-center">Médicaments du jour</h2><hr><br>
 
-<% @planifications.each do |planification|  %>
-<%=  cl_image_tag(planification.photo.key)%><br>
-<%= planification.patient.first_name %><br>
-<%= '*' * 60 %> <br><br>
-<% end %>
 <% if current_user.tutor? %>
   <%= link_to cam_patient_path(@patient.id) do%>
     <%= render "components/button_edit", content: "Nouvelle planification" %>
   <% end %>
+<%= render "components/accordion_card", elements: @planifications %>
+
+<% if current_user.tutor? %>
+  <%= link_to 'Ajouter',  cam_patient_path(@patient.id) %>
+  <%= render "components/button_confirm", content: "Ajouter" %>
 <% end %>

@@ -1,16 +1,42 @@
-			<li class="item">
+			<li class="item<%= element.id %>">
         <input type="radio" name="point" id="<%= element.id %>">
 				<label for="<%= element.id %>" class="label">
-          <h4>
-            <%= cl_image_tag element.photo.key, class: "vignette" %>
-					<%= element.medication.name %></h4>
+          <div class="acord-head">
+            <div class="acord-vign">
+              <%= cl_image_tag element.photo.key, class: "vignette" %>
+            </div>
+            <div class="acord-info">
+              <div class="acord-medic">
+                <%= element.medication.name %>
+              </div>
+              <div class="acord-qte">
+                <%= element.quantity %> <%= element.dosage.label %>
+              </div>
+            </div>
+          </div>
           <span class="control"></span>
 					<div class="slider ">
-						<%= cl_image_tag element.photo.key, sizes: "(max-width: 589px) 100vw" %>
-            <span>
-              <h4><%= element.medication.name %></h4><br>
-						  <h6><%= element.medication.description %><h6>
-            <span>
+            <div class="acord-det">
+              <div class="grid-photo">
+                <%= cl_image_tag element.photo.key, sizes: "(max-width: 589px) 100vw" %>
+              </div>
+              <div class="grid-medic">
+                <%= element.medication.name %>
+              </div>
+              <div class="grid-qte">
+                <%= element.quantity %> <%= element.dosage.label %>
+              </div>
+              <div class="grid-comment">
+                <%= element.medication.description %>
+              </div>
+              <div class="grid-val">
+                <% if current_user.tutor? %>
+                  <a href=#><%= render "components/button_edit", content: "Modifier" %></a>
+                <% else %>
+                  <a href=#><%= render "components/button_photo", content: "Valider" %></a>
+                <% end %>
+              </div>
+            </div>
 					</div>
 				</label>
       </li>
