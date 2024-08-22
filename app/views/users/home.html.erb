@@ -6,4 +6,6 @@
 
 <%= render "components/patient_card" %>
 
-<%= link_to "Ajouter un patient", new_patient_path %>
+<%= link_to new_patient_path do %>
+  <%= render "components/button_add_patient", content: "Ajouter patient" %>
+<% end %>
