@@ -9,7 +9,6 @@ class Planification < ApplicationRecord
 
   validates :quantity, presence: true, numericality: true
   validates :start_date, :end_date, presence: true
-  validates :description, presence: true
   validates :frequency_days, presence: true, inclusion: { in: [1, 2, 3, 4, 5, 6, 7] }
   validates :patient_id, presence: true
   validate :validate_patient_id
