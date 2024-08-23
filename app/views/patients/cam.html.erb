@@ -21,7 +21,12 @@
       <%= f.input :end_date%>
       <%= f.association :dosage, label_method: :label %>
       <%= f.input :frequency_days %>
-      <%= f.association :taking_periods, label_method: :label%>  <%#, as: :radio_buttons, multiple: true %>
+
+      <%= f.association :taking_periods, label_method: :label, as: :check_boxes %>  <%# %, as: :radio_buttons, multiple: true %>
+      <%# <%=  f.simple_fields_for :plan_takings do |plan_taking| %>
+      <%# <%=  plan_taking.association :plan_takings, as: :select %>
+      <%# <%=  assignment.estimated_time %>
+
       <%= f.input :description %>
       <%= f.button :submit, data:{action:"click->camera#submitForm"} %>
       <% end %>

@@ -20,6 +20,9 @@ class PlanificationsController < ApplicationController
     if @planification.photo.attached? #=> true/false
       @planification.photo.purge
     end
+    # @planification.taking_periods = params[:planification][:taking_period_ids]
+    # @planification.file /ou photo : envoyer dans cloudinary en utilisant les params, récuperer le path,
+    # l'associer à la planification
     # raise
     # # @planification.photo = ???
     # # attache new photo to planification
@@ -55,6 +58,6 @@ class PlanificationsController < ApplicationController
   end
 
   def planification_params
-    params.require(:planification).permit(:photo, :medication_name, :medication_description, :begin_date, :end_date, :dosage_quantity, :dosage_label, :frequency_amount, :frequency_periodicity )
+    params.require(:planification).permit(:file, :medication_id, :description, :start_date, :end_date, :dosage_id, :frequency_days, :quantity, :patient_id, taking_period_ids:[])
  end
 end
