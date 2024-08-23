@@ -17,8 +17,10 @@ class PatientsController < ApplicationController
     @user.patients.push(@patient)
     if @patient.save
       redirect_to patient_planifications_path(@patient)
+      flash[:notice] = "#{@patient.first_name} a été créé."
     else
       render :new, status: :unprocessable_entity
+      flash[:alert] = "Les informations ne sont pas valides."
     end
   end
 
@@ -28,8 +30,13 @@ class PatientsController < ApplicationController
   def update
     # authorize @patient
     @patient.update(patient_params)
-    @patient.save!
-    redirect_to patient_planifications_path(@patient)
+    if @patient.save!
+      redirect_to patient_planifications_path(@patient)
+      flash[:notice] = "#{@patient.first_name} a été mis à jour."
+    else
+      render :edit, status: :unprocessable_entity
+      flash[:alert] = "Les modifications ne sont pas valides."
+    end
   end
 
   def destroy

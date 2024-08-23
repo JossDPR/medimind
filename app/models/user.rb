@@ -13,6 +13,11 @@ class User < ApplicationRecord
   has_many :patients, through: :tutors_relation
   has_many :tutors, through: :patients_relation
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :phone_number, presence: true, length: { :minimum => 10, :maximum => 15 }
+
   def default_tutor
     self.role ||= "tutor"
   end
