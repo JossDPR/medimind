@@ -71,20 +71,30 @@ export default class extends Controller {
 
   photo = async () => {
     const canvas = document.createElement('canvas');
-    let width = 400;    // We will scale the photo width to this
-    let height = 400;
+    const width = 400;
+    const height = 600;
     var context = canvas.getContext('2d');
-    canvas.width = 400;
-    canvas.height = 400;
+    canvas.width = width;
+    canvas.height = height;
     context.drawImage(this.cameraScreenTarget, 0, 0, width, height);
     let data = await new Promise((resolve) => {
-      canvas.toBlob(resolve, 'image/png');
+      canvas.toBlob(resolve, 'image/jpeg');
     });
     this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
     this.cameraButtonTarget.classList.add("d-none");
+    const imgElement = document.createElement('img');
+
+    // Convert the blob to a URL and set it as the src of the img element
+    const imageUrl = URL.createObjectURL(data);
+    imgElement.src = imageUrl;
+    // Optionally, you can set attributes like width and height for the img element
+    imgElement.width = width;
+    imgElement.height = height;
+    // Replace the canvas (or any other element, like video) with the img element
+    this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
+
     this.stopPhoto()
     this.validateButton(this.file);
-
   };
 
   validatePhoto(event) {
@@ -109,6 +119,7 @@ export default class extends Controller {
     console.log(formData)
     // console.log(this.formTarget)
     console.log(document.getElementsByName('csrf-token'))
+    console.log(this.file)
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
         method: "POST",
@@ -125,10 +136,11 @@ export default class extends Controller {
         alert(data.errors)
       }
       else {
+        this.stopPhoto();
+        window.location.href = this.urlValue;
         console.log(data)
       }
     })
-    // window.location.href = this.urlValue;
   }
 
 };
