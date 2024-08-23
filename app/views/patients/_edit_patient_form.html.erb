@@ -1,5 +1,5 @@
 <%= simple_form_for @patient, url: patient_path do |f| %>
-  <%= f.error_notification message: "Les modifications ne sont pas valides."%>
+  <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.input :first_name, label: 'Prénom',
