@@ -3,7 +3,9 @@
 				<label for="<%= element.id %>" class="label">
           <div class="acord-head">
             <div class="acord-vign">
+              <% if element.photo.key != nil %>
               <%= cl_image_tag element.photo.key, class: "vignette" %>
+              <% end  %>
             </div>
             <div class="acord-info">
               <div class="acord-medic">
@@ -18,7 +20,9 @@
 					<div class="slider ">
             <div class="acord-det">
               <div class="grid-photo">
+                <% if element.photo.key != nil %>
                 <%= cl_image_tag element.photo.key, sizes: "(max-width: 589px) 100vw" %>
+                <% end %>
               </div>
               <div class="grid-medic">
                 <%= element.medication.name %>

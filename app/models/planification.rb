@@ -4,6 +4,7 @@ class Planification < ApplicationRecord
   belongs_to :patient, :class_name => 'User'
   has_many :plan_takings
   has_many :taking_periods, through: :plan_takings
+  accepts_nested_attributes_for :plan_takings
   has_many :takes
   has_one_attached :photo
 

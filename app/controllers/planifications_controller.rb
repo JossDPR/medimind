@@ -1,5 +1,8 @@
 class PlanificationsController < ApplicationController
   before_action :set_patient
+  require 'cloudinary'
+  require 'cloudinary/uploader'
+  require 'cloudinary/utils'
 
   def index
     @planifications = Planification.where(patient_id: @patient.id)
@@ -11,22 +14,33 @@ class PlanificationsController < ApplicationController
   end
 
   def create
-    respond_to do |format|
-      # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
-      format.json { render json: { message: "Planification created successfully.", planification: @planification }, status: :created }
+
+    @planification = Planification.new(planification_params)
+    @planification.patient_id = @patient.id
+    if @planification.photo.attached? #=> true/false
+      @planification.photo.purge
     end
-    # @planification = Planification.new(planification_params)
-    # @planification.patient_id = @patient.id
-    # if @planification.photo.attached? #=> true/false
-    #   @planification.photo.purge
-    # end
+    # photo=params[:file]
+    # cloudinary_response = Cloudinary::Uploader.upload(photo.tempfile.path)
+
+    @planification.photo.attach(params[:file])
+    # @planification.taking_periods = params[:planification][:taking_period_ids]
+    # @planification.file /ou photo : envoyer dans cloudinary en utilisant les params, récuperer le path,
+    # l'associer à la planification
+    # raise
     # # @planification.photo = ???
     # # attache new photo to planification
-    # if @planification.save!
-    #   redirect_to patient_planifications_path(@patient)
-    # else
-    #   render
-    # end
+    if @planification.save!
+      respond_to do |format|
+        # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
+        format.json { render json: { message: "Planification created successfully.", planification: @planification }, status: :created }
+      end
+    else
+      respond_to do |format|
+        # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
+        format.json { render json: { errors: "Planif failed", planification: @planification }, status: :created }
+      end
+    end
   end
 
   def edit
@@ -54,6 +68,6 @@ class PlanificationsController < ApplicationController
   end
 
   def planification_params
-    params.require(:planification).permit(:photo, :medication_name, :medication_description, :begin_date, :end_date, :dosage_quantity, :dosage_label, :frequency_amount, :frequency_periodicity )
+    params.require(:planification).permit(:photo, :medication_id, :description, :start_date, :end_date, :dosage_id, :frequency_days, :quantity, :patient_id, taking_period_ids:[])
  end
 end
