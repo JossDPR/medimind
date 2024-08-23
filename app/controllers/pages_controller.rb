@@ -15,5 +15,6 @@ class PagesController < ApplicationController
     end
     @planifications = Planification.all
     @planification = Planification.first
+    @takes = Take.all
   end
 end
