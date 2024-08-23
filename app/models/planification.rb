@@ -11,25 +11,29 @@ class Planification < ApplicationRecord
   validates :quantity, presence: true, numericality: true
   validates :start_date, :end_date, presence: true
   validates :frequency_days, presence: true, inclusion: { in: [1, 2, 3, 4, 5, 6, 7] }
-  validates :patient_id, presence: true
-  validate :validate_patient_id
-  validates :medication_id, presence: true, numericality: { only_integer: true }
-  validate :validate_medication_id
-  validates :dosage_id, presence: true, numericality: { only_integer: true }
-  validate :validate_dosage_id
+  after_create :set_takes
 
   private
 
-  def validate_patient_id
-    errors.add(:patient_id, "is invalid") unless User.exists?(self.patient_id)
+  def set_takes
+    # taking_periods va définir le datetime et un multiplicateur: pour chaque taking periods, on crée x takes
+    # frequency_days va définir le nombre de fois et la date dans l'intervalle entre start_date et end_date
+    # take.datetime
+    # en partant de start_date, itérer sur taking periods pour créer un new take pour chaque période de prise
+    # incrémenter start_date de frequency_days puis recréer un take pour la date suivante
+    current_date = start_date
+    while current_date <= end_date
+      taking_periods.each do |e|
+        case e.label
+        when "Matin"
+          Take.create(datetime: current_date.to_datetime + 5.hours, planification_id: id)
+        when "Midi"
+          Take.create(datetime: current_date.to_datetime + 10.hours, planification_id: id)
+        when "Soir"
+          Take.create(datetime: current_date.to_datetime + 15.hours, planification_id: id)
+        end
+      end
+      current_date += frequency_days
+    end
   end
-
-  def validate_medication_id
-    errors.add(:medication_id, "is invalid") unless Medication.exists?(self.medication_id)
-  end
-
-  def validate_dosage_id
-    errors.add(:dosage_id, "is invalid") unless Dosage.exists?(self.dosage_id)
-  end
-
 end
