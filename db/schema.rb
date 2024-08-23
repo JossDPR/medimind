@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_22_151515) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_23_134405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,12 +81,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_151515) do
   end
 
   create_table "takes", force: :cascade do |t|
-    t.date "datetime"
-    t.bigint "planifications_id", null: false
-    t.date "taken_date"
+    t.datetime "datetime"
+    t.datetime "taken_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["planifications_id"], name: "index_takes_on_planifications_id"
+    t.bigint "planification_id", null: false
+    t.index ["planification_id"], name: "index_takes_on_planification_id"
   end
 
   create_table "taking_periods", force: :cascade do |t|
@@ -125,7 +125,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_22_151515) do
   add_foreign_key "planifications", "dosages"
   add_foreign_key "planifications", "medications"
   add_foreign_key "planifications", "users", column: "patient_id"
-  add_foreign_key "takes", "planifications", column: "planifications_id"
   add_foreign_key "tutor_patients", "users", column: "patient_id"
   add_foreign_key "tutor_patients", "users", column: "tutor_id"
 end
