@@ -137,7 +137,7 @@ export default class extends Controller {
       }
       else {
         this.stopPhoto();
-        window.location.href = this.urlValue;
+        window.location.href = `/planifications/${data.planification.id}/confirm`;
         console.log(data)
       }
     })

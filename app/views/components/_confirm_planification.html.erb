@@ -15,7 +15,9 @@
     <p>Voulez-vous <strong>confirmer</strong> votre action ?</p>
   </div>
   <div class="buttons_double">
-    <button>Annuler</button>
-    <button>Confirmer</button>
+    <%# <button>Annuler</button>
+    <button>Confirmer</button> %>
+    <%= link_to 'Annuler', edit_planification_path(@planification), class: 'btn btn-primary' %>
+    <%= link_to 'Confirmer', patient_planifications_path(@planification.patient), class: 'btn btn-primary' %>
   </div>
 </div>

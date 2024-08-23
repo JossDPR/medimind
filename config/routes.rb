@@ -28,10 +28,15 @@ Rails.application.routes.draw do
   get "contact", to: "pages#contact"
 
   resources :patients, only: [:new, :create, :edit, :update, :destroy] do
-    resources :planifications, only: %i[index new create edit update destroy confirm]
+    resources :planifications, only: %i[index new create]
     member do
       get 'cam'
-      post 'cam'
+    end
+  end
+
+  resources :planifications, only: %i[edit update destroy] do
+    member do
+      get 'confirm'
     end
   end
 end

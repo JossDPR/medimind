@@ -1,8 +1,10 @@
 class PlanificationsController < ApplicationController
   before_action :set_patient
+  before_action :set_planification, only: %i[confirm edit update]
   require 'cloudinary'
   require 'cloudinary/uploader'
   require 'cloudinary/utils'
+
 
   def index
     @planifications = Planification.where(patient_id: @patient.id)
@@ -33,16 +35,12 @@ class PlanificationsController < ApplicationController
     # cloudinary_response = Cloudinary::Uploader.upload(photo.tempfile.path)
 
     @planification.photo.attach(params[:file])
-    # @planification.taking_periods = params[:planification][:taking_period_ids]
-    # @planification.file /ou photo : envoyer dans cloudinary en utilisant les params, récuperer le path,
-    # l'associer à la planification
-    # raise
-    # # @planification.photo = ???
-    # # attache new photo to planification
+
     if @planification.save!
       respond_to do |format|
         # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
         format.json { render json: { message: "Planification created successfully.", planification: @planification }, status: :created }
+        # data-camera-url-value=<%="#{confirm_planification_path(@planification)}
       end
     else
       respond_to do |format|
@@ -56,14 +54,17 @@ class PlanificationsController < ApplicationController
   end
 
   def update
+    if @planification.update!(planification_params)
+      redirect_to  confirm_planification_path(@planification)
+    else
+      render :edit
+    end
   end
 
   def destroy
   end
 
   def confirm
-    @planification = Planification.new
-    @planification.patient_id = @patient.id
   end
 
   private
@@ -78,5 +79,9 @@ class PlanificationsController < ApplicationController
 
   def planification_params
     params.require(:planification).permit(:photo, :medication_id, :description, :start_date, :end_date, :dosage_id, :frequency_days, :quantity, :patient_id, taking_period_ids:[])
+ end
+
+ def set_planification
+  @planification = Planification.find(params[:id])
  end
 end
