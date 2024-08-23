@@ -11,6 +11,8 @@
 
 <h2 class="text-center" style="margin-top: 20px;">Médicaments du jour</h2><hr>
 
+<%= render "components/accordion_card", elements: @planifications %>
+
 <% if current_user.tutor? %>
   <div>
   <%= link_to cam_patient_path(@patient.id) do%>
@@ -18,4 +20,3 @@
   <% end %>
   </div>
 <% end %>
-<%= render "components/accordion_card", elements: @planifications %>
