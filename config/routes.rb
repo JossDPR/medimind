@@ -20,7 +20,10 @@ Rails.application.routes.draw do
     root to: "planifications#index", as: :patient_root
   end
 
-  root to: "pages#home"
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
+
   get "about", to: "pages#about"
   get "contact", to: "pages#contact"
 
