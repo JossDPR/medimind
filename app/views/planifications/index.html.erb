@@ -1,6 +1,6 @@
 <% if current_user.tutor? %>
   <div class="default_card">
-    <h2 class="patient-full-name"><%= "#{@patient.first_name} " "#{@patient.last_name}" %></h2>
+    <h2 class="patient-full-name"><%= "#{@patient.first_name} #{@patient.last_name}" %></h2>
     <hr>
     <%= link_to edit_patient_path(@patient.id) do %>
       <%= render "components/button_edit", content: "Editer patient" %>
