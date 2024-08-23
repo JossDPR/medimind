@@ -7,6 +7,8 @@ class PlanificationsController < ApplicationController
 
 
   def index
+    OpenaiController.call("Test", "https:\\url1.com", "https:\\url2.com")
+
     @planifications = Planification.where(patient_id: @patient.id)
     # @take = Take.where(planification_id: @planification.id)
     # @current_time = DateTime.now
