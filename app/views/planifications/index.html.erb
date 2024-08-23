@@ -1,4 +1,4 @@
-<br><% if current_user.tutor? %>
+<% if current_user.tutor? %>
   <div class="default_card">
     <h2 class="patient-first-name"><%= "#{@patient.first_name}" %></h2>
     <h3 class="patient-last-name"><%= "#{@patient.last_name}" %></h3>
@@ -6,18 +6,16 @@
     <%= link_to edit_patient_path(@patient.id) do %>
       <%= render "components/button_edit", content: "Editer patient" %>
     <% end %>
-  </div><br>
+  </div>
 <% end %>
 
-<h2 class="text-center">Médicaments du jour</h2><hr><br>
+<h2 class="text-center" style="margin-top: 20px;">Médicaments du jour</h2><hr>
 
 <% if current_user.tutor? %>
+  <div>
   <%= link_to cam_patient_path(@patient.id) do%>
     <%= render "components/button_edit", content: "Nouvelle planification" %>
   <% end %>
+  </div>
 <% end %>
 <%= render "components/accordion_card", elements: @planifications %>
-
-<% if current_user.tutor? %>
-  <a href="<%= cam_patient_path(@patient.id) %>" %><%= render "components/button_confirm", content: "Ajouter" %></a>
-<% end %>
