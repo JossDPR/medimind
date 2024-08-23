@@ -2,10 +2,10 @@ class PlanTaking < ApplicationRecord
   belongs_to :taking_period
   belongs_to :planification
 
-  validates :taking_period_id, presence: true, numericality: { only_integer: true }
-  validate :validate_taking_period_id
-  validates :planification_id, presence: true, numericality: { only_integer: true }
-  validate :validate_planification_id
+  # validates :taking_period_id, presence: true, numericality: { only_integer: true }
+  # validate :validate_taking_period_id
+  # validates :planification_id, presence: true, numericality: { only_integer: true }
+  # validate :validate_planification_id
 
   private
 

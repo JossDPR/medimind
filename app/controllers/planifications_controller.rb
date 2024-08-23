@@ -24,12 +24,7 @@ class PlanificationsController < ApplicationController
     # cloudinary_response = Cloudinary::Uploader.upload(photo.tempfile.path)
 
     @planification.photo.attach(params[:file])
-    # @planification.taking_periods = params[:planification][:taking_period_ids]
-    # @planification.file /ou photo : envoyer dans cloudinary en utilisant les params, récuperer le path,
-    # l'associer à la planification
-    # raise
-    # # @planification.photo = ???
-    # # attache new photo to planification
+
     if @planification.save!
       respond_to do |format|
         # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
@@ -53,8 +48,7 @@ class PlanificationsController < ApplicationController
   end
 
   def confirm
-    @planification = Planification.new
-    @planification.patient_id = @patient.id
+    @planification = Planification.last
   end
 
   private
