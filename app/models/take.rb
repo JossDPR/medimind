@@ -20,4 +20,10 @@ class Take < ApplicationRecord
       return evening_takes
     end
   end
+
+  def self.current_planification(patient)
+    planification = Planification.where(patient_id: patient.id)
+    take = Take.where(planification_id: planification.ids)
+    return planification
+  end
 end

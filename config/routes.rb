@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'takes/index'
   devise_for :users
 
   get "ui", to: "pages#ui"
@@ -18,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   authenticated :user, ->(u) { u.patient?} do
-    root to: "planifications#index", as: :patient_root
+    root to: "takes#index", as: :patient_root
   end
 
   devise_scope :user do

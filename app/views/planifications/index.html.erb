@@ -1,12 +1,4 @@
-<% if current_user.tutor? %>
-  <div class="default_card">
-    <h2 class="patient-full-name"><%= "#{@patient.first_name} #{@patient.last_name}" %></h2>
-    <hr>
-    <%= link_to edit_patient_path(@patient.id) do %>
-      <%= render "components/button_edit", content: "Editer patient" %>
-    <% end %>
-  </div>
-<% end %>
+<h2 class="text-center" style="margin-top: 20px;">Prescriptions pour <%= @patient.first_name %></h2><hr>
 
 <% if current_user.tutor? %>
   <div>
@@ -15,7 +7,5 @@
   <% end %>
   </div>
 <% end %>
-
-<h2 class="text-center" style="margin-top: 20px;">Prescriptions du patient</h2><hr>
 
 <%= render "components/accordion_card", elements: @planifications %>
