@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera"
 export default class extends Controller {
-  static targets= ["cameraScreen", "cameraButton", "form", "buttonValidate"]
+  static targets= ["cameraScreen", "cameraButton", "form", "buttonValidate", "url"]
   static values = {
     url: String
   }
@@ -54,6 +54,13 @@ export default class extends Controller {
     });
   };
 
+  stopPhotoAndBack (event) {
+    const url = event.currentTarget.dataset.url;
+    this.stream.getTracks().forEach(track => {
+      track.stop();
+    });
+    window.location.href = url;
+  };
 
   noMoreButtonIfForm () {
     if (!this.formTarget.classList.contains("d-none")) {

@@ -7,6 +7,18 @@ class PlanificationsController < ApplicationController
 
 
   def index
+    # open_ai_service = OpenAiSvc.new  # Crée une instance de la classe OpenAiSvc
+    # photo1 = "https://www.pharma-medicaments.com/wp-content/uploads/2022/01/3595583-768x509.jpg"
+    # photo2 = "https://images.lasante.net/2056-141093-large.webp"
+    # resultat = open_ai_service.comparer_photos(photo1, photo2)
+
+    # ordo = "https://static.allodocteurs.fr/btf-11-31157-default-660/b48bfa025a4c2f0951ceb2481b8f0e1b/media.jpg"
+    # resultat = open_ai_service.lecture_ordonance(ordo)
+
+    # Analyse la photo de la boite, l'ajoute à la DB si besoin et renvoi la ref en DB
+    # medic = open_ai_service.analyser_boite(photo_boite)
+
+
     @planifications = Planification.where(patient_id: @patient.id)
     # @take = Take.where(planification_id: @planification.id)
     # @current_time = DateTime.now

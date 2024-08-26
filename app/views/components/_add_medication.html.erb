@@ -1,0 +1,14 @@
+<div class="add_card">
+  <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
+  <div>
+    <h1>Ajouter un médicament</h1>
+    <p><strong><%= @planification.medication.name %></strong> a été ajouté à la liste de vos prises</p>
+    <p>Voulez-vous <strong>confirmer</strong> votre action ?</p>
+  </div>
+  <div class="buttons_double">
+    <%# <button>Annuler</button>
+    <button>Confirmer</button> %>
+    <%= link_to 'Annuler', edit_planification_path(@planification), class: 'btn btn-primary' %>
+    <%= link_to 'Confirmer', patient_planifications_path(@planification.patient), class: 'btn btn-primary' %>
+  </div>
+</div>
