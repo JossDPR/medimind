@@ -9,21 +9,23 @@
       <div data-camera-target="form" class="d-none form_card mt-4">
         <h2>Détails de la prescription :</h2>
         <hr>
-        <div class="form_inputs", data-controller="checkbox">
+        <div data-controller="checkbox">
           <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
           <%= f.association :medication, label: "Nom du médicament :" %>
           <%= f.input :quantity, label: "Quantité :" %>
-          <%= f.input :start_date, :order => [:day, :month, :year], label: "Date de début :" %>
-          <%= f.input :end_date, :order => [:day, :month, :year], label: "Date de fin :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
           <%= f.input :frequency_days, label: "Fréquence de prises :" %>
-          <%= f.association :taking_periods, as: :check_boxes,
-                        label: "Moments de la journée :",
-                        label_method: :label,
-                        value_method: :id,
-                        input_html: { data: { action: "click->checkbox#toggle", checkbox_target: "checkbox" } },
-                        item_label_class: 'toggle-label' %>
-          <%= f.input :description %>
+          <%= f.input :start_date, :order => [:day, :month, :year], label: "Date de début :" %>
+          <%= f.input :end_date, :order => [:day, :month, :year], label: "Date de fin :" %>
+          <div class="check-boxes-container">
+            <%= f.association :taking_periods, as: :check_boxes,
+                          label: "Moments de la journée :",
+                          label_method: :label,
+                          value_method: :id,
+                          input_html: { data: { action: "click->checkbox#toggle", checkbox_target: "checkbox" } },
+                          item_label_class: 'checkbox-item toggle-label labels col-sm' %>
+          </div>
+          <%= f.input :description, as: :text, input_html: { class: "text-area", :cols => 5, :rows => 10 } %>
           <% end %>
         </div>
       </div>
