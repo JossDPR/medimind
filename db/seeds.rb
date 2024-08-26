@@ -87,7 +87,7 @@ planif2 = Planification.new(patient_id: patient.id, start_date: "19/08/2024", en
 file2 = URI.open("https://www.novomedlink.com/content/dam/novonordisk/novomedlink/new/diabetes/products/treatments/ozempic/now-available/Ozempic_EHR_blue.png/jcr:content/renditions/original")
 p uploaded_file2 = Cloudinary::Uploader.upload(file2.path, transformation: [{fetch_format: "webp"}])
 p planif2.photo.attach(io: URI.open(uploaded_file2['url']), filename: medic2.name, content_type: "image/webp")
-planif1.taking_periods = [period_matin]
+planif2.taking_periods = [period_matin]
 planif2.save!
 # planTaking21 = PlanTaking.create!(planification_id: planif2.id, taking_period_id: period_matin.id)
 
@@ -95,7 +95,7 @@ planif3 = Planification.new(patient_id: patient.id, start_date: "19/08/2024", en
 file3 = URI.open("https://www.pharma-medicaments.com/wp-content/uploads/2022/01/3595583-768x509.jpg")
 p uploaded_file3 = Cloudinary::Uploader.upload(file3.path, transformation: [{fetch_format: "webp"}])
 p planif3.photo.attach(io: URI.open(uploaded_file3['url']), filename: medic3.name, content_type: "image/webp")
-planif1.taking_periods = [period_midi]
+planif3.taking_periods = [period_midi]
 planif3.save!
 # planTaking31 = PlanTaking.create!(planification_id: planif3.id, taking_period_id: period_midi.id)
 puts 'End - Create Planifications'

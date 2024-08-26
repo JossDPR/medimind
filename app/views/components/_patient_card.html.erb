@@ -1,5 +1,5 @@
 <% @patients.each do |patient| %>
-  <%= link_to patient_planifications_path(patient) do %>
+  <%= link_to patient_takes_path(patient) do %>
     <div class="default_card">
       <h2 class="patient-full-name"><%= "#{patient.first_name} #{patient.last_name}" %></h2>
       <hr>

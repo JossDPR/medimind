@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'takes/index'
   devise_for :users
 
   get "ui", to: "pages#ui"
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
     member do
       get 'cam'
     end
+    resources :takes, only: %i[index]
   end
 
   resources :planifications, only: %i[edit update destroy] do
