@@ -391,3 +391,11 @@ input:checked ~ label > .control {
 		font-size: 1.5rem;
 	}
 }
+
+.taken {
+  background-color: #F9DEDC;
+}
+
+.untaken {
+  background-color: #DCFFD7;
+}

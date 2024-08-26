@@ -5,6 +5,9 @@
     <%= link_to edit_patient_path(@patient.id) do %>
       <%= render "components/button_edit", content: "Editer patient" %>
     <% end %>
+    <%= link_to patient_planifications_path(@patient.id) do%>
+      <%= render "components/button_edit", content: "Editer prescriptions" %>
+    <% end %>
   </div>
 <% end %>
 
@@ -12,9 +15,9 @@
 
 <% if current_user.tutor? %>
   <div>
-  <%= link_to cam_patient_path(@patient.id) do%>
-    <%= render "components/button_edit", content: "Nouvelle planification" %>
-  <% end %>
+    <%= link_to cam_patient_path(@patient.id) do%>
+      <%= render "components/button", content: "Nouvelle prescription" %>
+    <% end %>
   </div>
 <% end %>
 
