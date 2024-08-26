@@ -6,30 +6,58 @@
 
 /* Style activé pour le label */
 .toggle-label.checked {
-  color: $secondary;
-  font-weight: bold;
+  color: $white;
+  background-color: $primary;
 }
 
-// .labels {
-//   display: inline-flex;
-//   flex-direction: row;
-//   width: auto;
-//   padding: 5px 15px;
-//   border: 2px solid $button_border_color;
-//   background-color: $primary;
-//   color: #ffffff;
-//   font-size: 1rem;
-//   cursor: pointer;
-//   border-radius: 30px;
-//   transition: all 0.4s ease;
-//   outline: none;
-//   position: relative;
-//   overflow: hidden;
-//   font-weight: bold;
-//   text-align: center;
-//   margin: 12px;
-// }
+.labels {
+  display: inline-flex;
+  flex-direction: row;
+  width: auto;
+  padding: 5px 15px;
+  border: 2px solid $button_border_color;
+  background-color: white;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  margin: 12px;
+}
 
-// .form-check {
-//   display: contents;
-// }
+.form-check {
+  display: contents;
+}
+
+.labels:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(100, 132, 213, 0.4) 0%,
+    rgba(67, 67, 161, 0.168) 70%
+  );
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.labels:hover::after {
+  transform: scale(4);
+}
+
+.labels:hover {
+  border-color: #348772;
+  background: #348772;
+}
+
+.text-area {
+  width: 100%;
+  height: 100px;
+}
