@@ -8,29 +8,23 @@ export default class extends Controller {
   }
 
   connect() {
-
     this.displayLvl1();
-    let i = 0;
-    navigator.mediaDevices
-    .enumerateDevices()
-    .then((devices) => {
-      // const cams = devices.filter(device => device.kind === 'videoinput');
-      // prod et demo
-        // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
-      // ordi : changer pour this.constraint de prod et demo
-        this.constraint= { video: true, audio: false };
-      });
+    // const cams = devices.filter(device => device.kind === 'videoinput');
+    // prod et demo
+    // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
+    // ordi : changer pour this.constraint de prod et demo
+    this.constraint= { video: true, audio: false };
 
-      navigator.mediaDevices.getUserMedia(this.constraint)
-      .then(stream => {
-        this.stream=stream;
-        this.cameraScreenTarget.srcObject = stream;
-        this.cameraScreenTarget.play();
-        const tracks = stream.getTracks();
-      })
-      .catch(function(err) {
-        console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
-      });
+    navigator.mediaDevices.getUserMedia(this.constraint)
+    .then(stream => {
+      this.stream=stream;
+      this.cameraScreenTarget.srcObject = stream;
+      this.cameraScreenTarget.play();
+      const tracks = stream.getTracks();
+    })
+    .catch(function(err) {
+      console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
+    });
 
     this.cameraScreenTarget.setAttribute("height",230);
     this.cameraScreenTarget.setAttribute("width",300);
@@ -98,7 +92,6 @@ export default class extends Controller {
     this.displayLvl3();
     event.preventDefault();
     this.formTarget.classList.remove("d-none");
-    this.noMoreButtonIfForm();
   };
 
   // retakePhoto () {
