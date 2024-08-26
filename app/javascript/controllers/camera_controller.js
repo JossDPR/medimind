@@ -14,16 +14,12 @@ export default class extends Controller {
     navigator.mediaDevices
     .enumerateDevices()
     .then((devices) => {
-      const cams = devices.filter ((device) => {
-        device.kind === "videoinput"
-      })
-
-      if (cams.length>1){
-        this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
-      }
-      else {
+      // const cams = devices.filter(device => device.kind === 'videoinput');
+      // prod et demo
+        // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
+      // ordi : changer pour this.constraint de prod et demo
         this.constraint= { video: true, audio: false };
-      }
+      });
 
       navigator.mediaDevices.getUserMedia(this.constraint)
       .then(stream => {
@@ -35,7 +31,7 @@ export default class extends Controller {
       .catch(function(err) {
         console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
       });
-    });
+
     this.cameraScreenTarget.setAttribute("height",230);
     this.cameraScreenTarget.setAttribute("width",300);
     onpopstate = (event) => {
