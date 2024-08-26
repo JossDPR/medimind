@@ -1,6 +1,5 @@
-<h1>Congrats ! You managed to come to this view </h1>
+<h1 class="text-center pt-4 pb-3">Prennez une photo du médicament</h1>
 
-<h1>Take a photo of the medication</h1>
 <div data-controller="camera", data-camera-url-value=<%="#{patient_planifications_path(@patient)}"%>>
   <div class="selfie-container" >
     <video class="selfie-video" data-camera-target="cameraScreen">
@@ -9,28 +8,38 @@
     <p class="selfie-startbutton" data-camera-target="cameraButton" data-action="click->camera#photo">📸</p>
 
     <div data-camera-target="buttonValidate" class= "d-none" >
-      <%= button_to "validate photo", new_patient_planification_path(@patient), data:{action:"click->camera#validatePhoto"}%>
-      <%= button_to "retake photo", new_patient_planification_path(@patient), data:{action:"click->camera#retakePhoto"}%>
+      <%= button_to "Reprendre la photo", new_patient_planification_path(@patient), data:{action:"click->camera#retakePhoto"}, class: "boton-secondary" %>
+      <%= button_to "Valider la photo", new_patient_planification_path(@patient), data:{action:"click->camera#validatePhoto"}, class: "boton-elegante" %>
     </div>
 
-    <%# <div data-camera-target="form" class='d-none'> %>
-      <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient), html:{data:{camera_target:"form"}, class: "d-none"} do |f| %>
-      <%= f.association :medication, label_method: :name %>
-      <%= f.input :quantity %>
-      <%= f.input :start_date %>
-      <%= f.input :end_date%>
-      <%= f.association :dosage, label_method: :label %>
-      <%= f.input :frequency_days %>
+    <div data-camera-target="form" class="d-none form_card mt-4">
+      <h2>Détails de la prescription :</h2>
+      <hr>
+      <div class="form_inputs", data-controller="checkbox">
+        <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
+        <%= f.association :medication, label: "Nom du médicament :" %>
+        <%= f.input :quantity, label: "Quantité :" %>
+        <%= f.input :start_date, :order => [:day, :month, :year], label: "Date de début :" %>
+        <%= f.input :end_date, :order => [:day, :month, :year], label: "Date de fin :" %>
+        <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
+        <%= f.input :frequency_days, label: "Fréquence de prises :" %>
+        <%= f.association :taking_periods, as: :check_boxes,
+                      label: "Moments de la journée :",
+                      label_method: :label,
+                      value_method: :id,
+                      input_html: { data: { action: "click->checkbox#toggle", checkbox_target: "checkbox" } },
+                      item_label_class: 'toggle-label' %>
+        <%= f.input :description %>
+      </div>
 
-      <%= f.association :taking_periods, label_method: :label, as: :check_boxes %>  <%# %, as: :radio_buttons, multiple: true %>
-      <%# <%=  f.simple_fields_for :plan_takings do |plan_taking| %>
-      <%# <%=  plan_taking.association :plan_takings, as: :select %>
-      <%# <%=  assignment.estimated_time %>
+      <div class="text-center">
+        <%= button_tag(type: 'submit', class: "boton-elegante", data:{action:"click->camera#submitForm"}) do %>
+          <i class="fa-solid fa-check"></i> Enregistrer
+        <% end %>
+      </div>
 
-      <%= f.input :description %>
-      <%= f.button :submit, data:{action:"click->camera#submitForm"} %>
       <% end %>
-    <%# </div> %>
+    </div>
   </div>
 
     <%= link_to 'Retour',  patient_planifications_path(@patient), data:{action:"click->camera#stopPhoto"} %>

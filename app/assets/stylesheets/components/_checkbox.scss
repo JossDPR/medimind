@@ -1,0 +1,11 @@
+.toggle-label {
+  color: black;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+/* Style activé pour le label */
+.toggle-label.checked {
+  color: $secondary;
+  font-weight: bold;
+}
