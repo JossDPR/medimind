@@ -2,37 +2,52 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera"
 export default class extends Controller {
-  static targets= ["cameraScreen", "cameraButton", "form", "buttonValidate", "url"]
+  static targets= ["cameraScreen", "form", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3"]
   static values = {
     url: String
   }
 
   connect() {
-    console.log("Camera controller is in tha place!");
-
+    this.displayLvl1();
     navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(stream => {
-      this.stream=stream
+      this.stream=stream;
       this.cameraScreenTarget.srcObject = stream;
       this.cameraScreenTarget.play();
       const tracks = stream.getTracks();
     })
     .catch(function(err) {
-      console.log("An error occurred: " + err);
+      console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
     });
-    this.cameraScreenTarget.setAttribute("height",400);
-    this.cameraScreenTarget.setAttribute("width",400);
+    this.cameraScreenTarget.setAttribute("height",230);
+    this.cameraScreenTarget.setAttribute("width",300);
     onpopstate = (event) => {
-      this.stopPhoto()
+      this.stopPhoto();
     }
   };
 
+  displayLvl1 () {
+    this.buttonsLvl1Target.classList.remove("d-none");
+    this.buttonsLvl2Target.classList.add("d-none");
+    this.buttonsLvl3Target.classList.add("d-none");
+  }
+  displayLvl2 () {
+    this.buttonsLvl1Target.classList.add("d-none");
+    this.buttonsLvl2Target.classList.remove("d-none");
+    this.buttonsLvl3Target.classList.add("d-none");
+  }
+  displayLvl3 () {
+    this.buttonsLvl1Target.classList.add("d-none");
+    this.buttonsLvl2Target.classList.add("d-none");
+    this.buttonsLvl3Target.classList.remove("d-none");
+  }
+
   photoAgain () {
-    console.log("Camera controller is in tha place!");
+    console.log("Initialisation de la photo pour une autre prise!");
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(stream => {
-      this.stream=stream
+      this.stream=stream;
       this.cameraScreenTarget.srcObject = stream;
       this.cameraScreenTarget.play();
       const tracks = stream.getTracks();
@@ -40,11 +55,11 @@ export default class extends Controller {
     .catch(function(err) {
       console.log("An error occurred: " + err);
     });
-    this.cameraScreenTarget.setAttribute("height",400);
-    this.cameraScreenTarget.setAttribute("width",400);
+    this.cameraScreenTarget.setAttribute("height",230);
+    this.cameraScreenTarget.setAttribute("width",300);
 
     onpopstate = (event) => {
-      this.stopPhoto()
+      this.stopPhoto();
     }
   };
 
@@ -62,24 +77,12 @@ export default class extends Controller {
     window.location.href = url;
   };
 
-  noMoreButtonIfForm () {
-    if (!this.formTarget.classList.contains("d-none")) {
-      this.buttonValidateTarget.classList.add("d-none");
-    };
-  };
-
-  validateButton(file) {
-    if (file === undefined) {
-      this.buttonValidateTarget.classList.add("d-none")
-    } else {
-      this.buttonValidateTarget.classList.remove("d-none")
-    }
-  };
-
   photo = async () => {
+    this.displayLvl2();
+
     const canvas = document.createElement('canvas');
-    const width = 400;
-    const height = 600;
+    const width = 300;
+    const height = 230;
     var context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
@@ -88,49 +91,43 @@ export default class extends Controller {
       canvas.toBlob(resolve, 'image/jpeg');
     });
     this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
-    this.cameraButtonTarget.classList.add("d-none");
-    const imgElement = document.createElement('img');
 
-    // Convert the blob to a URL and set it as the src of the img element
+    const imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
     imgElement.src = imageUrl;
-    // Optionally, you can set attributes like width and height for the img element
     imgElement.width = width;
     imgElement.height = height;
-    // Replace the canvas (or any other element, like video) with the img element
     this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
 
-    this.stopPhoto()
-    this.validateButton(this.file);
+    this.stopPhoto();
   };
 
   validatePhoto(event) {
+    this.displayLvl3();
     event.preventDefault();
-    // console.log("Yeah you're in validate photo function");
-    // console.log(this.file)
     this.formTarget.classList.remove("d-none");
     this.noMoreButtonIfForm();
   };
 
   retakePhoto () {
-    this.photoAgain()
-    this.photo()
-  }
+    this.photoAgain();
+    this.photo();
+  };
+
+  retakePhotoAndBack (event) {
+    // this.photoAgain();
+    // this.photo();
+    // console.log("Back");
+    window.location.href = "cam";
+  };
 
   submitForm(event) {
     event.preventDefault();
-    // creating the FormData object to be sent in an HTTP request
     let formData = new FormData(this.formTarget);
-    // formData.append(this.formTarget);  //appending the file key with the uploaded file in the FormData object
-    formData.append("file", this.file);   // POST request for uploaded files
-    console.log(formData)
-    // console.log(this.formTarget)
-    console.log(document.getElementsByName('csrf-token'))
-    console.log(this.file)
+    formData.append("file", this.file);
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
         method: "POST",
-        // definir un header dans lequel mettre le  csrf token pour rails:
         headers: {
           'Accept': 'application/json',
           'X-CSRF-Token': token
@@ -145,7 +142,6 @@ export default class extends Controller {
       else {
         this.stopPhoto();
         window.location.href = `/planifications/${data.planification.id}/confirm`;
-        console.log(data)
       }
     })
   }
