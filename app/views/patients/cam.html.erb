@@ -1,4 +1,10 @@
-<h1 class="text-center pt-4 pb-3">Prennez une photo du médicament</h1>
+<div class="custom-confirm">
+  <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
+    <h1>Nouveau médicament</h1>
+
+
+
+
 
 <div data-controller="camera", data-camera-url-value=<%="#{patient_planifications_path(@patient)}"%>>
   <div class="selfie-container" >
@@ -42,5 +48,18 @@
     </div>
   </div>
 
-    <%= link_to 'Retour',  patient_planifications_path(@patient), data:{action:"click->camera#stopPhoto"} %>
+
+
+
+
+
+    <p>Are you sure you want to proceed?</p>
+    <div class="buttons_double">
+        <button data-action="click->camera#stopPhotoAndBack" data-url="<%= patient_planifications_path(@patient) %>"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
+        <%# <button ><i class="fa-solid fa-camera"></i> Confirm</button> %>
+
+        <button data-camera-target="cameraButton" data-action="click->camera#photo"><i class="fa-solid fa-camera"></i> Photo</button>
+
+
+    </div>
 </div>
