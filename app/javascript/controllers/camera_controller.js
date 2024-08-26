@@ -9,7 +9,13 @@ export default class extends Controller {
 
   connect() {
     this.displayLvl1();
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+    // const cams = devices.filter(device => device.kind === 'videoinput');
+    // prod et demo
+    // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
+    // ordi : changer pour this.constraint de prod et demo
+    this.constraint= { video: true, audio: false };
+
+    navigator.mediaDevices.getUserMedia(this.constraint)
     .then(stream => {
       this.stream=stream;
       this.cameraScreenTarget.srcObject = stream;
@@ -19,6 +25,7 @@ export default class extends Controller {
     .catch(function(err) {
       console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
     });
+
     this.cameraScreenTarget.setAttribute("height",230);
     this.cameraScreenTarget.setAttribute("width",300);
     onpopstate = (event) => {
@@ -41,27 +48,6 @@ export default class extends Controller {
     this.buttonsLvl2Target.classList.add("d-none");
     this.buttonsLvl3Target.classList.remove("d-none");
   }
-
-  photoAgain () {
-    console.log("Initialisation de la photo pour une autre prise!");
-
-    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-    .then(stream => {
-      this.stream=stream;
-      this.cameraScreenTarget.srcObject = stream;
-      this.cameraScreenTarget.play();
-      const tracks = stream.getTracks();
-    })
-    .catch(function(err) {
-      console.log("An error occurred: " + err);
-    });
-    this.cameraScreenTarget.setAttribute("height",230);
-    this.cameraScreenTarget.setAttribute("width",300);
-
-    onpopstate = (event) => {
-      this.stopPhoto();
-    }
-  };
 
   stopPhoto () {
     this.stream.getTracks().forEach(track => {
@@ -106,18 +92,14 @@ export default class extends Controller {
     this.displayLvl3();
     event.preventDefault();
     this.formTarget.classList.remove("d-none");
-    this.noMoreButtonIfForm();
   };
 
-  retakePhoto () {
-    this.photoAgain();
-    this.photo();
-  };
+  // retakePhoto () {
+  //   this.photoAgain();
+  //   this.photo();
+  // };
 
   retakePhotoAndBack (event) {
-    // this.photoAgain();
-    // this.photo();
-    // console.log("Back");
     window.location.href = "cam";
   };
 

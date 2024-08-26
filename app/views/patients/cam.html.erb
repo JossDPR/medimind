@@ -6,11 +6,11 @@
     <div class="selfie-container" >
       <video class="selfie-video" data-camera-target="cameraScreen"></video>
 
-      <div data-camera-target="form" class="d-none form_card mt-4">
+      <div  class="d-none form_card mt-4">
         <h2>Détails de la prescription :</h2>
         <hr>
         <div class="form_inputs", data-controller="checkbox">
-          <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
+          <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient), input_html: { data: { camera_target: 'form'} } do |f| %>
           <%= f.association :medication, label: "Nom du médicament :" %>
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.input :start_date, :order => [:day, :month, :year], label: "Date de début :" %>
