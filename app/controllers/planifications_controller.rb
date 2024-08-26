@@ -20,14 +20,6 @@ class PlanificationsController < ApplicationController
 
 
     @planifications = Planification.where(patient_id: @patient.id)
-    # @take = Take.where(planification_id: @planification.id)
-    # @current_time = DateTime.now
-    # @morning_start = DateTime.now.beginning_of_day + 5.hours
-    # @morning_end = DateTime.now.beginning_of_day + 10.hours
-    # @noon_start = DateTime.now.beginning_of_day + 10.hours
-    # @noon_end = DateTime.now.beginning_of_day + 15.hours
-    # @evening_start = DateTime.now.beginning_of_day + 15.hours
-    # @evening_end = DateTime.now.beginning_of_day + 23.hours
   end
 
   def new

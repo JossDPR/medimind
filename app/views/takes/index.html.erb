@@ -8,6 +8,8 @@
   </div>
 <% end %>
 
+<h2 class="text-center" style="margin-top: 20px;">Prises de médicaments du jour</h2><hr>
+
 <% if current_user.tutor? %>
   <div>
   <%= link_to cam_patient_path(@patient.id) do%>
@@ -16,6 +18,4 @@
   </div>
 <% end %>
 
-<h2 class="text-center" style="margin-top: 20px;">Prescriptions du patient</h2><hr>
-
-<%= render "components/accordion_card", elements: @planifications %>
+<%= render "components/accordion_card_takes", elements: @takes %>

@@ -1,0 +1,50 @@
+			<li class="item<%= element.id %>">
+        <input type="radio" name="point" id="<%= element.id %>">
+				<label for="<%= element.planification.id %>" class="label">
+          <div class="acord-head">
+            <div class="acord-vign">
+              <% if element.planification.photo.key != nil %>
+              <%= cl_image_tag element.planification.photo.key, class: "vignette" %>
+              <% end  %>
+            </div>
+            <div class="acord-info">
+              <div class="acord-medic">
+                <%= element.planification.medication.name %>
+              </div>
+              <div class="acord-qte">
+                <%= element.planification.quantity %> <%= element.planification.dosage.label %>
+              </div>
+            </div>
+          </div>
+          <span class="control"></span>
+					<div class="slider ">
+            <div class="acord-det">
+              <div class="grid-photo">
+                <% if element.planification.photo.key != nil %>
+                <%= cl_image_tag element.planification.photo.key, sizes: "(max-width: 589px) 100vw" %>
+                <% end %>
+              </div>
+              <div class="grid-medic">
+                <%= element.planification.medication.name %>
+              </div>
+              <div class="grid-qte">
+                <%= element.planification.quantity %> <%= element.planification.dosage.label %>
+              </div>
+              <div class="grid-comment">
+                <%= element.planification.description %>
+              </div>
+              <div class="grid-val">
+                <% if current_user.tutor? %>
+                  <% link_to edit_planification_path(@planification) do %>
+                    <%= render "components/button_edit", content: "Modifier planification" %>
+                  <% end %>
+                <% else %>
+                  <%= link_to cam_patient_path(@patient.id) do%>
+                    <%= render "components/button_photo", content: "Valider" %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+					</div>
+				</label>
+      </li>
