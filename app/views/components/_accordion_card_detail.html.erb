@@ -35,7 +35,10 @@
               </div>
               <div class="grid-val">
                 <% if current_user.tutor? %>
-                  <a href=#><%= render "components/button_edit", content: "Modifier" %></a>
+                  <% content = render "components/button_edit", content: "Modifier"%>
+                  <%= link_to content, edit_planification_path(element) %>
+                  <% content_destroy = render "components/button_destroy", content: "Supprimer"%>
+                  <%=  link_to content_destroy, planification_path(element), data: { turbo_method: :delete } %>
                 <% else %>
                   <a href=#><%= render "components/button_photo", content: "Valider" %></a>
                 <% end %>
