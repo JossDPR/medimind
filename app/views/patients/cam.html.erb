@@ -19,8 +19,8 @@
         <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient) do |f| %>
         <%= f.association :medication, label: "Nom du médicament :" %>
         <%= f.input :quantity, label: "Quantité :" %>
-        <%= f.input :start_date, label: "Date de début :" %>
-        <%= f.input :end_date, label: "Date de fin :" %>
+        <%= f.input :start_date, :order => [:day, :month, :year], label: "Date de début :" %>
+        <%= f.input :end_date, :order => [:day, :month, :year], label: "Date de fin :" %>
         <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         <%= f.input :frequency_days, label: "Fréquence de prises :" %>
         <%= f.association :taking_periods, as: :check_boxes,
@@ -29,10 +29,6 @@
                       value_method: :id,
                       input_html: { data: { action: "click->checkbox#toggle", checkbox_target: "checkbox" } },
                       item_label_class: 'toggle-label' %>
-        <%# <%=  f.simple_fields_for :plan_takings do |plan_taking| %>
-        <%# <%=  plan_taking.association :plan_takings, as: :select %>
-        <%# <%=  assignment.estimated_time %>
-
         <%= f.input :description %>
       </div>
 

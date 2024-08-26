@@ -10,12 +10,12 @@ export default class extends Controller {
   }
 
   toggle(event) {
-    const checkbox = event.currentTarget;  // Récupère la case à cocher cliquée
-    const label = document.querySelector(`label[for='${checkbox.id}']`);  // Trouve le label associé
+    const checkbox = event.currentTarget;
+    const label = document.querySelector(`label[for='${checkbox.id}']`);
 
     console.log(label)
 
-    if (label) {  // Vérifie si le label existe
+    if (label) {
       if (checkbox.checked) {
         label.classList.add('checked');
       } else {
@@ -23,12 +23,4 @@ export default class extends Controller {
       }
     }
   }
-
-  // toggle() {
-  //   if (this.checksTarget.checked) {
-  //     this.labelTargets.classList.add('checked');
-  //   } else {
-  //     this.labelTargets.classList.remove('checked');
-  //   }
-  // }
 }
