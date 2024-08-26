@@ -13,8 +13,10 @@
         <div class="form_inputs", data-controller="checkbox">
           <%= simple_form_for [@patient,@planification], url: patient_planifications_path(@patient), html: { data: { camera_target: 'form'} } do |f| %>
           <%= f.association :medication, label: "Nom du médicament :" %>
-          <%= f.input :quantity, label: "Quantité :" %>
-          <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
+          <div class="posotity">
+            <%= f.input :quantity, label: "Quantité :" %>
+            <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
+          </div>
           <%= f.input :frequency_days, label: "Fréquence de prises :" %>
           <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
           <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
