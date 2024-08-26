@@ -1,4 +1,4 @@
-//= require datetime_picker_input
+import "flatpickr"
 import { Application } from "@hotwired/stimulus"
 
 const application = Application.start()
