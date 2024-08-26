@@ -79,4 +79,3 @@ end
 
 gem "pundit", "~> 2.3"
 gem "cloudinary"
-gem 'datetime_picker_input'
