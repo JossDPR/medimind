@@ -16,8 +16,8 @@
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
           <%= f.input :frequency_days, label: "Fréquence de prises :" %>
-          <%= f.input :start_at, as: :date_picker, label: "Date de début :" %>
-          <%= f.input :end_at, as: :date_picker, label: "Date de fin :" %>
+          <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
+          <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
           <div class="check-boxes-container">
             <%= f.association :taking_periods, as: :check_boxes,
                           label: "Moments de la journée :",
