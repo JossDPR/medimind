@@ -11,7 +11,7 @@ $dark-gray: #3a3939c7;
 $light-gray: #F4F4F4;
 $white: #ffffff;
 
-$primary: #06ADE7;
+$primary: #3ca188;
 $secondary: #79D8D7;
 $tertiary: #60CBB0;
 
@@ -21,8 +21,8 @@ $navbar_open_color: #60CBB0;
 
 $color1: #60CBB0;
 $button_color: #06ADE7;
-$button_border_color: #06ADE7;
-$button_active_color: #0387b3;
+$button_border_color: $tertiary;
+$button_active_color: $tertiary;
 
 $medic_card_front: white;
 $medic_card_back: #D21849;
