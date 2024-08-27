@@ -16,17 +16,13 @@ class OpenAiSvc
     reponse = traitement_reponse(self.open_ai_question_photo(question, photo_url))
 
     ##Traitement du medicament (Ajout dans la db si non trouvé)
-    medic_name = reponse['name'].upcase + " " + reponse['dosage']
-    check_medic = Medication.where(name: medic_name)
-    if (check_medic.count == 0)
-      medic = Medication.new
-      medic.name =medic_name
-      medic.description = reponse['description']
-      medic.save!
-      return medic
+    if reponse != ""
+      medic_name = reponse['name'].upcase + " " + reponse['dosage']
+      answer = Medication.find_or_create_by(name: medic_name)
     else
-      return check_medic
+      answer = "Fail"
     end
+    return answer
   end
 
   private
@@ -72,8 +68,13 @@ class OpenAiSvc
 
   def traitement_reponse(reponse)
     retour_ai = reponse["choices"][0]["message"]["content"]
-    retour_json = retour_ai.gsub(/```json|```/, '').strip
-    return JSON.parse(retour_json)
+    if retour_ai.include? "name"
+      retour_json = retour_ai.gsub(/```json|```/, '').strip
+      json = JSON.parse(retour_json)
+    else
+      json = ""
+    end
+    return json
   end
 
 end

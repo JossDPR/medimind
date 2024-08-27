@@ -44,24 +44,39 @@
   border-top: 1px solid #B4B4B4;
 }
 
-.custom-confirm button:focus,
-.custom-confirm button:hover {
-  font-weight: bold;
-  background: $navbar_open_color; /* Exemple de couleur */
-  color: #FFFFFF; /* Exemple de couleur */
+.custom-confirm button:nth-of-type(3) {
+  border-top: 1px solid #B4B4B4;
 }
 
-.custom-confirm button:active {
-  background: $navbar_open_color; /* Exemple de couleur */
-  color: #FFFFFF; /* Exemple de couleur */
+.custom-confirm button:nth-of-type(4) {
+  border-top: 1px solid #B4B4B4;
+}
+
+.custom-confirm button:not([disabled]):focus,
+.custom-confirm button:not([disabled]):hover {
+  font-weight: bold;
+  background: $navbar_open_color;
+  color: #FFFFFF;
+}
+
+.custom-confirm button:not([disabled]):active {
+  background: $navbar_open_color;
+  color: #FFFFFF;
 }
 
 .buttons_double {
   display: flex;
+  padding-top: 10px;
 }
 
 .custom-icon {
   font-size: 48px;
   color: $navbar_open_color;
   margin-bottom: 10px;
+}
+
+.custom-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: $navbar_open_color;
 }

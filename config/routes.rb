@@ -41,5 +41,8 @@ Rails.application.routes.draw do
     member do
       get 'confirm'
     end
+    collection do
+      post 'photo'
+    end
   end
 end
