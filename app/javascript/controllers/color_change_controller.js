@@ -4,18 +4,18 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["element"]
   static values = {
-    takendate: Number
+    takendate: Boolean
   }
 
   connect() {
     console.log(this.takendateValue)
     console.log(this.elementTarget)
-    if (this.element.taken_date === 0) {
-      this.element.classList.remove("taken");
-      this.element.classList.add("untaken");
+    if (this.takendateValue) {
+      this.elementTarget.classList.remove("untaken");
+      this.elementTarget.classList.add("taken");
     } else {
-      this.element.classList.remove("untaken");
-      this.element.classList.add("taken");
+      this.elementTarget.classList.remove("taken");
+      this.elementTarget.classList.add("untaken");
     }
   }
 }
