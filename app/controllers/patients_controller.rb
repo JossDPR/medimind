@@ -18,7 +18,6 @@ class PatientsController < ApplicationController
     # authorize @patient
     @patient = User.new(patient_params)
     @user.patients.push(@patient)
-    raise
     if @patient.save
       redirect_to patient_planifications_path(@patient)
       flash[:notice] = "#{@patient.first_name} a été créé."
