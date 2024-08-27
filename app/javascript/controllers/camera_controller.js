@@ -2,20 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera"
 export default class extends Controller {
-  static targets= ["cameraScreen", "form", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3"]
+  static targets= ["cameraScreen", "form", "formarea", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3"]
   static values = {
     url: String
   }
 
   connect() {
     this.displayLvl1();
-    // const cams = devices.filter(device => device.kind === 'videoinput');
-    // prod et demo
-    // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
-    // ordi : changer pour this.constraint de prod et demo
-    this.constraint= { video: true, audio: false };
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
 
-    navigator.mediaDevices.getUserMedia(this.constraint)
     .then(stream => {
       this.stream=stream;
       this.cameraScreenTarget.srcObject = stream;
@@ -112,13 +107,8 @@ export default class extends Controller {
   validatePhoto(event) {
     this.displayLvl3();
     event.preventDefault();
-    this.formTarget.classList.remove("d-none");
+    this.formareaTarget.classList.remove("d-none");
   };
-
-  // retakePhoto () {
-  //   this.photoAgain();
-  //   this.photo();
-  // };
 
   retakePhotoAndBack (event) {
     window.location.href = "cam";
@@ -126,8 +116,7 @@ export default class extends Controller {
 
   submitForm(event) {
     event.preventDefault();
-    const form = this.formTarget.querySelector("form");
-    let formData = new FormData(form);
+    let formData = new FormData(this.formTarget);
     formData.append("file", this.file);
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
