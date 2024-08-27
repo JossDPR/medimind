@@ -90,8 +90,7 @@ export default class extends Controller {
   convertToBase64(file) {
     if (file) {
       this.fileToBase64(file).then(base64 => {
-        // this.outputTarget.textContent = base64;
-        // console.log('Fichier converti en base64 :', base64);
+        this.sendPhoto(base64);
       }).catch(error => {
         console.error('Erreur lors de la conversion en base64 :', error);
       });
@@ -106,6 +105,52 @@ export default class extends Controller {
       reader.onerror = error => reject(error);
     });
   };
+
+  sendPhoto(base64) {
+    let loadingphoto = document.querySelector("#loadingphoto");
+    let validatebutton = document.querySelector("#validatephoto");
+    let retryphoto = document.querySelector("#retryphoto");
+    const url_photo = "/planifications/photo";
+    const token = document.getElementsByName('csrf-token')[0].content;
+    fetch(url_photo, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-Token': token
+        },
+        body: base64,
+    })
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error('Erreur réseau ou serveur');
+      }
+    })
+    .then(data => {
+      if (data.errors) {
+        alert(data.errors);
+      } else {
+        if (data.error) {
+          loadingphoto.classList.add("d-none");
+          validatebutton.classList.add("d-none");
+          retryphoto.classList.remove("d-none");
+        } else {
+          loadingphoto.classList.add("d-none");
+          validatebutton.classList.remove("d-none");
+          retryphoto.classList.add("d-none");
+          let medic_id = document.querySelector("#planification_medication_id");
+          let medic_name = document.querySelector(".custom-title");
+          medic_id.value=data.medication.id;
+          medic_name.innerHTML=data.medication.name;
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors de la requête fetch:', error);
+    });
+  };
+
 
   validatePhoto(event) {
     //faire la comparaison IA et si ok on a la redirection ci-dessous
