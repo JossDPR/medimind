@@ -3,7 +3,7 @@
 <% if current_user.tutor? %>
   <div>
   <%= link_to cam_patient_path(@patient.id) do%>
-    <%= render "components/button_edit", content: "Nouvelle planification" %>
+    <%= render "components/button_edit", content: "Nouvelle prescription" %>
   <% end %>
   </div>
 <% end %>

@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       get 'cam'
     end
     resources :takes, only: %i[index]
+    resources :patient_takes, only: %i[index]
   end
 
   resources :planifications, only: %i[edit update destroy] do
