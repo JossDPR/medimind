@@ -16,35 +16,13 @@ class OpenAiSvc
     reponse = traitement_reponse(self.open_ai_question_photo(question, photo_url))
 
     ##Traitement du medicament (Ajout dans la db si non trouvé)
-    medic_name = reponse['name'].upcase + " " + reponse['dosage']
-    check_medic = Medication.where(name: medic_name)
-    if (check_medic.count == 0)
-      medic = Medication.new
-      medic.name =medic_name
-      medic.description = reponse['description']
-      medic.save!
-      return medic
+    if reponse != ""
+      medic_name = reponse['name'].upcase + " " + reponse['dosage']
+      answer = Medication.find_or_create_by(name: medic_name)
     else
-      return check_medic
+      answer = "Fail"
     end
-  end
-
-  def analyser_boite_64(photo_url)
-    question = "Tu peux me donner au format json le nom du médiacament en tant que name, le dosage en tant que dosage, le type de cachet en tant que type et la description du medicament en tant que description qu'il y a sur la photo sans rien ajouter devant le json?"
-    reponse = traitement_reponse(self.open_ai_question_photo_64(question, photo_url))
-
-    ##Traitement du medicament (Ajout dans la db si non trouvé)
-    medic_name = reponse['name'].upcase + " " + reponse['dosage']
-    check_medic = Medication.where(name: medic_name)
-    if (check_medic.count == 0)
-      medic = Medication.new
-      medic.name =medic_name
-      medic.description = reponse['description']
-      medic.save!
-      return medic
-   else
-     return check_medic
-   end
+    return answer
   end
 
   private
@@ -88,36 +66,15 @@ class OpenAiSvc
     )
   end
 
-
-  def open_ai_question_photo_64(question, photo_url)
-    client = OpenAI::Client.new
-    return client.chat(
-      parameters: {
-        model: "gpt-4o-mini",
-        max_tokens: 300,
-        messages: [
-                    {
-                      "role": "user",
-                      "content": [
-                        {"type": "text", "text": question},
-                        {
-                                        "type": "image_url",
-                                        "image_url": {
-                                            "url": "data:image/jpeg;base64,{"+ photo_url + "}",
-                                            "detail": "auto",
-                                        },
-                                    },
-                      ]
-                    }
-                  ]
-      }
-    )
-  end
-
   def traitement_reponse(reponse)
     retour_ai = reponse["choices"][0]["message"]["content"]
-    retour_json = retour_ai.gsub(/```json|```/, '').strip
-    return JSON.parse(retour_json)
+    if retour_ai.include? "name"
+      retour_json = retour_ai.gsub(/```json|```/, '').strip
+      json = JSON.parse(retour_json)
+    else
+      json = ""
+    end
+    return json
   end
 
 end

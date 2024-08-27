@@ -27,7 +27,18 @@ class PlanificationsController < ApplicationController
     #
     base64_image = request.body.read
     open_ai_service = OpenAiSvc.new
-    medic = open_ai_service.analyser_boite_64(base64_image)
+    medic = open_ai_service.analyser_boite(base64_image)
+
+    if medic === "Fail"
+      respond_to do |format|
+        format.json { render json: { error: "NOT_FOUND" }, status: :ok }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: { message: "Médicament à planifier.", medication: medic }, status: :ok }
+      end
+    end
+
   end
 
   def new
