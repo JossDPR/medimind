@@ -1,18 +1,36 @@
-<h1>Edit your planification</h1>
 
-<%= simple_form_for @planification, url:  planification_path(@planification) do |f| %>
-      <%= f.association :medication, label_method: :name %>
-      <%= f.input :quantity %>
-      <%= f.input :start_date %>
-      <%= f.input :end_date%>
-      <%= f.association :dosage, label_method: :label %>
-      <%= f.input :frequency_days %>
-
-      <%= f.association :taking_periods, label_method: :label, as: :check_boxes %>  <%# %, as: :radio_buttons, multiple: true %>
-      <%# <%=  f.simple_fields_for :plan_takings do |plan_taking| %>
-      <%# <%=  plan_taking.association :plan_takings, as: :select %>
-      <%# <%=  assignment.estimated_time %>
-
-      <%= f.input :description %>
-      <%= f.button :submit, 'Confirmer les modifications' %>
-      <% end %>
+<div class="custom-confirm">
+  <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
+  <h1>Modifier la prescription</h1>
+  <hr/>
+  <div data-controller="edit-planification" data-edit-planification-url-value=<%="#{patient_planifications_path(@planification.patient)}"%>>
+    <div class="form_card">
+      <div class="form_inputs", data-controller="checkbox">
+        <%= simple_form_for @planification, url:  patient_planifications_path(@patient), html: { data: { edit_planification_target: 'form'} } do |f| %>
+          <%= f.association :medication, label: "Nom du médicament :" %>
+          <div class="posotity">
+            <%= f.input :quantity, label: "Quantité :" %>
+            <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
+          </div>
+          <%= f.input :frequency_days, label: "Fréquence de prises :" %>
+          <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
+          <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
+          <div class="check-boxes-container">
+            <%= f.association :taking_periods, as: :check_boxes,
+                          label: "Moments de la journée :",
+                          label_method: :label,
+                          value_method: :id,
+                          input_html: { data: { action: "click->checkbox#toggle", checkbox_target: "checkbox" } },
+                          item_label_class: 'checkbox-item toggle-label labels col-sm' %>
+          </div>
+          <%= f.input :description, as: :text, input_html: { class: "text-area", :cols => 5, :rows => 10 } %>
+          <%= f.button :submit, 'Confirmer les modifications' %>
+          <% end %>
+      </div>
+    </div>
+    <div class="buttons_double">
+      <button data-action="click->edit-planification#cancel"><i class="fa-solid fa-chevron-left"></i> Retour</button>
+      <button data-action="click->edit-planification#submitForm"><i class="fa-solid fa-check"></i> Enregistrer</button>
+    </div>
+  </div>
+</div>
