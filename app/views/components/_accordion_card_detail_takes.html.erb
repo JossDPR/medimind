@@ -34,15 +34,9 @@
           <%= element.planification.description %>
         </div>
         <div class="grid-val">
-          <% if current_user.tutor? %>
-            <%= link_to edit_planification_path(element.planification) do %>
-              <% render "components/button_edit", content: "Modifier prescription" %>
-            <% end %>
-          <% else %>
             <%= link_to cam_patient_path(@patient.id) do%>
               <%= render "components/button_photo", content: "Valider" %>
             <% end %>
-          <% end %>
         </div>
       </div>
     </div>
