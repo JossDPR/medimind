@@ -83,10 +83,8 @@ export default class extends Controller {
     this.displayLvl2();
 
     const canvas = document.createElement('canvas');
-    // const width = 300;
-    // const height = 230;
-    const width = 782;
-    const height = 600;
+    const width = 300;
+    const height = 230;
     var context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
@@ -102,14 +100,10 @@ export default class extends Controller {
     imgElement.width = width;
     imgElement.height = height;
     this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
-
     this.stopPhoto();
   };
 
-
   convertToBase64(file) {
-
-
     if (file) {
       this.fileToBase64(file).then(base64 => {
         // this.outputTarget.textContent = base64;
@@ -129,8 +123,6 @@ export default class extends Controller {
     });
   };
 
-
-
   validatePhoto(event) {
     this.displayLvl3();
     event.preventDefault();
@@ -143,9 +135,6 @@ export default class extends Controller {
   };
 
   retakePhotoAndBack (event) {
-    // this.photoAgain();
-    // this.photo();
-    // console.log("Back");
     window.location.href = "cam";
   };
 
@@ -153,7 +142,6 @@ export default class extends Controller {
     event.preventDefault();
     const form = this.formTarget.querySelector("form");
     let formData = new FormData(form);
-    // let formData = new FormData(this.formTarget);
     formData.append("file", this.file);
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
