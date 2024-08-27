@@ -92,8 +92,8 @@ export default class extends Controller {
   convertToBase64(file) {
     if (file) {
       this.fileToBase64(file).then(base64 => {
-        // this.outputTarget.textContent = base64;
         console.log('Fichier converti en base64 :', base64);
+        this.sendPhoto(base64);
       }).catch(error => {
         console.error('Erreur lors de la conversion en base64 :', error);
       });
@@ -108,6 +108,20 @@ export default class extends Controller {
       reader.onerror = error => reject(error);
     });
   };
+
+  sendPhoto(base64) {
+    url_photo = "/planifications/photo"
+    const token = document.getElementsByName('csrf-token')[0].content
+    fetch(url_photo, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-Token': token
+        },
+        body: base64,
+    })
+  }
+
 
   validatePhoto(event) {
     this.displayLvl3();

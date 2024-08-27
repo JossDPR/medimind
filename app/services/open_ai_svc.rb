@@ -29,6 +29,24 @@ class OpenAiSvc
     end
   end
 
+  def analyser_boite_64(photo_url)
+    question = "Tu peux me donner au format json le nom du médiacament en tant que name, le dosage en tant que dosage, le type de cachet en tant que type et la description du medicament en tant que description qu'il y a sur la photo sans rien ajouter devant le json?"
+    reponse = traitement_reponse(self.open_ai_question_photo_64(question, photo_url))
+
+    ##Traitement du medicament (Ajout dans la db si non trouvé)
+    medic_name = reponse['name'].upcase + " " + reponse['dosage']
+    check_medic = Medication.where(name: medic_name)
+    if (check_medic.count == 0)
+      medic = Medication.new
+      medic.name =medic_name
+      medic.description = reponse['description']
+      medic.save!
+      return medic
+   else
+     return check_medic
+   end
+  end
+
   private
 
   def open_ai_comparer_photo(question, photo1_url, photo2_url)
@@ -63,6 +81,32 @@ class OpenAiSvc
                       "content": [
                         {"type": "text", "text": question},
                         {"type": "image_url", "image_url": { "url": photo_url}}
+                      ]
+                    }
+                  ]
+      }
+    )
+  end
+
+
+  def open_ai_question_photo_64(question, photo_url)
+    client = OpenAI::Client.new
+    return client.chat(
+      parameters: {
+        model: "gpt-4o-mini",
+        max_tokens: 300,
+        messages: [
+                    {
+                      "role": "user",
+                      "content": [
+                        {"type": "text", "text": question},
+                        {
+                                        "type": "image_url",
+                                        "image_url": {
+                                            "url": "data:image/jpeg;base64,{"+ photo_url + "}",
+                                            "detail": "auto",
+                                        },
+                                    },
                       ]
                     }
                   ]
