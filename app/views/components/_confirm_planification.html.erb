@@ -14,10 +14,9 @@
       <% end %>.</p>
     <p>Voulez-vous <strong>confirmer</strong> votre action ?</p>
   </div>
-  <div class="buttons_double">
-    <%# <button>Annuler</button>
-    <button>Confirmer</button> %>
-    <%= link_to 'Annuler', edit_planification_path(@planification), class: 'btn btn-primary' %>
-    <%= link_to 'Confirmer', patient_planifications_path(@planification.patient), class: 'btn btn-primary' %>
-  </div>
+
+    <div class="buttons_double" data-controller="confirmation-planif" data-confirmation-planif-url-cancel-value=<%="#{edit_planification_path(@planification)}"%> data-confirmation-planif-url-confirm-value=<%="#{patient_planifications_path(@planification.patient)}"%>>
+      <button data-action="click->confirmation-planif#cancel" ><i class="fa-solid fa-chevron-left"></i> Annuler</button>
+      <button data-action="click->confirmation-planif#confirm" ><i class="fa-solid fa-check"></i>Confirmer</button>
+    </div>
 </div>
