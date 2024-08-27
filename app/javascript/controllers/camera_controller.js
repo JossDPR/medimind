@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera"
 export default class extends Controller {
-  static targets= ["cameraScreen", "form", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3"]
+  static targets= ["cameraScreen", "form", "formarea", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3"]
   static values = {
     url: String
   }
@@ -112,7 +112,7 @@ export default class extends Controller {
   validatePhoto(event) {
     this.displayLvl3();
     event.preventDefault();
-    this.formTarget.classList.remove("d-none");
+    this.formareaTarget.classList.remove("d-none");
   };
 
   // retakePhoto () {
@@ -126,8 +126,7 @@ export default class extends Controller {
 
   submitForm(event) {
     event.preventDefault();
-    const form = this.formTarget.querySelector("form");
-    let formData = new FormData(form);
+    let formData = new FormData(this.formTarget);
     formData.append("file", this.file);
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
