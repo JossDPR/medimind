@@ -7,7 +7,6 @@ export default class extends Controller {
     const checkbox = event.currentTarget;
     const label = document.querySelector(`label[for='${checkbox.id}']`);
 
-
     if (label) {
       if (checkbox.checked) {
         label.classList.add('checked');
