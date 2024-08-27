@@ -393,9 +393,9 @@ input:checked ~ label > .control {
 }
 
 .taken {
-  background-color: #F9DEDC;
+  background-color: $take1;
 }
 
 .untaken {
-  background-color: #DCFFD7;
+  background-color: $take0;
 }
