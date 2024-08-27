@@ -1,7 +1,7 @@
 	<main>
 		<ul class="item-list">
       <% elements.each do |element| %>
-        <% if current_user.patient? && element.taken_date == nil %>
+        <% if element.taken_date == nil %>
           <%= render "components/accordion_card_detail_takes", element: element %>
         <% end %>
       <% end %>
