@@ -7,24 +7,23 @@ export default class extends Controller {
     url: String
   }
   connect() {
-    console.log("Edit_planification JScontroller connected")
+    console.log("Edit_planification controller connected")
   }
   cancel () {
     window.location.href = this.urlValue;
   }
   submitForm(event) {
     event.preventDefault();
-    console.log(this.formTarget);
     let formData = new FormData(this.formTarget);
-    console.log(formData)
+    console.log(this.urlValue)
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'X-CSRF-Token': token
-      },
-      body: formData,
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-Token': token
+        },
+        body: formData,
     })
     .then(resp => resp.json())
     .then(data => {
@@ -32,7 +31,8 @@ export default class extends Controller {
         alert(data.errors)
       }
       else {
-        // window.location.href = this.urlValue;
+        console.log(data)
+        window.location.href = `/patients/${data.planification.patient_id}/planifications`
       }
     })
   }

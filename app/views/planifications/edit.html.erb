@@ -3,10 +3,10 @@
   <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
   <h1>Modifier la prescription</h1>
   <hr/>
-  <div data-controller="edit-planification" data-edit-planification-url-value=<%="#{patient_planifications_path(@planification.patient)}"%>>
+  <div data-controller="edit-planification" data-edit-planification-url-value=<%="#{planification_path(@planification)}"%>>
     <div class="form_card">
       <div class="form_inputs", data-controller="checkbox">
-        <%= simple_form_for @planification, url:  patient_planifications_path(@patient), html: { data: { edit_planification_target: 'form'} } do |f| %>
+        <%= simple_form_for @planification, url:  planification_path(@planification), html: { data: { edit_planification_target: 'form'} } do |f| %>
           <%= f.association :medication, label: "Nom du médicament :" %>
           <div class="posotity">
             <%= f.input :quantity, label: "Quantité :" %>
