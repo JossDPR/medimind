@@ -1,5 +1,5 @@
 class PlanificationsController < ApplicationController
-  before_action :set_patient
+  before_action :set_patient, except: %i[destroy]
   before_action :set_planification, only: %i[confirm edit update destroy]
   require 'cloudinary'
   require 'cloudinary/uploader'
@@ -65,6 +65,7 @@ class PlanificationsController < ApplicationController
   end
 
   def destroy
+    @patient = @planification.patient
     Planification.destroy(@planification.id)
     redirect_to patient_planifications_path(@patient)
   end
