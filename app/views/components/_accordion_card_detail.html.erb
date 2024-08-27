@@ -12,7 +12,7 @@
                 <%= element.medication.name %>
               </div>
               <div class="acord-qte">
-              <p> Du <%= element.start_date %> au <%= element.end_date %></p>
+              <p> Du <%= element.start_date.strftime("%d/%m/%Y") %> au <%= element.end_date.strftime("%d/%m/%Y") %></p>
               </div>
             </div>
           </div>
