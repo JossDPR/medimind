@@ -2,52 +2,49 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera-patient"
 export default class extends Controller {
-  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3"]
+  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2"]
   static values = {
     url: String
   }
+
   connect() {
-    connect() {
-      this.displayLvl1();
-      // const cams = devices.filter(device => device.kind === 'videoinput');
-      // prod et demo
-      // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
-      // ordi : changer pour this.constraint de prod et demo
-      this.constraint= { video: true, audio: false };
+    this.displayLvl1();
+    // const cams = devices.filter(device => device.kind === 'videoinput');
+    // prod et demo
+    // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
+    // ordi : changer pour this.constraint de prod et demo
+    this.constraint= { video: true, audio: false };
 
-      navigator.mediaDevices.getUserMedia(this.constraint)
-      .then(stream => {
-        this.stream=stream;
-        this.cameraScreenTarget.srcObject = stream;
-        this.cameraScreenTarget.play();
-        const tracks = stream.getTracks();
-      })
-      .catch(function(err) {
-        console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
-      });
+    navigator.mediaDevices.getUserMedia(this.constraint)
+    .then(stream => {
+      this.stream=stream;
+      this.cameraScreenTarget.srcObject = stream;
+      this.cameraScreenTarget.play();
+      const tracks = stream.getTracks();
+    })
+    .catch(function(err) {
+      console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
+    });
 
-      this.cameraScreenTarget.setAttribute("height",230);
-      this.cameraScreenTarget.setAttribute("width",300);
-      onpopstate = (event) => {
-        this.stopPhoto();
-      }
-    };
-  }
+    this.cameraScreenTarget.setAttribute("height",230);
+    this.cameraScreenTarget.setAttribute("width",300);
+    onpopstate = (event) => {
+      this.stopPhoto();
+    }
+  };
+
 
   displayLvl1 () {
     this.buttonsLvl1Target.classList.remove("d-none");
     this.buttonsLvl2Target.classList.add("d-none");
-    this.buttonsLvl3Target.classList.add("d-none");
   }
   displayLvl2 () {
     this.buttonsLvl1Target.classList.add("d-none");
     this.buttonsLvl2Target.classList.remove("d-none");
-    this.buttonsLvl3Target.classList.add("d-none");
   }
   displayLvl3 () {
     this.buttonsLvl1Target.classList.add("d-none");
     this.buttonsLvl2Target.classList.add("d-none");
-    this.buttonsLvl3Target.classList.remove("d-none");
   }
 
   stopPhoto () {
@@ -59,11 +56,11 @@ export default class extends Controller {
   };
 
   stopPhotoAndBack (event) {
-    const url = event.currentTarget.dataset.url;
+    // const url = event.currentTarget.dataset.url;
     this.stream.getTracks().forEach(track => {
       track.stop();
     });
-    window.location.href = url;
+    window.location.href = this.urlValue;
   };
 
   photo = async () => {
@@ -94,7 +91,7 @@ export default class extends Controller {
     if (file) {
       this.fileToBase64(file).then(base64 => {
         // this.outputTarget.textContent = base64;
-        console.log('Fichier converti en base64 :', base64);
+        // console.log('Fichier converti en base64 :', base64);
       }).catch(error => {
         console.error('Erreur lors de la conversion en base64 :', error);
       });
@@ -111,12 +108,13 @@ export default class extends Controller {
   };
 
   validatePhoto(event) {
-    this.displayLvl3();
-    event.preventDefault();
-    this.formTarget.classList.remove("d-none");
+    //faire la comparaison IA et si ok on a la redirection ci-dessous
+    window.location.href = this.urlValue;
   };
 
-  retakePhotoAndBack (event) {
-    window.location.href = "cam";
-  };
+  retakePhoto () {
+    location.reload()
+      // this.connect(); //crée une erreur car cameraScreen target n'est pas rechargée
+      // this.photo();
+    };
 }

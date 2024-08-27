@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :planifications, only: %i[index new create]
     member do
       get 'cam'
+      get 'cam_patient'
     end
     resources :takes, only: %i[index]
     resources :patient_takes, only: %i[index]

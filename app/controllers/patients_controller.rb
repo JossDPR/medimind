@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[cam edit update]
+  before_action :set_patient, only: %i[cam edit update cam_patient]
   before_action :set_user, only: [:update, :destroy, :create, :new]
 
   def cam
@@ -11,11 +11,13 @@ class PatientsController < ApplicationController
     @patient= User.new
   end
 
+  def cam_patient
+  end
+
   def create
     # authorize @patient
     @patient = User.new(patient_params)
     @user.patients.push(@patient)
-    raise
     if @patient.save
       redirect_to patient_planifications_path(@patient)
       flash[:notice] = "#{@patient.first_name} a été créé."
