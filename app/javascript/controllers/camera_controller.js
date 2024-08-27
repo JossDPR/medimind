@@ -64,9 +64,11 @@ export default class extends Controller {
   };
 
   stopPhoto () {
-    this.stream.getTracks().forEach(track => {
-      track.stop();
-    });
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => {
+        track.stop();
+      });
+    }
   };
 
   stopPhotoAndBack (event) {
@@ -81,8 +83,10 @@ export default class extends Controller {
     this.displayLvl2();
 
     const canvas = document.createElement('canvas');
-    const width = 300;
-    const height = 230;
+    // const width = 300;
+    // const height = 230;
+    const width = 782;
+    const height = 600;
     var context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
@@ -91,7 +95,7 @@ export default class extends Controller {
       canvas.toBlob(resolve, 'image/jpeg');
     });
     this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
-
+    this.convertToBase64(this.file)
     const imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
     imgElement.src = imageUrl;
@@ -102,11 +106,35 @@ export default class extends Controller {
     this.stopPhoto();
   };
 
+
+  convertToBase64(file) {
+
+
+    if (file) {
+      this.fileToBase64(file).then(base64 => {
+        // this.outputTarget.textContent = base64;
+        console.log('Fichier converti en base64 :', base64);
+      }).catch(error => {
+        console.error('Erreur lors de la conversion en base64 :', error);
+      });
+    }
+  };
+
+  fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  };
+
+
+
   validatePhoto(event) {
     this.displayLvl3();
     event.preventDefault();
     this.formTarget.classList.remove("d-none");
-    this.noMoreButtonIfForm();
   };
 
   retakePhoto () {
@@ -123,7 +151,9 @@ export default class extends Controller {
 
   submitForm(event) {
     event.preventDefault();
-    let formData = new FormData(this.formTarget);
+    const form = this.formTarget.querySelector("form");
+    let formData = new FormData(form);
+    // let formData = new FormData(this.formTarget);
     formData.append("file", this.file);
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
