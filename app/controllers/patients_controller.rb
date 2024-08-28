@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  before_action :set_patient, only: %i[cam edit update cam_patient photo]
+  before_action :set_patient, only: %i[cam edit update]
   before_action :set_user, only: [:update, :destroy, :create, :new]
 
   def cam

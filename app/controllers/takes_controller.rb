@@ -28,6 +28,23 @@ class TakesController < ApplicationController
     end
   end
 
+  def taken
+    @take = Take.find(params[:id])
+    @take.taken_date = Time.now
+    if @take.update!
+      respond_to do |format|
+        # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
+        format.json { render json: { message: "Take is updated" }, status: :created }
+        # data-camera-url-value=<%="#{confirm_planification_path(@planification)}
+      end
+    else
+      respond_to do |format|
+        # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
+        format.json { render json: { errors: "Take update failed" }, status: :fail }
+      end
+    end
+  end
+
   private
 
   def set_patient
