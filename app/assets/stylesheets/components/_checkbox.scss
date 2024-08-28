@@ -63,7 +63,7 @@
 }
 
 .posotity {
-  display: flex;
+  display: grid;
+  grid-template-columns: 4fr 6fr;
   gap: 16px;
-  justify-content: center;
 }
