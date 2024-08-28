@@ -14,15 +14,7 @@ class OpenAiSvc
   def analyser_boite(photo_url)
     question = "Tu peux me donner au format json le nom du médiacament en tant que name, le dosage en tant que dosage, le type de cachet en tant que type et la description du medicament en tant que description qu'il y a sur la photo sans rien ajouter devant le json?"
     reponse = traitement_reponse(self.open_ai_question_photo(question, photo_url))
-
-    ##Traitement du medicament (Ajout dans la db si non trouvé)
-    if reponse != ""
-      medic_name = reponse['name'].upcase + " " + reponse['dosage']
-      answer = Medication.find_or_create_by(name: medic_name)
-    else
-      answer = "Fail"
-    end
-    return answer
+    return reponse
   end
 
   private

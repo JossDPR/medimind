@@ -145,6 +145,8 @@ export default class extends Controller {
           let medic_name = document.querySelector(".custom-title");
           medic_id.value=data.medication.id;
           medic_name.innerHTML=data.medication.name;
+          let dosage_id = document.querySelector("#planification_dosage_id");
+          dosage_id.value=data.type.id;
         }
       }
     })
