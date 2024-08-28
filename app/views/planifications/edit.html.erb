@@ -9,7 +9,7 @@
           <%= cl_image_tag @planification.photo.key, sizes: "(max-width: 589px) 100vw" %>
         <% end %>
         <h2 class="custom-title"><%= @planification.medication.name %></h2>
-        <div class="dosage-quantity">
+        <div class="posotity">
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         </div>
