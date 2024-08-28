@@ -8,9 +8,10 @@ class Planification < ApplicationRecord
   has_many :takes, dependent: :destroy
   has_one_attached :photo
 
-  validates :quantity, presence: true, numericality: true
+  validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :start_date, :end_date, presence: true
-  validates :frequency_days, presence: true, inclusion: { in: [1, 2, 3, 4, 5, 6, 7] }
+  validates :end_date, comparison: { greater_than: :start_date }
+  validates :frequency_days, presence: true, numericality: { only_integer: true, greater_than: 0 }
   after_create :set_takes
 
   private

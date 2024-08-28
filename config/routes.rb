@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :planifications, only: %i[index new create]
     member do
       get 'cam'
+      get 'cam_patient'
     end
     resources :takes, only: %i[index]
     resources :patient_takes, only: %i[index]
@@ -39,6 +40,9 @@ Rails.application.routes.draw do
   resources :planifications, only: %i[edit update destroy] do
     member do
       get 'confirm'
+    end
+    collection do
+      post 'photo'
     end
   end
 end
