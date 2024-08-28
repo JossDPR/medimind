@@ -59,6 +59,10 @@
   color: #FFFFFF; /* Exemple de couleur */
 }
 
+.custom-confirm textarea {
+  resize: none
+}
+
 .buttons_double {
   display: flex;
 }
@@ -67,4 +71,16 @@
   font-size: 48px;
   color: $navbar_open_color;
   margin-bottom: 10px;
+}
+
+.custom-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: $navbar_open_color;
+}
+
+.dosage-quantity {
+  display: grid;
+  grid-template-columns: 4fr 6fr;
+  gap: 16px;
 }

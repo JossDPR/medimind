@@ -1,16 +1,15 @@
 
 <div class="custom-confirm" data-controller="edit-planification" data-edit-planification-url-value=<%="#{planification_path(@planification)}"%>>
-  <div class="form_card">
-    <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
-    <h1>Modifier la prescription</h1>
-    <hr/>
+  <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
+  <h1>Modifier la prescription</h1>
+  <div class="form_card m-4">
     <div class="form_inputs", data-controller="checkbox">
       <%= simple_form_for @planification, url:  planification_path(@planification), html: { data: { edit_planification_target: 'form'} } do |f| %>
         <% if @planification.photo.key != nil %>
           <%= cl_image_tag @planification.photo.key, sizes: "(max-width: 589px) 100vw" %>
         <% end %>
-        <h2><%= @planification.medication.name %></h2>
-        <div class="posotity">
+        <h2 class="custom-title"><%= @planification.medication.name %></h2>
+        <div class="dosage-quantity">
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         </div>
@@ -25,7 +24,7 @@
                         input_html: { data: { action: "click->checkbox#toggle", checkbox_target: "checkbox" } },
                         item_label_class: 'checkbox-item toggle-label labels col-sm' %>
         </div>
-        <%= f.input :description, as: :text, input_html: { class: "text-area", :cols => 5, :rows => 10 } %>
+        <%= f.input :description, as: :text, input_html: { class: "text-area", :rows => 4 } %>
         <% end %>
     </div>
   </div>
