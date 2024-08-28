@@ -23,6 +23,9 @@ class PlanificationsController < ApplicationController
 
       rechtype = type_medic.downcase.singularize + "(s)"
       dosage_type = Dosage.find_by(label: rechtype)
+      if dosage_type == nil
+        dosage_type = ""
+      end
 
       respond_to do |format|
         format.json { render json: { message: "Médicament à planifier.", medication: medic, type: dosage_type }, status: :ok }
