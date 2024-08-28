@@ -84,23 +84,24 @@ main {
 ul.item-list {
 	max-width: var(--mem-width);
 	margin: 0 auto;
+
+  img {
+    max-width: 100%;
+    max-height: 200px;
+  }
+
+  img[width][height] {
+    height: auto;
+  }
+
+  /* Let SVG scale without boundaries */
+  img[src$=".svg"] {
+    width: 100%;
+    height: auto;
+    max-width: none;
+  }
 }
 
-img {
-	max-width: 100%;
-  max-height: 200px;
-}
-
-img[width][height] {
-	height: auto;
-}
-
-/* Let SVG scale without boundaries */
-img[src$=".svg"] {
-	width: 100%;
-	height: auto;
-	max-width: none;
-}
 .vignette {
   // width: 100px;
   height: 50px;

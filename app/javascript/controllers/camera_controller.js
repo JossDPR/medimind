@@ -21,13 +21,18 @@ export default class extends Controller {
       this.cameraScreenTarget.srcObject = stream;
       this.cameraScreenTarget.play();
       const tracks = stream.getTracks();
+      this.cameraScreenTarget.onloadedmetadata = () => {
+        this.width = this.cameraScreenTarget.videoWidth;
+        this.height = this.cameraScreenTarget.videoHeight;
+        console.log(`Camera screen size: ${videoWidth}x${videoHeight}`);
+      };
     })
     .catch(function(err) {
       console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
     });
 
-    this.cameraScreenTarget.setAttribute("height",230);
-    this.cameraScreenTarget.setAttribute("width",300);
+    this.cameraScreenTarget.style.width = this.width;
+    this.cameraScreenTarget.style.height = this.height;
     onpopstate = (event) => {
       this.stopPhoto();
     }
@@ -69,12 +74,12 @@ export default class extends Controller {
     this.displayLvl2();
 
     const canvas = document.createElement('canvas');
-    const width = 300;
-    const height = 230;
+    // const width = 300;
+    // const height = 230;
     var context = canvas.getContext('2d');
-    canvas.width = width;
-    canvas.height = height;
-    context.drawImage(this.cameraScreenTarget, 0, 0, width, height);
+    canvas.width = this.width;
+    canvas.height = this.height;
+    context.drawImage(this.cameraScreenTarget, 0, 0, this.width, this.height);
     let data = await new Promise((resolve) => {
       canvas.toBlob(resolve, 'image/jpeg');
     });
@@ -83,8 +88,8 @@ export default class extends Controller {
     const imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
     imgElement.src = imageUrl;
-    imgElement.width = width;
-    imgElement.height = height;
+    imgElement.width = this.width;
+    imgElement.height = this.height;
     this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
     this.stopPhoto();
   };
