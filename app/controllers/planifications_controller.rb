@@ -77,9 +77,13 @@ class PlanificationsController < ApplicationController
 
   def update
     if @planification.update!(planification_params)
-      redirect_to  confirm_planification_path(@planification)
+      respond_to do |format|
+        format.json { render json: { message: "Planification updated successfully.", planification: @planification } }
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.json { render json: { errors: "Planif failed", planification: @planification } }
+      end
     end
   end
 
