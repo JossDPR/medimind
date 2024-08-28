@@ -33,10 +33,11 @@
                   input_html: { autocomplete: "Votre mot de passe" } %>
     </div>
 </div>
-  <div class="buttons_double">
-    <%= link_to patient_patient_takes_path(@patient), class: 'b_button' do %>
-      <i class="fa-solid fa-chevron-left"></i> Retour
-    <% end %>
-    <button type="submit"><i class="fa-solid fa-check"></i> Enregistrer</button>
-  </div>
-<% end %>
+
+    <div class="buttons_double">
+      <%= link_to patient_patient_takes_path(@patient), class: 'b_button' do %>
+        <i class="fa-solid fa-chevron-left"></i> Retour
+      <% end %>
+      <button type="submit"><i class="fa-solid fa-check"></i> Enregistrer</button>
+    </div>
+  <% end %>
