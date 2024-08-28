@@ -14,8 +14,8 @@
           <div class="custom-title"></div>
           <%= f.input :medication_id, as: :hidden %>
           <div class="posotity">
-            <%= f.input :quantity, label: "Quantité :", input_html: { class: "formnumber" } %>
-            <%= f.association :dosage, label_method: :label, label: "Posologie :", input_html: { class: "formlist" } %>
+            <%= f.input :quantity, label: "Quantité :" %>
+            <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
           </div>
           <%= f.input :frequency_days, label: "Fréquence de prises :" %>
 
