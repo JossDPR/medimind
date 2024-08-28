@@ -2,9 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera-patient"
 export default class extends Controller {
-  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2"]
+  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3", "buttonsLvl4", "takeInfo", "otherMedic"]
   static values = {
-    url: String
+    takeId: String
   }
 
   connect() {
@@ -37,14 +37,26 @@ export default class extends Controller {
   displayLvl1 () {
     this.buttonsLvl1Target.classList.remove("d-none");
     this.buttonsLvl2Target.classList.add("d-none");
+    this.buttonsLvl3Target.classList.add("d-none");
+    this.buttonsLvl4Target.classList.add("d-none");
   }
   displayLvl2 () {
     this.buttonsLvl1Target.classList.add("d-none");
     this.buttonsLvl2Target.classList.remove("d-none");
+    this.buttonsLvl3Target.classList.add("d-none");
+    this.buttonsLvl4Target.classList.add("d-none");
   }
   displayLvl3 () {
     this.buttonsLvl1Target.classList.add("d-none");
     this.buttonsLvl2Target.classList.add("d-none");
+    this.buttonsLvl3Target.classList.remove("d-none");
+    this.buttonsLvl4Target.classList.add("d-none");
+  }
+  displayLvl4 () {
+    this.buttonsLvl1Target.classList.add("d-none");
+    this.buttonsLvl2Target.classList.add("d-none");
+    this.buttonsLvl3Target.classList.add("d-none");
+    this.buttonsLvl4Target.classList.remove("d-none");
   }
 
   stopPhoto () {
@@ -60,7 +72,7 @@ export default class extends Controller {
     this.stream.getTracks().forEach(track => {
       track.stop();
     });
-    window.location.href = this.urlValue;
+    window.location.href = "/";
   };
 
   photo = async () => {
@@ -78,20 +90,19 @@ export default class extends Controller {
     });
     this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
     this.convertToBase64(this.file)
-    const imgElement = document.createElement('img');
+    this.imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
-    imgElement.src = imageUrl;
-    imgElement.width = width;
-    imgElement.height = height;
-    this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
+    this.imgElement.src = imageUrl;
+    this.imgElement.width = width;
+    this.imgElement.height = height;
+    this.cameraScreenTarget.parentNode.replaceChild(this.imgElement, this.cameraScreenTarget);
     this.stopPhoto();
   };
 
   convertToBase64(file) {
     if (file) {
       this.fileToBase64(file).then(base64 => {
-        // this.outputTarget.textContent = base64;
-        // console.log('Fichier converti en base64 :', base64);
+        this.sendPhoto(base64);
       }).catch(error => {
         console.error('Erreur lors de la conversion en base64 :', error);
       });
@@ -107,9 +118,97 @@ export default class extends Controller {
     });
   };
 
+  sendPhoto(base64) {
+    let loadingphoto = document.querySelector("#loadingphoto");
+    let validatebutton = document.querySelector("#validatephoto");
+    let retryphoto = document.querySelector("#retryphoto");
+    validatebutton.classList.add('d-none')
+    const url_photo = `/takes/${this.takeIdValue}/photo`;
+    // console.log(url_photo);
+    const token = document.getElementsByName('csrf-token')[0].content;
+    fetch(url_photo, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'X-CSRF-Token': token
+        },
+        body: base64,
+    })
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error('Erreur réseau ou serveur');
+      }
+    })
+    .then(data => {
+      if (data.errors) {
+        alert(data.errors);
+      } else {
+        if (data.error) {
+          loadingphoto.classList.add("d-none");
+          validatebutton.classList.add("d-none");
+          retryphoto.classList.remove("d-none");
+        } else {
+          loadingphoto.classList.add("d-none");
+          validatebutton.classList.remove("d-none");
+          retryphoto.classList.add("d-none");
+          // let medic_id = document.querySelector("#planification_medication_id");
+          // let medic_name = document.querySelector(".custom-title");
+          console.log(data)
+          if (data.resultat.Reponse) {
+            // const image = document.querySelector("img")
+            this.displayLvl4()
+            this.imgElement.style.borderRadius="30px";
+            this.imgElement.style.border="20px solid #50C878";
+            this.imgElement.insertAdjacentHTML('afterend',`<p>${data.resultat.Differences} </p> <p><b>Vous pouvez le prendre.</b></p>`);
+            this.takeInfoTarget.classList.remove("d-none");
+          }
+          else {
+            // const wrongMedic = `<p>${data.resultat.Differences}.</p>`
+            // this.imgElement.parentNode.replaceChild(wrongMedic, this.imgElement);
+            // this.otherMedicTarget.classList.remove("d-none");
+            this.displayLvl3()
+            this.imgElement.classList.add('d-none');
+            this.otherMedicTarget.classList.remove("d-none");
+            this.otherMedicTarget.insertAdjacentHTML('afterbegin',`<p>${data.resultat.Differences}</p>`);
+
+          }
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors de la requête fetch:', error);
+    });
+  };
+
+
   validatePhoto(event) {
     //faire la comparaison IA et si ok on a la redirection ci-dessous
-    window.location.href = this.urlValue;
+    const token = document.getElementsByName('csrf-token')[0].content;
+    const url_taken = `/takes/${this.takeIdValue}/taken`;
+    fetch(url_taken, {
+      method: "PATCH",
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: JSON.stringify( { info: "Medication has been validated as taken" } )
+    })
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error('Erreur réseau ou serveur');
+      }
+    })
+    .then(data => {
+      if (data.errors) {
+        alert(data.errors);
+      } else {
+        window.location.href = "/";
+      }
+    })
   };
 
   retakePhoto () {
