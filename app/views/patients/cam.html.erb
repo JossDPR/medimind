@@ -6,7 +6,7 @@
 
     <div class="selfie-container" >
       <video class="selfie-video" data-camera-target="cameraScreen"></video>
-      <div class="d-none form_card mt-4", data-camera-target="formarea">
+      <div class="d-none form_card mx-2 my-4", data-camera-target="formarea">
         <h2>Détails de la prescription :</h2>
         <hr>
         <div class="form_inputs", data-controller="checkbox">
@@ -18,8 +18,16 @@
             <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
           </div>
           <%= f.input :frequency_days, label: "Fréquence de prises :" %>
-          <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
-          <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
+
+          <div data-controller="flatpickr" class="center-calendar">
+            <label class="form-label range required" for="range_range">Dates de prescription : <abbr title="required">*</abbr></label>
+            <input class="form-control string optional d-none" data-target="flatpickr.rangeDate" id="range_range" type="text" name="planification[range_date]">
+            <%= f.input :start_date, label: false, as: :string, required: false,
+                        input_html: {  data: { target: "flatpickr.startDate" }, id: "range_start", class: "d-none" } %>
+            <%= f.input :end_date, label: false, as: :string, required: false,
+                        input_html: {  data: { target: "flatpickr.endDate" }, id: "range_end", class: "d-none" } %>
+          </div>
+
           <div class="check-boxes-container">
             <%= f.association :taking_periods, as: :check_boxes,
                           label: "Moments de la journée :",

@@ -67,3 +67,10 @@
   grid-template-columns: 4fr 6fr;
   gap: 16px;
 }
+
+.center-calendar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
