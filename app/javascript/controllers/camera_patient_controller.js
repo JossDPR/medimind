@@ -2,9 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera-patient"
 export default class extends Controller {
-  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2"]
+  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2", "takeInfo", "otherMedic"]
   static values = {
-    url: String
+    takeId: String
   }
 
   connect() {
@@ -60,7 +60,7 @@ export default class extends Controller {
     this.stream.getTracks().forEach(track => {
       track.stop();
     });
-    window.location.href = this.urlValue;
+    window.location.href = "/";
   };
 
   photo = async () => {
@@ -78,12 +78,12 @@ export default class extends Controller {
     });
     this.file = new File([data], 'medic_photo.jpg',{ type: 'image/jpeg' });
     this.convertToBase64(this.file)
-    const imgElement = document.createElement('img');
+    this.imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
-    imgElement.src = imageUrl;
-    imgElement.width = width;
-    imgElement.height = height;
-    this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
+    this.imgElement.src = imageUrl;
+    this.imgElement.width = width;
+    this.imgElement.height = height;
+    this.cameraScreenTarget.parentNode.replaceChild(this.imgElement, this.cameraScreenTarget);
     this.stopPhoto();
   };
 
@@ -110,7 +110,8 @@ export default class extends Controller {
     let loadingphoto = document.querySelector("#loadingphoto");
     let validatebutton = document.querySelector("#validatephoto");
     let retryphoto = document.querySelector("#retryphoto");
-    const url_photo = "/planifications/photo";
+    const url_photo = `/takes/${this.takeIdValue}/photo`;
+    // console.log(url_photo);
     const token = document.getElementsByName('csrf-token')[0].content;
     fetch(url_photo, {
         method: "POST",
@@ -139,10 +140,25 @@ export default class extends Controller {
           loadingphoto.classList.add("d-none");
           validatebutton.classList.remove("d-none");
           retryphoto.classList.add("d-none");
-          let medic_id = document.querySelector("#planification_medication_id");
-          let medic_name = document.querySelector(".custom-title");
-          medic_id.value=data.medication.id;
-          medic_name.innerHTML=data.medication.name;
+          // let medic_id = document.querySelector("#planification_medication_id");
+          // let medic_name = document.querySelector(".custom-title");
+          console.log(data)
+          if (data.resultat.Reponse) {
+            // const image = document.querySelector("img")
+            this.imgElement.style.borderRadius="30px";
+            this.imgElement.style.border="20px solid #50C878";
+            this.imgElement.insertAdjacentHTML('afterend',`<p>${data.resultat.Differences} Vous pouvez le prendre.</p>`);
+            this.takeInfoTarget.classList.remove("d-none");
+          }
+          else {
+            // const wrongMedic = `<p>${data.resultat.Differences}.</p>`
+            // this.imgElement.parentNode.replaceChild(wrongMedic, this.imgElement);
+            // this.otherMedicTarget.classList.remove("d-none");
+            this.imgElement.classList.add('d-none');
+            this.otherMedicTarget.classList.remove("d-none");
+            this.otherMedicTarget.insertAdjacentHTML('afterbegin',`<p>${data.resultat.Differences}</p>`);
+
+          }
         }
       }
     })
@@ -154,7 +170,7 @@ export default class extends Controller {
 
   validatePhoto(event) {
     //faire la comparaison IA et si ok on a la redirection ci-dessous
-    window.location.href = this.urlValue;
+    window.location.href = "/";
   };
 
   retakePhoto () {

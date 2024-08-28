@@ -1,0 +1,39 @@
+<div class="custom-confirm">
+  <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
+  <h1>Nouveau médicament</h1>
+
+  <div data-controller="camera-patient", data-camera-patient-take-id-value=<%="#{ @take.id}"%>>
+    <div class="selfie-container" >
+      <video class="selfie-video" data-camera-patient-target="cameraScreen"></video>
+    </div>
+
+    <div class='d-none' data-camera-patient-target="takeInfo">
+      <div class="grid-qte">
+        <%= @take.planification.quantity %> <%= @take.planification.dosage.label %>
+      </div>
+      <div class="grid-comment">
+        <%= @take.planification.description %>
+      </div>
+    </div>
+
+    <div class='d-none' data-camera-patient-target="otherMedic">
+      <span style="color: red, font-size: 20px"> <i class="fa-solid fa-circle-xmark"></i></span>
+      <p>Vous devez chercher la boîte du médicament :
+      <div class="grid-medic">
+          <%= @take.planification.medication.name %>
+          </p>
+      </div>
+      <p>et reprendre une photographie. </p>
+    </div>
+
+    <div class="buttons_double" data-camera-patient-target="buttonsLvl1">
+        <button data-action="click->camera-patient#stopPhotoAndBack"><i class="fa-solid fa-chevron-left"></i> Retour</button>
+        <button data-action="click->camera-patient#photo"><i class="fa-solid fa-camera"></i> Photo</button>
+    </div>
+    <div class="buttons_double d-none" data-camera-patient-target="buttonsLvl2">
+        <button data-action="click->camera-patient#retakePhoto" id="retryphoto"  ><i class="fa-solid fa-camera"></i> Reprendre</button>
+        <button data-action="click->camera-patient#validatePhoto" id="validatephoto" ><i class="fa-solid fa-camera"></i> Valider</button>
+        <button disabled id="loadingphoto"><img src="<%= asset_path('loading-6321_512.gif') %>" alt="Photo GIF" style="height: 32px; width: auto;"/></button>
+    </div>
+  </div>
+</div>

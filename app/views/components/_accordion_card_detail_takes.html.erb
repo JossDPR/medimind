@@ -34,7 +34,7 @@
           <%= element.planification.description %>
         </div>
         <div class="grid-val">
-            <%= link_to cam_patient_patient_path(element.planification.patient_id) do%>
+            <%= link_to cam_patient_take_path(element) do%>
               <%= render "components/button_photo", content: "Valider" %>
             <% end %>
         </div>

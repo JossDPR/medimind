@@ -1,9 +1,13 @@
 class OpenAiSvc
 
-  def comparer_photos(photo1_url, photo2_url)
-    question = "Tu peux me dire au format json si ce sont les mêmes noms de médicaments, les mêmes posologies, je veux True dans la variable Reponse si c'est elles sont identiques et False le cas contraire puis dans une variable Differences une phrase simple avec les differences si il y en a, sans rien ajouter devant le json?"
-    reponse = self.open_ai_comparer_photo(question, photo1_url, photo2_url)
-
+  def comparer_photos(photo1_url, medication_name)
+    question = "Peux-tu me dire si la photo montre le médicament #{medication_name}?
+    Réponds avec un json: true dans la variable Reponse si les médicaments sont identiques et
+    false si ils sont différents. Puis dans une variable Differences écris une phrase simple avec les
+    differences si il y en a, sans rien ajouter devant le json."
+    reponse = self.open_ai_comparer_photo(question, photo1_url)
+    puts reponse
+    return traitement_reponse(reponse)
   end
 
   def lecture_ordonance(photo_url)
@@ -27,7 +31,7 @@ class OpenAiSvc
 
   private
 
-  def open_ai_comparer_photo(question, photo1_url, photo2_url)
+  def open_ai_comparer_photo(question, photo1_url)
     client = OpenAI::Client.new
     return client.chat(
       parameters: {
@@ -39,7 +43,6 @@ class OpenAiSvc
                       "content": [
                         {"type": "text", "text": question},
                         {"type": "image_url", "image_url": {"url": photo1_url}},
-                        {"type": "image_url", "image_url": {"url": photo2_url}}
                       ]
                     }
                   ]
@@ -68,7 +71,7 @@ class OpenAiSvc
 
   def traitement_reponse(reponse)
     retour_ai = reponse["choices"][0]["message"]["content"]
-    if retour_ai.include? "name"
+    if retour_ai.include?("name") || retour_ai.include?("Reponse")
       retour_json = retour_ai.gsub(/```json|```/, '').strip
       json = JSON.parse(retour_json)
     else
@@ -76,5 +79,4 @@ class OpenAiSvc
     end
     return json
   end
-
 end
