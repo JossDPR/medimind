@@ -20,7 +20,7 @@
           <%= f.input :frequency_days, label: "Fréquence de prises :" %>
 
           <div data-controller="flatpickr" class="center-calendar">
-            <label class="form-label range required" for="range_range">Plage des prises : <abbr title="required">*</abbr></label>
+            <label class="form-label range required" for="range_range">Dates de prescription : <abbr title="required">*</abbr></label>
             <input class="form-control string optional d-none" data-target="flatpickr.rangeDate" id="range_range" type="text" name="planification[range_date]">
             <%= f.input :start_date, label: false, as: :string, required: false,
                         input_html: {  data: { target: "flatpickr.startDate" }, id: "range_start", class: "d-none" } %>

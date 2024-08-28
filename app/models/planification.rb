@@ -10,7 +10,7 @@ class Planification < ApplicationRecord
 
   validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :start_date, :end_date, presence: true
-  validates :end_date, comparison: { greater_than: :start_date }
+  validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
   validates :frequency_days, presence: true, numericality: { only_integer: true, greater_than: 0 }
   after_create :set_takes
 

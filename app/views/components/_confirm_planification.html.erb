@@ -3,20 +3,27 @@
   <div>
     <h1>Médicament ajouté</h1>
     <p><strong><%= @planification.medication.name %></strong> a été ajouté à la liste de vos prises</p>
-    <% if @planification.end_date.present? %>
+    <% if @planification.end_date.present? && (@planification.end_date != @planification.start_date) %>
       <p>Votre traitement durera du <%= @planification.start_date.strftime("%d/%m/%Y") %> au <%= @planification.end_date.strftime("%d/%m/%Y") %></p>
       <% else %>
-      <p>Votre traitement démarre le <%= @planification.start_date.strftime("%d/%m/%Y") %> </p>
+      <p>Votre traitement sera à prendre le <%= @planification.start_date.strftime("%d/%m/%Y") %> </p>
     <% end %>
-    <p>Vous devez prendre <%= @planification.quantity %><%= @planification.dosage.label %> tous les
-      <% @planification.taking_periods.each do |period| %>
-        <%= period.label %>
-      <% end %>.</p>
-    <p>Voulez-vous <strong>confirmer</strong> votre action ?</p>
+    <p>Vous devez prendre <strong><%= @planification.quantity %><%= @planification.dosage.label %>
+    <% if @planification.end_date.present? && (@planification.end_date != @planification.start_date) %>
+     tous les <%= @planification.taking_periods.map(&:label).join(', ') %>.</p></strong>
+    <% else %>
+      <% if @planification.taking_periods.count > 1 %>
+        les
+      <% else %>
+        le
+      <% end %>
+      <%= @planification.taking_periods.map(&:label).join(', ') %>.</p></strong>
+    <% end %>
+    <p>Voulez-vous confirmer la prescription ?</p>
   </div>
 
     <div class="buttons_double" data-controller="confirmation-planif" data-confirmation-planif-url-cancel-value=<%="#{edit_planification_path(@planification)}"%> data-confirmation-planif-url-confirm-value=<%="#{patient_planifications_path(@planification.patient)}"%>>
-      <button data-action="click->confirmation-planif#cancel" ><i class="fa-solid fa-chevron-left"></i> Annuler</button>
-      <button data-action="click->confirmation-planif#confirm" ><i class="fa-solid fa-check"></i>Confirmer</button>
+      <button data-action="click->confirmation-planif#cancel" ><i class="fa-solid fa-pen-to-square"></i> Modifier</button>
+      <button data-action="click->confirmation-planif#confirm" ><i class="fa-solid fa-check"></i> Confirmer</button>
     </div>
 </div>
