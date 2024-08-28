@@ -31,7 +31,7 @@ class TakesController < ApplicationController
   def taken
     @take = Take.find(params[:id])
     @take.taken_date = Time.now
-    if @take.update!
+    if @take.save!
       respond_to do |format|
         # format.html { redirect_to patient_planifications_path(@patient), notice: "Planification created successfully." }
         format.json { render json: { message: "Take is updated" }, status: :created }

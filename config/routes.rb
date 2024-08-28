@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     member do
       get 'cam_patient'
       post 'photo'
-      post 'taken'
+      patch 'taken'
     end
   end
 

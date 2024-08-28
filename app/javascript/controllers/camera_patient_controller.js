@@ -194,15 +194,21 @@ export default class extends Controller {
         'X-CSRF-Token': token
       },
       body: JSON.stringify( { info: "Medication has been validated as taken" } )
-  })
-  .then(resp => {
-    if (resp.ok) {
-      return resp.json();
-    } else {
-      throw new Error('Erreur réseau ou serveur');
-    }
-  })
-    window.location.href = "/";
+    })
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error('Erreur réseau ou serveur');
+      }
+    })
+    .then(data => {
+      if (data.errors) {
+        alert(data.errors);
+      } else {
+        window.location.href = "/";
+      }
+    })
   };
 
   retakePhoto () {
