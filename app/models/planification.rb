@@ -12,11 +12,12 @@ class Planification < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
   validates :frequency_days, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  after_create :set_takes
+  after_save :set_takes
 
   private
 
   def set_takes
+    takes.destroy_all
     current_date = start_date
     while current_date <= end_date
       taking_periods.each do |e|

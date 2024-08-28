@@ -3,7 +3,7 @@ class TakesController < ApplicationController
   # before_action :set_take, only: %i[cam_patient, photo]
 
   def index
-    @takes = Take.current_take(@patient)
+    @takes = Take.current_take(@patient).where(taken_date: nil)
   end
 
   def cam_patient
