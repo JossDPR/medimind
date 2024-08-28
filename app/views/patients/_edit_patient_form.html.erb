@@ -1,7 +1,7 @@
 <%= simple_form_for @patient, url: patient_path do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-inputs form_card m-4">
     <%= f.input :first_name, label: 'Prénom',
                 required: true,
                 autofocus: true,
@@ -32,9 +32,10 @@
                 input_html: { autocomplete: "Votre mot de passe" } %>
   </div>
 
-  <div class="text-center">
-    <%= button_tag(type: 'submit', class: "boton-elegante") do %>
-      <i class="fa-solid fa-check"></i> Enregistrer
+  <div class="buttons_double">
+    <%= link_to patient_patient_takes_path(@patient), class: 'b_button' do %>
+      <i class="fa-solid fa-chevron-left"></i> Retour
     <% end %>
+    <button type="submit"><i class="fa-solid fa-check"></i> Enregistrer</button>
   </div>
 <% end %>

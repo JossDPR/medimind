@@ -12,3 +12,44 @@
       text-align: center;
     }
 }
+
+.b_button {
+  padding: 12px;
+  background: transparent;
+  border: none;
+  color: $navbar_open_color; /* Exemple de couleur */
+  height: 3rem;
+  font-size: 1rem;
+  width: 50%;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.b_button:nth-of-type(1) {
+  border-top: 1px solid #B4B4B4;
+  border-right: 1px solid #B4B4B4;
+}
+
+.b_button:nth-of-type(2) {
+  border-top: 1px solid #B4B4B4;
+}
+
+.b_button:nth-of-type(3) {
+  border-top: 1px solid #B4B4B4;
+}
+
+.b_button:nth-of-type(4) {
+  border-top: 1px solid #B4B4B4;
+}
+
+.b_button:not([disabled]):focus,
+.b_button:not([disabled]):hover {
+  font-weight: bold;
+  background: $navbar_open_color;
+  color: #FFFFFF;
+}
+
+.b_button:not([disabled]):active {
+  background: $navbar_open_color;
+  color: #FFFFFF;
+}

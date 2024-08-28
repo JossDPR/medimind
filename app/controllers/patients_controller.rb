@@ -19,7 +19,7 @@ class PatientsController < ApplicationController
     @patient = User.new(patient_params)
     @user.patients.push(@patient)
     if @patient.save
-      redirect_to patient_planifications_path(@patient)
+      redirect_to patient_patient_takes_path(@patient)
       flash[:notice] = "#{@patient.first_name} a été créé."
     else
       render :new, status: :unprocessable_entity
