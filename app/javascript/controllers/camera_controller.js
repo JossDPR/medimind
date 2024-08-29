@@ -21,18 +21,20 @@ export default class extends Controller {
       this.cameraScreenTarget.srcObject = stream;
       this.cameraScreenTarget.play();
       const tracks = stream.getTracks();
-      this.cameraScreenTarget.onloadedmetadata = () => {
-        this.width = this.cameraScreenTarget.videoWidth;
-        this.height = this.cameraScreenTarget.videoHeight;
-        console.log(`Camera screen size: ${videoWidth}x${videoHeight}`);
-      };
+      // this.cameraScreenTarget.onloadedmetadata = () => {
+      //   this.width = this.cameraScreenTarget.videoWidth;
+      //   this.height = this.cameraScreenTarget.videoHeight;
+      //   console.log(`Camera screen size: ${videoWidth}x${videoHeight}`);
+      // };
     })
     .catch(function(err) {
       console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
     });
+    // this.width = window.screen.width *0.8;
+    // this.height = window.screen.height * 0.4;
 
-    this.cameraScreenTarget.style.width = this.width;
-    this.cameraScreenTarget.style.height = this.height;
+    // this.cameraScreenTarget.setAttribute("height", window.screen.height * 0.4);
+    this.cameraScreenTarget.setAttribute("width", window.screen.width * 0.8);
     onpopstate = (event) => {
       this.stopPhoto();
     }
@@ -74,8 +76,8 @@ export default class extends Controller {
     this.displayLvl2();
 
     const canvas = document.createElement('canvas');
-    // const width = 300;
-    // const height = 230;
+    this.width = this.cameraScreenTarget.videoWidth;
+    this.height= this.cameraScreenTarget.videoHeight;
     var context = canvas.getContext('2d');
     canvas.width = this.width;
     canvas.height = this.height;
@@ -88,8 +90,8 @@ export default class extends Controller {
     const imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
     imgElement.src = imageUrl;
-    imgElement.width = this.width;
-    imgElement.height = this.height;
+    imgElement.width = window.screen.width * 0.8;
+    // imgElement.height = this.height;
     this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
     this.stopPhoto();
   };

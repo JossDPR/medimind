@@ -6,7 +6,7 @@
     <div class="form_inputs", data-controller="checkbox">
       <%= simple_form_for @planification, url:  planification_path(@planification), html: { data: { edit_planification_target: 'form'} } do |f| %>
         <% if @planification.photo.key != nil %>
-          <%= cl_image_tag @planification.photo.key, sizes: "(max-width: 589px) 100vw" %>
+          <%= cl_image_tag @planification.photo.key, class: "size" %>
         <% end %>
         <h2 class="custom-title"><%= @planification.medication.name %></h2>
         <div class="posotity">
