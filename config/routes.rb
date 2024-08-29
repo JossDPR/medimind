@@ -45,6 +45,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tutor_patients, only: [:show] do
+    resources :chats, only: [:create]
+  end
+
   resources :takes, only: [] do
     member do
       get 'cam_patient'

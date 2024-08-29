@@ -1,0 +1,9 @@
+<div id="message-<%= chat.id %>" class="message <%= chat.user === user ? 'sent' : 'received' %>"
+ data-controller="message"
+ data-message-user-id-value="<%= chat.user.id %>">
+  <small class="message-info">
+    <strong><%= chat.user.first_name %></strong>
+    <i><%= chat.created_at.strftime("%a %b %e at %l:%M %p") %></i>
+  </small>
+  <p class="message-content"><%= chat.message %></p>
+</div>

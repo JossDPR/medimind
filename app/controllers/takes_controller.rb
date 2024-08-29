@@ -4,6 +4,11 @@ class TakesController < ApplicationController
 
   def index
     @takes = Take.current_take(@patient).where(taken_date: nil)
+    if current_user.tutor?
+      @tutor_patient_relation = TutorPatient.where(["patient_id = ? and tutor_id = ?", @patient.id, current_user.id])
+    else
+      @tutor_patient_relation = TutorPatient.where(patient_id: @patient.id)
+    end
   end
 
   def cam_patient
