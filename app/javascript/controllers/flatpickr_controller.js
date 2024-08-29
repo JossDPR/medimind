@@ -62,8 +62,6 @@ export default class extends Controller {
       inline: true,
       defaultDate: defaultDates,
       onChange: (selectedDates) => {
-        console.log("Nb: " + selectedDates.length);
-        console.log("Select : " + selectedDates);
         if (selectedDates.length === 2) {
           const [startDate, endDate] = selectedDates;
           this.startDateTarget.value = this.formatDate(startDate);
