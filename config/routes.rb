@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
     resources :takes, only: %i[index]
     resources :patient_takes, only: %i[index]
+    resources :patient_histo, only: %i[index create]
   end
 
   resources :planifications, only: %i[edit update destroy] do

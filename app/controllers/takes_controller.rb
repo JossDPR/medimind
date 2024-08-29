@@ -6,6 +6,10 @@ class TakesController < ApplicationController
     @takes = Take.current_take(@patient)
   end
 
+  def create
+    puts "PASS CREATE"
+  end
+
   def cam_patient
     @take = Take.find(params[:id])
   end

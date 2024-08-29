@@ -1,0 +1,33 @@
+<h1>PatientHisto#index</h1>
+
+
+	<main>
+
+
+  <div data-controller="histoflatpickr" class="center-calendar">
+    <%= form_with url:  patient_patient_histo_index_path(), method: :post, local: true do %>
+    <input class="form-control string optional d-none" data-histoflatpickr-target="rangeDate" id="range_range" type="text" name="histo[range_date]">
+    <input class="form-control string optional" data-histoflatpickr-target="startDate" id="range_start" type="text" name="histo[start_date]">
+    <input class="form-control string optional" data-histoflatpickr-target="endDate" id="range_end" type="text" name="histo[end_date]">
+<% end %>
+  </div>
+
+    <% previous_date = nil %>
+    <% previous_moment = nil %>
+      <% @takes.each do |take| %>
+        <% if previous_date != take.datetime.to_date %>
+          <%= take.datetime.to_date %>
+        <% end %>
+
+        <% current_moment = 'Matin' if (5..9).include?(take.datetime.hour) %>
+        <% current_moment = 'Midi' if (10..14).include?(take.datetime.hour) %>
+        <% current_moment = 'Soir' if (15..23).include?(take.datetime.hour) %>
+        <% if current_moment && current_moment != previous_moment %>
+          <p><%= current_moment %></p>
+        <% end %>
+
+        <%= render "components/card_histo", element: take %>
+        <% previous_date = take.datetime.to_date %>
+        <% previous_moment = current_moment %>
+      <% end %>
+	</main>
