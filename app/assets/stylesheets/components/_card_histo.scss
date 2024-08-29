@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: space-around;
   gap: 15px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .icon-container {
@@ -45,4 +45,16 @@
   color: $dark-gray;
   font-size: 17px;
   font-weight: 700;
+}
+
+.histodat {
+  font-size: 15px;
+  font-weight: bold;
+  color: $navbar_open_color;
+}
+
+.histomom {
+  font-size: 15px;
+  font-style: italic;
+  color: $navbar_open_color;
 }

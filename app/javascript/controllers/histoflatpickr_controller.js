@@ -89,12 +89,13 @@ const French = {
                 startDate: startOfWeek,
                 endDate: endOfWeek
               };
-              document.querySelector('form').submit();
-
-              fetch(patient_patient_histo_index_path(), {
+              // document.querySelector('form').submit();
+              const token = document.getElementsByName('csrf-token')[0].content;
+              fetch('/patients/4/patient_histo', {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json'
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': token
                 },
                 body: JSON.stringify(data)
               })
@@ -102,23 +103,16 @@ const French = {
                 if (!response.ok) {
                   throw new Error('Network response was not ok');
                 }
-                return response.json();
+                return response.text();
               })
               .then(responseData => {
-                console.log('Réponse du serveur:', responseData);
+
+                this.traitement_data(responseData)
 
               })
               .catch(error => {
                 console.error('Erreur lors de la requête fetch:', error);
               });
-
-
-
-
-
-
-
-
           }
         },
         locale: French,
@@ -132,7 +126,20 @@ const French = {
 
     }
 
+    traitement_data(data) {
+      console.log('Réponse du serveur:', data);
 
+
+
+
+      let container = document.querySelector(".historique");
+      console.dir(container);
+      container.innerHTML = data;
+
+
+
+
+    }
 
 
 
