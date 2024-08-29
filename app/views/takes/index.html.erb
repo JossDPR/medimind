@@ -2,8 +2,6 @@
 
 <%= render "components/accordion_card_takes", elements: @takes %>
 
-<%= link_to tutor_root_path do %>
+<%= link_to tutor_patient_path(@tutor_patient_relation.ids) do %>
   <%= render "components/chat_button" %>
 <% end %>
-
-<%# tutor_patient_path(@tutor_patient_relation) %>
