@@ -2,12 +2,23 @@
   <div class="default_card">
     <h2 class="patient-full-name"><%= "#{@patient.first_name} #{@patient.last_name}" %></h2>
     <hr>
-    <%= link_to edit_patient_path(@patient.id) do %>
-      <%= render "components/button_edit", content: "Editer patient" %>
-    <% end %>
-    <%= link_to patient_planifications_path(@patient.id) do%>
-      <%= render "components/button", content: "Voir les prescriptions" %>
-    <% end %>
+    <div class="row">
+      <div class="col">
+        <%= link_to edit_patient_path(@patient.id) do %>
+          <%= render "components/little_buttons", content: "Editer" %>
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to patient_planifications_path(@patient.id) do%>
+          <%= render "components/little_buttons", content: "Prescriptions" %>
+        <% end %>
+      </div>
+      <div class="col">
+        <%= link_to patient_planifications_path(@patient.id) do%>
+          <%= render "components/little_buttons", content: "Historique" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>
 
