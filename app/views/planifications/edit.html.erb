@@ -1,5 +1,5 @@
 
-<div class="custom-confirm" data-controller="edit-planification" data-edit-planification-url-value=<%="#{planification_path(@planification)}"%>>
+<div class="custom-confirm" data-controller="edit-planification" data-edit-planification-url-value=<%="#{planification_path(@planification)}"%> data-edit-planification-cancel-value=<%="#{patient_planifications_path(@planification.patient.id)}"%>>
   <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
   <h1>Modifier la prescription</h1>
   <div class="form_card m-4">
@@ -8,7 +8,9 @@
         <% if @planification.photo.key != nil %>
           <%= cl_image_tag @planification.photo.key, class: "size" %>
         <% end %>
-        <h2 class="custom-title"><%= @planification.medication.name %></h2>
+        <div class="custom-title">
+        <h2><%= @planification.medication.name %></h2>
+        </div>
         <div class="posotity">
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>

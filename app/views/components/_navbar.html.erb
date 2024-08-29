@@ -16,15 +16,15 @@
   <nav class="navbar" data-burger-target="navbar">
      <% if user_signed_in? %>
     <ul class="nav-links">
-      <li class="nav-link" data-burger-target="navLink"><%= link_to "Home", root_path, class: "nav-link" %></li>
-      <li class="nav-link" data-burger-target="navLink"><%= link_to "About", about_path, class: "nav-link" %></li>
+      <li class="nav-link" data-burger-target="navLink"><%= link_to "Menu", root_path, class: "nav-link" %></li>
+      <li class="nav-link" data-burger-target="navLink"><%= link_to "À propos", about_path, class: "nav-link" %></li>
       <li class="nav-link" data-burger-target="navLink"><%= link_to "Contact", contact_path, class: "nav-link" %></li>
-      <li class="nav-link" data-burger-target="navLink"><%= link_to "UI", ui_path, class: "nav-link" %></li>
-      <li class="nav-link" data-burger-target="navLink"><%= link_to "Log out", destroy_user_session_path, class: "dropdown-item", data: {turbo_method: :delete} %></li>
+      <%# <li class="nav-link" data-burger-target="navLink"><%= link_to "UI", ui_path, class: "nav-link" %>
+      <li class="nav-link" data-burger-target="navLink"><%= link_to "Déconnexion", destroy_user_session_path, class: "dropdown-item", data: {turbo_method: :delete} %></li>
     </ul>
     <% else %>
       <ul class="nav-links">
-        <li class="nav-link" data-burger-target="navLink"><%= link_to "Sign-In", new_user_session_path, class: "nav-link" %></li>
+        <li class="nav-link" data-burger-target="navLink"><%= link_to "Connexion", new_user_session_path, class: "nav-link" %></li>
       </ul>
     <% end %>
   </nav>
