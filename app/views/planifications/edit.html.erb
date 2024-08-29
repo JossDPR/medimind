@@ -13,7 +13,7 @@
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         </div>
-        <%= f.input :frequency_days, label: "Intervalle de jours par prises :" %>
+        <%= f.input :frequency_days, label: "Intervalle de prises en jours :" %>
         <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
         <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
         <div class="check-boxes-container">
@@ -32,4 +32,7 @@
     <button data-action="click->edit-planification#cancel"><i class="fa-solid fa-chevron-left"></i> Retour</button>
     <button data-action="click->edit-planification#submitForm"><i class="fa-solid fa-check"></i> Enregistrer</button>
   </div>
+</div>
+<div id="anim">
+  <span class="tooltip" data-tooltip="username must consist of 29 symbols.">?</span>
 </div>
