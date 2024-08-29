@@ -1,7 +1,7 @@
 .chat {
   background: white;
   margin-top: 9px;
-  height: calc(100vh - 75px);
+  height: calc(100vh - 270px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -51,13 +51,13 @@
   }
 
   .message.sent .message-content {
-    align-self: flex-start;
-    background: $blue;
+    align-self: flex-end;
+    background: $primary;
     color: $light-gray;
   }
 
   .message.received .message-content {
-    align-self: flex-end;
+    align-self: flex-start;
     background: $gray-200;
   }
 }
