@@ -52,12 +52,22 @@ const French = {
 
     connect() {
 
+      function getEndOfWeek(date) {
+        const lastDayOfWeek = new Date(date);
+        lastDayOfWeek.setDate(date.getDate() + (7 - date.getDay()));
+        return lastDayOfWeek;
+      }
+
+      const today = new Date();
+      const SelectendOfWeek = getEndOfWeek(today);
+
+
       flatpickr(this.rangeDateTarget, {
         mode: "range",
-        maxDate: "today",
+        maxDate: SelectendOfWeek,
         dateFormat: "d/m/Y",
         inline: true,
-        onChange: function(selectedDates, dateStr, instance) {
+        onChange: (selectedDates, dateStr, instance) => {
           if (selectedDates.length === 1) {
               const date = selectedDates[0];
 
@@ -72,14 +82,43 @@ const French = {
               // Mise à jour de la sélection pour inclure toute la semaine
               instance.setDate([startOfWeek, endOfWeek]);
 
-              // console.log(startOfWeek);
-              // console.dir(this.rangeDateTarget);
               this.startDateTarget.value = startOfWeek;
+              this.endDateTarget.value = endOfWeek;
 
-              // this.endDateTarget.value = endOfWeek;
+              const data = {
+                startDate: startOfWeek,
+                endDate: endOfWeek
+              };
+              document.querySelector('form').submit();
 
-              // Soumettre le formulaire pour filtrer les enregistrements
-              this.rangeDateTarget.closest('form').submit();
+              fetch(patient_patient_histo_index_path(), {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(responseData => {
+                console.log('Réponse du serveur:', responseData);
+
+              })
+              .catch(error => {
+                console.error('Erreur lors de la requête fetch:', error);
+              });
+
+
+
+
+
+
+
+
           }
         },
         locale: French,
@@ -90,7 +129,22 @@ const French = {
         time_24hr: true,
 
       })
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     formatDate(date) {
