@@ -182,14 +182,15 @@ export default class extends Controller {
     event.preventDefault();
     let formData = new FormData(this.formTarget);
     formData.append("file", this.file);
+    formData.delete("planification[range_date]")
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'X-CSRF-Token': token
-        },
-        body: formData,
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: formData,
     })
     .then(resp => resp.json())
     .then(data => {
