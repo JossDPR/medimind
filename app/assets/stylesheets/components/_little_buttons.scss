@@ -1,10 +1,10 @@
 .l-button {
-  width: 100px;
+  width: 150px;
   padding: 5px 30px;
   border: 2px solid $button_border_color;
   background-color: $primary;
   color: #ffffff;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   border-radius: 30px;
   transition: all 0.4s ease;
@@ -13,8 +13,6 @@
   overflow: hidden;
   font-weight: bold;
   text-align: center;
-  margin: 16px;
-  max-width: 30%;
 }
 
 .l-button::after {
@@ -40,4 +38,8 @@
 .l-button:hover {
   border-color: #348772;
   background: #348772;
+}
+
+.presc {
+  font-size: 1rem;
 }
