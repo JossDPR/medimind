@@ -27,4 +27,7 @@
   <%= render "components/back_button", symbol: raw('<i class="fa-solid fa-angle-left"></i>') %>
 <% end %>
 
-<%= link_to 'Chat',  tutor_patient_path(@tutor_patient_relation.ids) %>
+<%= link_to tutor_patient_path(@tutor_patient_relation.ids) do %>
+  <%= render "components/chat_button" %>
+<% end %>
+

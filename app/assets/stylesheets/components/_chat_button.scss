@@ -1,0 +1,43 @@
+.chat_btn {
+  bottom: 5%;
+  right: 5%;
+  padding: 5px 30px;
+  border: 2px solid $button_border_color;
+  background-color: $primary;
+  color: #ffffff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 34px;
+  transition: all 0.4s ease;
+  outline: none;
+  position: fixed;
+  overflow: hidden;
+  font-weight: bold;
+  text-align: left;
+  margin: 5px;
+}
+
+.chat_btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  background: radial-gradient(
+    circle,
+    rgba(100, 132, 213, 0.4) 0%,
+    rgba(67, 67, 161, 0.168) 70%
+  );
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.chat_btn:hover::after {
+  transform: scale(4);
+}
+
+.chat_btn:hover {
+  border-color: #348772;
+  background: #348772;
+}
