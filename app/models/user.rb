@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   has_many :patients, through: :tutors_relation
   has_many :tutors, through: :patients_relation
+  has_many :chats
 
   validates :first_name, presence: true
   validates :last_name, presence: true

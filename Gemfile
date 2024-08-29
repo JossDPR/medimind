@@ -79,3 +79,4 @@ end
 
 gem "pundit", "~> 2.3"
 gem "cloudinary"
+gem "actioncable-enhanced-postgresql-adapter"
