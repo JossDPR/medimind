@@ -12,25 +12,12 @@ class Planification < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validates :end_date, comparison: { greater_than_or_equal_to: :start_date }
   validates :frequency_days, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  after_save :set_takes
+  # after_save :set_takes_job
+  after_commit :set_takes_job, on: %i[create update]
 
   private
 
-  def set_takes
-    takes.destroy_all
-    current_date = start_date
-    while current_date <= end_date
-      taking_periods.each do |e|
-        case e.label
-        when "Matin"
-          Take.create(datetime: current_date.to_datetime + 5.hours, planification_id: id)
-        when "Midi"
-          Take.create(datetime: current_date.to_datetime + 10.hours, planification_id: id)
-        when "Soir"
-          Take.create(datetime: current_date.to_datetime + 15.hours, planification_id: id)
-        end
-      end
-      current_date += frequency_days
-    end
+  def set_takes_job
+    TakesCreationJob.perform_later(self)
   end
 end
