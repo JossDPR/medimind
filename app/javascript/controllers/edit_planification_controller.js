@@ -4,14 +4,16 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["form", "url"]
   static values = {
-    url: String
+    url: String,
+    cancel: String
   }
   connect() {
-    console.log("Edit_planification controller connected")
   }
+  
   cancel () {
-    window.location.href = this.urlValue;
+    window.location.href = this.cancelValue;
   }
+
   submitForm(event) {
     event.preventDefault();
     let formData = new FormData(this.formTarget);
@@ -31,7 +33,6 @@ export default class extends Controller {
         alert(data.errors)
       }
       else {
-        console.log(data)
         window.location.href = `/patients/${data.planification.patient_id}/planifications`
       }
     })
