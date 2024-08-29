@@ -13,7 +13,7 @@
           <%= f.input :quantity, label: "Quantité :" %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         </div>
-        <%= f.input :frequency_days, label: "Fréquence de prises :" %>
+        <%= f.input :frequency_days, label: "Intervalle de jours par prises :" %>
         <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
         <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
         <div class="check-boxes-container">
