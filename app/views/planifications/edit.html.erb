@@ -1,21 +1,29 @@
-
-<div class="custom-confirm" data-controller="edit-planification" data-edit-planification-url-value=<%="#{planification_path(@planification)}"%>>
+<div class="custom-confirm" data-controller="edit-planification" data-edit-planification-url-value=<%="#{planification_path(@planification)}"%> data-edit-planification-cancel-value=<%="#{patient_planifications_path(@planification.patient.id)}"%>>
   <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
   <h1>Modifier la prescription</h1>
   <div class="form_card m-4">
     <div class="form_inputs", data-controller="checkbox">
       <%= simple_form_for @planification, url:  planification_path(@planification), html: { data: { edit_planification_target: 'form'} } do |f| %>
         <% if @planification.photo.key != nil %>
-          <%= cl_image_tag @planification.photo.key, sizes: "(max-width: 589px) 100vw" %>
+          <%= cl_image_tag @planification.photo.key, class: "size" %>
         <% end %>
-        <h2 class="custom-title"><%= @planification.medication.name %></h2>
+        <div class="custom-title">
+        <h2><%= @planification.medication.name %></h2>
+        </div>
         <div class="posotity">
-          <%= f.input :quantity, label: "Quantité :" %>
+          <%= f.input :quantity, label: "Quantité :", input_html: { min: 0} %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         </div>
-        <%= f.input :frequency_days, label: "Intervalle de prises en jours :" %>
-        <%= f.input :start_date, label: "Date de début :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
-        <%= f.input :end_date, label: "Date de fin :", as: :string, input_html: { data: { controller: 'flatpickr' } } %>
+        <%= f.input :frequency_days, label: "Intervalle de prises en jours :", input_html: { min: 0} %>
+        <div data-controller="flatpickr" class="center-calendar">
+          <label class="form-label range required" for="range_range">Dates de prescription : <abbr title="required">*</abbr></label>
+          <input class="form-control string optional d-none" data-target="flatpickr.rangeDate" id="range_range" type="text" name="planification[range_date]">
+          <%= f.input :start_date, label: false, as: :string, required: false,
+                      input_html: {  data: { target: "flatpickr.startDate" }, value: @planification.start_date.strftime('%d/%m/%Y'), id: "range_start", class: "d-none" } %>
+          <%= f.input :end_date, label: false, as: :string, required: false,
+                      input_html: {  data: { target: "flatpickr.endDate" }, value: @planification.end_date.strftime('%d/%m/%Y') , id: "range_end", class: "d-none" } %>
+        </div>
+
         <div class="check-boxes-container">
           <%= f.association :taking_periods, as: :check_boxes,
                         label: "Moments de la journée :",

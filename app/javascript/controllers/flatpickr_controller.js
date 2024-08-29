@@ -51,15 +51,17 @@ export default class extends Controller {
 
 
   connect() {
-
+    const startDateValue = this.startDateTarget.value;
+    const endDateValue = this.endDateTarget.value;
+    const defaultDates = (startDateValue && endDateValue) ? [this.parseDate(startDateValue), this.parseDate(endDateValue)] : null;
+    const defaultMinDate = defaultDates ? defaultDates[0] : "today";
     flatpickr(this.rangeDateTarget, {
       mode: "range",
-      minDate: "today",
+      minDate: defaultMinDate,
       dateFormat: "d/m/Y",
       inline: true,
+      defaultDate: defaultDates,
       onChange: (selectedDates) => {
-        console.log("Nb: " + selectedDates.length);
-        console.log("Select : " + selectedDates);
         if (selectedDates.length === 2) {
           const [startDate, endDate] = selectedDates;
           this.startDateTarget.value = this.formatDate(startDate);
@@ -83,4 +85,8 @@ export default class extends Controller {
     return `${day}/${month}/${year}`;
   }
 
+  parseDate(date) {
+    const [day, month, year] = date.split('/');
+    return new Date(`${year}-${month}-${day}`);
+  }
 }

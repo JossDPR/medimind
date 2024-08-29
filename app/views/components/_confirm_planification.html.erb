@@ -8,7 +8,7 @@
       <% else %>
       <p>Votre traitement sera à prendre le <%= @planification.start_date.strftime("%d/%m/%Y") %> </p>
     <% end %>
-    <p>Vous devez prendre <strong><%= @planification.quantity %><%= @planification.dosage.label %>
+    <p>Vous devez prendre <strong><%= @planification.quantity %> <%= @planification.dosage.label %>
     <% if @planification.end_date.present? && (@planification.end_date != @planification.start_date) %>
      tous les <%= @planification.taking_periods.map(&:label).join(', ') %>.</p></strong>
     <% else %>
