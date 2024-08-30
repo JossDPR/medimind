@@ -4,7 +4,7 @@
     <%= form_with url:  patient_patient_histo_index_path(), method: :post, local: true do %>
       <input class="form-control string optional d-none" data-histoflatpickr-target="rangeDate" id="range_range" type="text" name="histo[range_date]">
       <input class="form-control string optional d-none" data-histoflatpickr-target="startDate" id="range_start" type="text" name="histo[start_date]">
-      <input class="form-control string optional " data-histoflatpickr-target="endDate" id="range_end" type="text" name="histo[end_date]">
+      <input class="form-control string optional d-none" data-histoflatpickr-target="endDate" id="range_end" type="text" name="histo[end_date]">
       <input class="form-control string optional d-none" data-histoflatpickr-target="patient_id" value=<%= @patient.id%> id="patient_id" type="text" name="histo[patient_id]">
     <% end %>
   </div>
