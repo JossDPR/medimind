@@ -23,7 +23,7 @@
 </div>
 
 <%  if @writer.tutor? %>
-  <%= link_to tutor_root_path do %>
+  <%= link_to patient_patient_takes_path(@relation.patient_id) do %>
     <%= render "components/back_button", symbol: raw('<i class="fa-solid fa-angle-left"></i>') %>
   <% end %>
 <% else  %>
