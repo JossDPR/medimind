@@ -86,8 +86,8 @@ const French = {
               this.endDateTarget.value = endOfWeek;
 
               const data = {
-                startDate: startOfWeek,
-                endDate: endOfWeek
+                startDate: startOfWeek.toLocaleString(),
+                endDate: endOfWeek.toLocaleString()
               };
 
               const token = document.getElementsByName('csrf-token')[0].content;

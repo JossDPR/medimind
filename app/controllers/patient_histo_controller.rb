@@ -7,11 +7,12 @@ class PatientHistoController < ApplicationController
   end
 
   def create
+    puts "PARAMS : #{params}"
     if params[:patient_id].present?
-      start_date = params[:startDate]
-      end_date = params[:endDate]
-      takes = Take.historique(@patient).where(datetime: start_date..end_date).order(datetime: :asc)
-
+      start_date = params[:startDate].to_date
+      end_date = params[:endDate].to_date
+      takes = Take.historique(@patient).where(datetime: start_date..end_date.end_of_day).order(datetime: :asc)
+puts "END DATE : #{end_date}"
       retourhtml = ""
       previous_date = nil
       previous_moment = nil
