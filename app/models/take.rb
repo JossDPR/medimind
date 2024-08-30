@@ -3,6 +3,12 @@ class Take < ApplicationRecord
 
   validates :datetime, presence: true
 
+  def self.historique(patient)
+    planification = Planification.where(patient_id: patient.id)
+    takes = Take.where(planification_id: planification.ids, ).order(datetime: :asc)
+    return takes
+  end
+
   def self.current_take(patient)
     planification = Planification.where(patient_id: patient.id)
     takes = Take.where(planification_id: planification.ids)
