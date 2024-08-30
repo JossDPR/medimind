@@ -47,7 +47,7 @@ const French = {
   }};
 
   export default class extends Controller {
-    static targets = ["rangeDate", "startDate", "endDate"];
+    static targets = ["rangeDate", "startDate", "endDate", "patient_id"];
 
 
     connect() {
@@ -89,9 +89,9 @@ const French = {
                 startDate: startOfWeek,
                 endDate: endOfWeek
               };
-              // document.querySelector('form').submit();
+
               const token = document.getElementsByName('csrf-token')[0].content;
-              fetch('/patients/4/patient_histo', {
+              fetch('/patients/' + this.patient_idTarget.value + '/patient_histo', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -123,36 +123,12 @@ const French = {
         time_24hr: true,
 
       })
-
     }
 
     traitement_data(data) {
-      console.log('Réponse du serveur:', data);
-
-
-
-
       let container = document.querySelector(".historique");
-      console.dir(container);
       container.innerHTML = data;
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     formatDate(date) {
       const day = String(date.getDate()).padStart(2, '0');
@@ -160,5 +136,4 @@ const French = {
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
     }
-
   }
