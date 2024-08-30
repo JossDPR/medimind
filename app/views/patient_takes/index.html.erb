@@ -9,7 +9,7 @@
         <% end %>
       </div>
       <div class="col-auto">
-        <%= link_to patient_patient_histo_index_path do%>
+        <%= link_to patient_patient_histo_index_path(@patient) do%>
           <%= render "components/little_buttons", content: "Historique" %>
         <% end %>
       </div>
