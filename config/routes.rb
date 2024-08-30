@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
     resources :takes, only: %i[index]
     resources :patient_takes, only: %i[index]
+    resources :patient_histo, only: %i[index create]
   end
 
   resources :planifications, only: %i[edit update destroy] do
@@ -43,6 +44,10 @@ Rails.application.routes.draw do
     collection do
       post 'photo'
     end
+  end
+
+  resources :tutor_patients, only: [:show] do
+    resources :chats, only: [:create]
   end
 
   resources :takes, only: [] do

@@ -1,0 +1,60 @@
+.cardhisto {
+  height: 40px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 5px 5px;
+  background-color: #ffffff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.icon-container {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $backgroundcolor_histo_taken;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.icon-container.nottaken {
+  background-color: $backgroundcolor_histo_not_taken;
+}
+
+.message-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+}
+.message-text,
+.sub-text {
+  margin: 0;
+  cursor: default;
+}
+.message-text {
+  color: $dark-gray;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.histodat {
+  font-size: 15px;
+  font-weight: bold;
+  color: $navbar_open_color;
+}
+
+.histomom {
+  font-size: 15px;
+  font-style: italic;
+  color: $navbar_open_color;
+}

@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera-patient"
 export default class extends Controller {
-  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3", "buttonsLvl4", "takeInfo", "otherMedic"]
+  static targets= ["cameraScreen", "titlePage", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3", "buttonsLvl4", "takeInfo", "otherMedic"]
   static values = {
     takeId: String
   }
@@ -158,15 +158,18 @@ export default class extends Controller {
             this.displayLvl4()
             this.imgElement.style.borderRadius="30px";
             this.imgElement.style.border="20px solid #50C878";
+            this.imgElement.insertAdjacentHTML('beforebegin',"<h1>C'est le bon médicament</h1>");
             this.imgElement.insertAdjacentHTML('afterend',`<p>${data.resultat.Differences} </p> <p><b>Vous pouvez le prendre.</b></p>`);
             this.takeInfoTarget.classList.remove("d-none");
+            this.titlePageTarget.classList.add('d-none');
           }
           else {
             this.displayLvl3()
             this.imgElement.classList.add('d-none');
             this.otherMedicTarget.classList.remove("d-none");
             this.otherMedicTarget.insertAdjacentHTML('afterbegin',`<p>${data.resultat.Differences}</p>`);
-
+            this.otherMedicTarget.insertAdjacentHTML('beforebegin',`<h1 style="color:red">Ce n'est pas le bon médicament</h1>`);
+            this.titlePageTarget.classList.add('d-none');
           }
         }
       }

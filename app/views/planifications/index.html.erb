@@ -11,5 +11,5 @@
 <%= render "components/accordion_card", elements: @planifications %>
 
 <%= link_to patient_patient_takes_path do %>
-  <%= render "components/back_button" %>
+  <%= render "components/back_button", symbol: raw('<i class="fa-solid fa-angle-left"></i>') %>
 <% end %>

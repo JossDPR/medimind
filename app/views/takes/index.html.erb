@@ -1,3 +1,7 @@
-<h2 class="text-center" style="margin-top: 20px;">Prises de médicaments du jour</h2><hr>
+<h2 class="text-center" style="margin-top: 20px;">Médicament(s) à prendre</h2><hr>
 
 <%= render "components/accordion_card_takes", elements: @takes %>
+
+<%= link_to tutor_patient_path(@tutor_patient_relation.ids) do %>
+  <%= render "components/chat_button" %>
+<% end %>

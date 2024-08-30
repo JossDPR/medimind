@@ -33,3 +33,6 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
+
+# SolidQueue configuration when using Localhost. Decomment if you aren't using a dyno on Heroku.
+# plugin :solid_queue

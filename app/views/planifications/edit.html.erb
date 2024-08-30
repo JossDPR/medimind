@@ -11,10 +11,10 @@
         <h2><%= @planification.medication.name %></h2>
         </div>
         <div class="posotity">
-          <%= f.input :quantity, label: "Quantité :" %>
+          <%= f.input :quantity, label: "Quantité :", input_html: { min: 0} %>
           <%= f.association :dosage, label_method: :label, label: "Posologie :" %>
         </div>
-
+        <%= f.input :frequency_days, label: "Intervalle de prises en jours :", input_html: { min: 0} %>
         <div data-controller="flatpickr" class="center-calendar">
           <label class="form-label range required" for="range_range">Dates de prescription : <abbr title="required">*</abbr></label>
           <input class="form-control string optional d-none" data-target="flatpickr.rangeDate" id="range_range" type="text" name="planification[range_date]">
