@@ -3,7 +3,12 @@ class TakesController < ApplicationController
   # before_action :set_take, only: %i[cam_patient, photo]
 
   def index
-    @takes = Take.current_take(@patient)
+    @takes = Take.current_take(@patient).where(taken_date: nil)
+    if current_user.tutor?
+      @tutor_patient_relation = TutorPatient.where(["patient_id = ? and tutor_id = ?", @patient.id, current_user.id])
+    else
+      @tutor_patient_relation = TutorPatient.where(patient_id: @patient.id)
+    end
   end
 
   def cam_patient

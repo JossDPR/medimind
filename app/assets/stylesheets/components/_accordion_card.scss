@@ -84,23 +84,24 @@ main {
 ul.item-list {
 	max-width: var(--mem-width);
 	margin: 0 auto;
+
+  img {
+    max-width: 100%;
+    max-height: 200px;
+  }
+
+  img[width][height] {
+    height: auto;
+  }
+
+  /* Let SVG scale without boundaries */
+  img[src$=".svg"] {
+    width: 100%;
+    height: auto;
+    max-width: none;
+  }
 }
 
-img {
-	max-width: 100%;
-  max-height: 200px;
-}
-
-img[width][height] {
-	height: auto;
-}
-
-/* Let SVG scale without boundaries */
-img[src$=".svg"] {
-	width: 100%;
-	height: auto;
-	max-width: none;
-}
 .vignette {
   // width: 100px;
   height: 50px;
@@ -159,7 +160,7 @@ label > .slider {
   flex-direction: column;
 }
 
-.acord-medic {
+.acord-medic p{
   height: 50%;
   text-transform: uppercase;
   font-size: large;
@@ -313,49 +314,49 @@ input:checked ~ label > .control {
 	animation: 0.9s glow ease-in-out infinite alternate;
 }
 
-@media (hover: hover) {
-	li,
-	label {
-		cursor: pointer;
-	}
+// @media (hover: hover) {
+// 	li,
+// 	label {
+// 		cursor: pointer;
+// 	}
 
-	input:not(:checked) + label:hover > .slider {
-		/* animation: details-show var(--slide-duration) ease-in-out; */
-		transition: height var(--slide-duration) ease-in-out;
-		height: var(--mem-height);
-	}
+// 	input:not(:checked) + label:hover > .slider {
+// 		/* animation: details-show var(--slide-duration) ease-in-out; */
+// 		transition: height var(--slide-duration) ease-in-out;
+// 		height: var(--mem-height);
+// 	}
 
-	input:not(:checked) + label:not(:hover) > .slider {
-		/* animation: details-hide var(--slide-duration) ease-in-out; */
-		transition: height var(--slide-duration) ease-in-out;
-		height: 0;
-	}
+// 	input:not(:checked) + label:not(:hover) > .slider {
+// 		/* animation: details-hide var(--slide-duration) ease-in-out; */
+// 		transition: height var(--slide-duration) ease-in-out;
+// 		height: 0;
+// 	}
 
-	input:not(:checked) + label:hover > h4 {
-		/* animation: text-show var(--text-duration) ease-in-out; */
-		transition: height var(--text-duration) ease-in-out;
-		height: calc(var(--text-l-height) * 3);
-	}
+// 	input:not(:checked) + label:hover > h4 {
+// 		/* animation: text-show var(--text-duration) ease-in-out; */
+// 		transition: height var(--text-duration) ease-in-out;
+// 		height: calc(var(--text-l-height) * 3);
+// 	}
 
-	input:not(:checked) + label:not(:hover) > h4 {
-		/* animation: text-hide var(--text-duration) ease-in-out; */
-		transition: height var(--text-duration) ease-in-out;
-		height: var(--text-l-height);
-	}
+// 	input:not(:checked) + label:not(:hover) > h4 {
+// 		/* animation: text-hide var(--text-duration) ease-in-out; */
+// 		transition: height var(--text-duration) ease-in-out;
+// 		height: var(--text-l-height);
+// 	}
 
-	ul:hover .control {
-		opacity: 1;
-	}
+// 	ul:hover .control {
+// 		opacity: 1;
+// 	}
 
-	input:not(:checked) + label:hover > .control {
-		transform: rotate(1.25turn);
-		-webkit-transform: rotate(1.25turn);
-		-moz-transform: rotate(1.25turn);
-		-ms-transform: rotate(1.25turn);
-		-o-transform: rotate(1.25turn);
-		filter: drop-shadow(0 -0.2em 0.5em #5ed8d8);
-	}
-}
+// 	input:not(:checked) + label:hover > .control {
+// 		transform: rotate(1.25turn);
+// 		-webkit-transform: rotate(1.25turn);
+// 		-moz-transform: rotate(1.25turn);
+// 		-ms-transform: rotate(1.25turn);
+// 		-o-transform: rotate(1.25turn);
+// 		filter: drop-shadow(0 -0.2em 0.5em #5ed8d8);
+// 	}
+// }
 
 @media all and (min-width: 820px) and (max-width: 1022px) {
 	/*tablet*/

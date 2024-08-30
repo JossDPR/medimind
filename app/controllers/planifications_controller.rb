@@ -36,12 +36,6 @@ class PlanificationsController < ApplicationController
         format.json { render json: { error: "NOT_FOUND" }, status: :ok }
       end
     end
-
-
-
-
-
-
   end
 
   def new

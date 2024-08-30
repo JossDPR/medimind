@@ -24,5 +24,10 @@
 <%= render "components/accordion_card_tutor_takes", elements: @takes %>
 
 <%= link_to tutor_root_path do %>
-  <%= render "components/back_button" %>
+  <%= render "components/back_button", symbol: raw('<i class="fa-solid fa-angle-left"></i>') %>
 <% end %>
+
+<%= link_to tutor_patient_path(@tutor_patient_relation.ids) do %>
+  <%= render "components/chat_button" %>
+<% end %>
+

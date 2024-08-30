@@ -21,13 +21,20 @@ export default class extends Controller {
       this.cameraScreenTarget.srcObject = stream;
       this.cameraScreenTarget.play();
       const tracks = stream.getTracks();
+      // this.cameraScreenTarget.onloadedmetadata = () => {
+      //   this.width = this.cameraScreenTarget.videoWidth;
+      //   this.height = this.cameraScreenTarget.videoHeight;
+      //   console.log(`Camera screen size: ${videoWidth}x${videoHeight}`);
+      // };
     })
     .catch(function(err) {
       console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
     });
+    // this.width = window.screen.width *0.8;
+    // this.height = window.screen.height * 0.4;
 
-    this.cameraScreenTarget.setAttribute("height",230);
-    this.cameraScreenTarget.setAttribute("width",300);
+    // this.cameraScreenTarget.setAttribute("height", window.screen.height * 0.4);
+    this.cameraScreenTarget.setAttribute("width", window.screen.width * 0.8);
     onpopstate = (event) => {
       this.stopPhoto();
     }
@@ -69,12 +76,12 @@ export default class extends Controller {
     this.displayLvl2();
 
     const canvas = document.createElement('canvas');
-    const width = 300;
-    const height = 230;
+    this.width = this.cameraScreenTarget.videoWidth;
+    this.height= this.cameraScreenTarget.videoHeight;
     var context = canvas.getContext('2d');
-    canvas.width = width;
-    canvas.height = height;
-    context.drawImage(this.cameraScreenTarget, 0, 0, width, height);
+    canvas.width = this.width;
+    canvas.height = this.height;
+    context.drawImage(this.cameraScreenTarget, 0, 0, this.width, this.height);
     let data = await new Promise((resolve) => {
       canvas.toBlob(resolve, 'image/jpeg');
     });
@@ -83,8 +90,8 @@ export default class extends Controller {
     const imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
     imgElement.src = imageUrl;
-    imgElement.width = width;
-    imgElement.height = height;
+    imgElement.width = window.screen.width * 0.8;
+    // imgElement.height = this.height;
     this.cameraScreenTarget.parentNode.replaceChild(imgElement, this.cameraScreenTarget);
     this.stopPhoto();
   };
@@ -175,14 +182,15 @@ export default class extends Controller {
     event.preventDefault();
     let formData = new FormData(this.formTarget);
     formData.append("file", this.file);
+    formData.delete("planification[range_date]")
     const token = document.getElementsByName('csrf-token')[0].content
     fetch(this.urlValue, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'X-CSRF-Token': token
-        },
-        body: formData,
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'X-CSRF-Token': token
+      },
+      body: formData,
     })
     .then(resp => resp.json())
     .then(data => {

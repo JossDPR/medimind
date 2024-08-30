@@ -1,0 +1,33 @@
+<div class="default_card">
+  <div class="chat">
+    <h1 class="text-center pt-1 pb-4">Discussion avec <%= @other_user.first_name %></h1>
+    <%= turbo_stream_from "chat_#{@relation.id}_chats" %>
+    <div id="chats" class="messages">
+      <% @relation.chats.each do |chat| %>
+        <%= render "components/chat", chat: chat, user: current_user %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= simple_form_for [@relation, @chat], url: tutor_patient_chats_path(@relation),
+    html: {class: "d-flex", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }, autocomplete: "off"} do |f|
+  %>
+    <%# <% other_user = current_user == @booking.restaurant.user ? @booking.user : @booking.restaurant.user %>
+    <%= f.input :message,
+      label: false,
+      placeholder: "Ecrire à #{@other_user.first_name}",
+      wrapper_html: {class: "flex-grow-1"}
+    %>
+    <%= f.submit "Envoyer", class: "btn btn-primary text-white mb-3" %>
+  <% end %>
+</div>
+
+<%  if @writer.tutor? %>
+  <%= link_to tutor_root_path do %>
+    <%= render "components/back_button", symbol: raw('<i class="fa-solid fa-angle-left"></i>') %>
+  <% end %>
+<% else  %>
+  <%= link_to patient_root_path do %>
+    <%= render "components/back_button", symbol: raw('<i class="fa-solid fa-angle-left"></i>') %>
+  <% end %>
+<% end %>

@@ -2,14 +2,13 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="camera-patient"
 export default class extends Controller {
-  static targets= ["cameraScreen", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3", "buttonsLvl4", "takeInfo", "otherMedic"]
+  static targets= ["cameraScreen", "titlePage", "url", "buttonsLvl1", "buttonsLvl2", "buttonsLvl3", "buttonsLvl4", "takeInfo", "otherMedic"]
   static values = {
     takeId: String
   }
 
   connect() {
     this.displayLvl1();
-    // const cams = devices.filter(device => device.kind === 'videoinput');
     // prod et demo
     // this.constraint = { video: { facingMode: { exact:'environment'}}, audio: false };
     // ordi : changer pour this.constraint de prod et demo
@@ -21,13 +20,17 @@ export default class extends Controller {
       this.cameraScreenTarget.srcObject = stream;
       this.cameraScreenTarget.play();
       const tracks = stream.getTracks();
+      // this.cameraScreenTarget.onloadedmetadata = () => {
+      //   this.width = this.cameraScreenTarget.videoWidth;
+      //   this.height = this.cameraScreenTarget.videoHeight;
+      //   console.log(`Camera screen size: ${videoWidth}x${videoHeight}`);
+      // };
     })
     .catch(function(err) {
       console.log("Erreur lors de l'initilisaztion de l'appareil photo : " + err);
     });
 
-    this.cameraScreenTarget.setAttribute("height",230);
-    this.cameraScreenTarget.setAttribute("width",300);
+    this.cameraScreenTarget.setAttribute("width", window.screen.width * 0.8);
     onpopstate = (event) => {
       this.stopPhoto();
     }
@@ -68,7 +71,6 @@ export default class extends Controller {
   };
 
   stopPhotoAndBack (event) {
-    // const url = event.currentTarget.dataset.url;
     this.stream.getTracks().forEach(track => {
       track.stop();
     });
@@ -79,12 +81,12 @@ export default class extends Controller {
     this.displayLvl2();
 
     const canvas = document.createElement('canvas');
-    const width = 300;
-    const height = 230;
+    this.width = this.cameraScreenTarget.videoWidth;
+    this.height= this.cameraScreenTarget.videoHeight;
     var context = canvas.getContext('2d');
-    canvas.width = width;
-    canvas.height = height;
-    context.drawImage(this.cameraScreenTarget, 0, 0, width, height);
+    canvas.width = this.width;
+    canvas.height = this.height;
+    context.drawImage(this.cameraScreenTarget, 0, 0, this.width, this.height);
     let data = await new Promise((resolve) => {
       canvas.toBlob(resolve, 'image/jpeg');
     });
@@ -93,8 +95,8 @@ export default class extends Controller {
     this.imgElement = document.createElement('img');
     const imageUrl = URL.createObjectURL(data);
     this.imgElement.src = imageUrl;
-    this.imgElement.width = width;
-    this.imgElement.height = height;
+    this.imgElement.width = window.screen.width * 0.8;
+    // this.imgElement.height = this.height;
     this.cameraScreenTarget.parentNode.replaceChild(this.imgElement, this.cameraScreenTarget);
     this.stopPhoto();
   };
@@ -124,7 +126,6 @@ export default class extends Controller {
     let retryphoto = document.querySelector("#retryphoto");
     validatebutton.classList.add('d-none')
     const url_photo = `/takes/${this.takeIdValue}/photo`;
-    // console.log(url_photo);
     const token = document.getElementsByName('csrf-token')[0].content;
     fetch(url_photo, {
         method: "POST",
@@ -153,26 +154,22 @@ export default class extends Controller {
           loadingphoto.classList.add("d-none");
           validatebutton.classList.remove("d-none");
           retryphoto.classList.add("d-none");
-          // let medic_id = document.querySelector("#planification_medication_id");
-          // let medic_name = document.querySelector(".custom-title");
-          console.log(data)
           if (data.resultat.Reponse) {
-            // const image = document.querySelector("img")
             this.displayLvl4()
             this.imgElement.style.borderRadius="30px";
             this.imgElement.style.border="20px solid #50C878";
+            this.imgElement.insertAdjacentHTML('beforebegin',"<h1>C'est le bon médicament</h1>");
             this.imgElement.insertAdjacentHTML('afterend',`<p>${data.resultat.Differences} </p> <p><b>Vous pouvez le prendre.</b></p>`);
             this.takeInfoTarget.classList.remove("d-none");
+            this.titlePageTarget.classList.add('d-none');
           }
           else {
-            // const wrongMedic = `<p>${data.resultat.Differences}.</p>`
-            // this.imgElement.parentNode.replaceChild(wrongMedic, this.imgElement);
-            // this.otherMedicTarget.classList.remove("d-none");
             this.displayLvl3()
             this.imgElement.classList.add('d-none');
             this.otherMedicTarget.classList.remove("d-none");
             this.otherMedicTarget.insertAdjacentHTML('afterbegin',`<p>${data.resultat.Differences}</p>`);
-
+            this.otherMedicTarget.insertAdjacentHTML('beforebegin',`<h1 style="color:red">Ce n'est pas le bon médicament</h1>`);
+            this.titlePageTarget.classList.add('d-none');
           }
         }
       }
@@ -184,7 +181,6 @@ export default class extends Controller {
 
 
   validatePhoto(event) {
-    //faire la comparaison IA et si ok on a la redirection ci-dessous
     const token = document.getElementsByName('csrf-token')[0].content;
     const url_taken = `/takes/${this.takeIdValue}/taken`;
     fetch(url_taken, {
@@ -213,7 +209,5 @@ export default class extends Controller {
 
   retakePhoto () {
     location.reload()
-      // this.connect(); //crée une erreur car cameraScreen target n'est pas rechargée
-      // this.photo();
     };
 }

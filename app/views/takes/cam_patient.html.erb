@@ -1,8 +1,8 @@
 <div class="custom-confirm">
   <strong><i class="fa-solid fa-pills custom-icon"></i></strong>
-  <h1>Nouveau médicament</h1>
 
   <div data-controller="camera-patient", data-camera-patient-take-id-value=<%="#{ @take.id}"%>>
+    <h1 data-camera-patient-target="titlePage">Prenez la boîte du médicament en photo</h1>
     <div class="selfie-container" >
       <video class="selfie-video" data-camera-patient-target="cameraScreen"></video>
     </div>
