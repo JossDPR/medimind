@@ -1,24 +1,26 @@
-<div class="container chat">
-  <h1>Discussion avec <%= @other_user.first_name %></h1>
-  <%= turbo_stream_from "chat_#{@relation.id}_chats" %>
-  <div id="chats" class="messages">
-    <% @relation.chats.each do |chat| %>
-      <%= render "components/chat", chat: chat, user: current_user %>
-    <% end %>
+<div class="default_card">
+  <div class="chat">
+    <h1 class="text-center pt-1 pb-4">Discussion avec <%= @other_user.first_name %></h1>
+    <%= turbo_stream_from "chat_#{@relation.id}_chats" %>
+    <div id="chats" class="messages">
+      <% @relation.chats.each do |chat| %>
+        <%= render "components/chat", chat: chat, user: current_user %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<%= simple_form_for [@relation, @chat], url: tutor_patient_chats_path(@relation),
-  html: {class: "d-flex", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }} do |f|
-%>
-  <%# <% other_user = current_user == @booking.restaurant.user ? @booking.user : @booking.restaurant.user %>
-  <%= f.input :message,
-    label: false,
-    placeholder: "Ecrire à #{@other_user.first_name}",
-    wrapper_html: {class: "flex-grow-1"}
+  <%= simple_form_for [@relation, @chat], url: tutor_patient_chats_path(@relation),
+    html: {class: "d-flex", data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }, autocomplete: "off"} do |f|
   %>
-  <%= f.submit "Send", class: "btn btn-primary mb-3" %>
-<% end %>
+    <%# <% other_user = current_user == @booking.restaurant.user ? @booking.user : @booking.restaurant.user %>
+    <%= f.input :message,
+      label: false,
+      placeholder: "Ecrire à #{@other_user.first_name}",
+      wrapper_html: {class: "flex-grow-1"}
+    %>
+    <%= f.submit "Envoyer", class: "btn btn-primary text-white mb-3" %>
+  <% end %>
+</div>
 
 <%  if @writer.tutor? %>
   <%= link_to tutor_root_path do %>

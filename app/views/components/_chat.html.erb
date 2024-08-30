@@ -3,7 +3,7 @@
  data-message-user-id-value="<%= chat.user.id %>">
   <small class="message-info">
     <strong><%= chat.user.first_name %></strong>
-    <i><%= chat.created_at.strftime("%a %b %e at %l:%M %p") %></i>
+    <i><%= chat.created_at.in_time_zone("CET").strftime("%d/%m/%Y à %H:%M") %></i>
   </small>
   <p class="message-content"><%= chat.message %></p>
 </div>
